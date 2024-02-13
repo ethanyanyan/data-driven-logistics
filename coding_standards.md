@@ -14,14 +14,66 @@ These standards apply to all software development activities for [Project Name],
 - Use camelCase for variable names and make them descriptive of their purpose.
 - Boolean variables should be prefixed with `is`, `has`, or `can`.
 
+```
+// Good
+let customerCount = 5;
+let isUserLoggedIn = false;
+
+// Bad
+let count = 5;
+let logged_in = false;
+```
+
 ### Functions and Methods
-- Use camelCase for function names. Begin with a verb indicating the function's action (e.g., `calculateTotal`, `fetchUserData`).
+- Use camelCase for function names. Begin with a verb indicating the function's action.
+
+```
+# Good
+def calculateTotalPrice():
+    pass
+
+def fetchUserData():
+    pass
+
+# Bad
+def calc_price():
+    pass
+
+def getdata():
+    pass
+```
 
 ### Classes
 - Use PascalCase for class names. Names should be nouns or noun phrases that clearly indicate the purpose of the class.
 
+```
+# Good
+class ShoppingCart:
+    pass
+
+class UserProfile:
+    pass
+
+# Bad
+class shopping_cart:
+    pass
+
+class userprofile:
+    pass
+```
+
 ### Constants
-- Use uppercase with underscores to separate words (e.g., `MAX_RETRY_COUNT`).
+- Use uppercase with underscores to separate words.
+
+```
+// Good
+const MAX_RETRY_COUNT = 3;
+const DEFAULT_USER_ROLE = 'guest';
+
+// Bad
+const maxRetries = 3;
+const UserRole = 'guest';
+```
 
 ### Files and Directories
 - Use kebab-case for directories and files (e.g., `user-profile.js`).
@@ -32,6 +84,7 @@ These standards apply to all software development activities for [Project Name],
 ### Indentation
 - Use spaces instead of tabs, with 4 spaces per indentation level for Python and 2 spaces for JavaScript, HTML, and CSS.
 
+
 ### Braces
 - Place opening braces on the same line as the statement for JavaScript.
 - Use a new line for opening braces in Python blocks (as per the language's syntax).
@@ -41,6 +94,24 @@ These standards apply to all software development activities for [Project Name],
 
 ### Whitespace
 - Use whitespace around operators and after commas to improve readability.
+
+```
+// Good
+if (user.isLoggedIn) {
+    console.log('User is logged in.');
+    fetchUserData();
+} else {
+    console.log('User is not logged in.');
+}
+
+// Bad - inconsistent spacing and indentation
+if(user.isLoggedIn){
+console.log('User is logged in.');
+ fetchUserData();
+}else{
+console.log('User is not logged in.');
+}
+```
 
 ## Commenting and Documentation
 
@@ -53,6 +124,27 @@ These standards apply to all software development activities for [Project Name],
 ### Documentation
 - Use JSDoc for JavaScript documentation.
 - Use docstrings for Python, following the PEP 257 conventions.
+
+```
+# Good
+def calculateInterest(rate, years):
+    """
+    Calculate the interest over a given period.
+
+    Args:
+        rate (float): The interest rate per annum.
+        years (int): The number of years.
+
+    Returns:
+        float: The total interest.
+    """
+    return principal * rate * years  # Return the total interest
+
+# Bad - comments are vague or unnecessary
+def calcInterest(r, y):
+    # Function to calculate interest
+    return p * r * y  # Calculate interest
+```
 
 ## Language-Specific Practices
 
@@ -70,6 +162,22 @@ These standards apply to all software development activities for [Project Name],
 - Use try-catch blocks for error handling in JavaScript, and try-except in Python.
 - Create custom exception classes for errors specific to the application's domain.
 
+```
+// Good
+try {
+    const data = JSON.parse(response);
+} catch (error) {
+    console.error('Failed to parse response:', error);
+}
+
+// Bad - ignoring errors
+try {
+    const data = JSON.parse(response);
+} catch (error) {
+    // Should handle or log the error
+}
+```
+
 ### Logging
 - Use `console.log` judiciously in JavaScript; prefer logging libraries for more significant applications.
 - Use Python's logging module for application logs, configuring different log levels appropriately.
@@ -81,6 +189,14 @@ These standards apply to all software development activities for [Project Name],
 
 ### Commit Messages
 - Write concise, descriptive commit messages in the imperative mood.
+
+```
+// Good
+Fix: Correct typo in user authentication flow
+
+// Bad
+fixed stuff
+```
 
 ## Testing
 
@@ -104,7 +220,7 @@ These standards apply to all software development activities for [Project Name],
 ## Review Process
 
 ### Code Review Guidelines
-- Require code reviews for all merges into the `main` or `develop` branches.
+- Require code reviews for **all** merges into the `main` or `develop` branches.
 - Reviewers should focus on code quality, security, and adherence to project standards.
 
 ## Enforcement
@@ -115,5 +231,5 @@ These standards apply to all software development activities for [Project Name],
 
 ## Revision History
 
-- **[Date]**: Initial creation of the document.
+- **[12th Feb 2023]**: Initial creation of the document.
 - **[Date]**: Updated sections [Section Name] to reflect changes in [reason for changes].
