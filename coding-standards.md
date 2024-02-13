@@ -76,8 +76,20 @@ const UserRole = 'guest';
 ```
 
 ### Files and Directories
-- Use kebab-case for directories and files (e.g., `user-profile.js`).
+- Use PascalCase for files that are named after classes they contain, such as components in React (e.g., UserProfile.js) or class-based files in other languages (e.g., DatabaseConnection.py).
+- Use kebab-case for other types of files and directories, especially when they do not directly correspond to a class or when the framework or language does not have a preference for PascalCase.
 - Group files into directories that represent their module or functionality.
+
+```
+// Good Examples
+React Component: UserProfile.jsx
+Angular Service: AuthService.ts
+C# Class File: UserRepository.cs
+
+// For non-class files or when not dictated by language/framework conventions
+Stylesheet: user-profile.css
+Utility Script: format-date.js
+```
 
 ## Formatting and Style
 
