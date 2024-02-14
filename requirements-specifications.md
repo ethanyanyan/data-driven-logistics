@@ -85,6 +85,16 @@ The user requirements for the Integrated Inventory and Process Management System
 
 These requirements serve as a foundational guide for the development and implementation of the IIPMS, ensuring it meets the needs of businesses in managing their inventory and production processes efficiently and effectively.
 
+Sample Table:
+
+| ID   | Description                                                  | Priority | Status |
+| ---- | ------------------------------------------------------------ | -------- | ------ |
+| R11  | Users should not have to sign into the system; their current network login should be used for identification. | Med      | Done   |
+| R12  | The user should pick a project first; the tasks available are a derivative of the project. | High     | Open   |
+| R13  | A full-time employee should not be able to submit a time card with less than 40 hours per week recorded. | High     | Open   |
+| R14  | A contractor can submit any number of hours up to 60 without special approval. | Med      | Open   |
+| R15  | A team lead can see his/her team's time cards before they are submitted but cannot approve them until the user submits it. | High     | Open   |
+
 
 ### Use Cases & User Stories
 
