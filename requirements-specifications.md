@@ -1,44 +1,90 @@
 # Requirements and Specification Document
 
-## TeamName
-
-<!--The name of your team.-->
+## Integrated Inventory and Process Management System (IIPMS)
 
 ### Project Abstract
 
-<!--A one paragraph summary of what the software will do.-->
-
-This is an example paragraph written in markdown. You can use *italics*, **bold**, and other formatting options. You can also <u>use inline html</u> to format your text. The example sections included in this document are not necessarily all the sections you will want, and it is possible that you won't use all the one's provided. It is your responsibility to create a document that adequately conveys all the information about your project specifications and requirements.
-
-Please view this file's source to see `<!--comments-->` with guidance on how you might use the different sections of this document. 
+The goal of the Integrated Inventory and Process Management System (IIPMS) is to develop a comprehensive web application designed for businesses to efficiently track inventory across multiple physical locations. This system aims to model business processes, transforming inputs into outputs, managing shipments, and maintaining precise inventory records. By implementing IIPMS, businesses can gain real-time visibility into inventory levels at any site and any given time, ensuring operational efficiency and informed decision-making.
 
 ### Customer
 
-<!--A brief description of the customer for this software, both in general (the population who might eventually use such a system) and specifically for this document (the customer(s) who informed this document). Every project will have a customer from the CS506 instructional staff. Requirements should not be derived simply from discussion among team members. Ideally your customer should not only talk to you about requirements but also be excited later in the semester to use the system.-->
+#### General Population
+
+The primary customer base for the Integrated Inventory and Process Management System (IIPMS) encompasses businesses within the manufacturing sector, with a special focus on automotive manufacturing. This demographic includes small to large-scale manufacturers that operate across multiple physical locations and require efficient, real-time tracking of inventory and production processes. Target customers include:
+
+- **Manufacturing Plant Managers**: Individuals overseeing production and inventory across manufacturing sites.
+- **Supply Chain Coordinators**: Professionals managing the logistics of material movements and production flow.
+- **Inventory Specialists**: Staff responsible for tracking stock levels, managing shipments, and ensuring material availability.
+- **Business Analysts**: Analysts looking to derive insights from inventory and process data to optimize operations.
+- **IT and System Administrators**: Those managing system implementation, integration, and maintenance.
+
+#### Specific Customers for This Document
+
+The specific customers informing this document include:
+
+- **CS506 Instructional Staff**: The instructional team of the CS506 course acts as the project's primary customer, providing initial requirements and guiding the development process to ensure the project meets both educational objectives and real-world applicability.
+- **Industry Consultants**: Experts in automotive manufacturing who have collaborated with the instructional staff to define specific industry needs and challenges, ensuring the system is tailored to address real operational inefficiencies.
+- **Potential End-Users**: A select group of manufacturing plant managers and supply chain coordinators have been consulted to gather detailed user requirements and feedback, crucial for tailoring the system's functionalities to meet end-user expectations effectively.
+
+#### Customer Engagement
+
+The project engages a diverse group of customers, from instructional staff and industry consultants to potential end-users, ensuring a comprehensive understanding of the domain and user needs. This collaboration aims to shape the project's direction, with continued feedback and testing phases expected to refine the system further, fostering enthusiasm and readiness among the customers to utilize the IIPMS upon completion.
+
 
 ### User Requirements
 
-<!--This section lists the behavior that the users see. This information needs to be presented in a logical, organized fashion. It is most helpful if this section is organized in outline form: a bullet list of major topics (e.g., one for each kind of user, or each major piece of system functionality) each with some number of subtopics.-->
+The user requirements for the Integrated Inventory and Process Management System (IIPMS) are organized around different user roles and system functionalities to ensure clarity and ease of understanding. Each requirement is designated a priority level (High, Medium, Low) to guide development focus and resource allocation.
 
-Here is a user requirements sample from [Crookshanks](https://learning-oreilly-com.ezproxy.library.wisc.edu/library/view/practical-software-development/9781484206201/9781484206218_Ch02.xhtml):
+#### General System Access
+- **R1**: System access should be seamlessly integrated with the company's existing single sign-on (SSO) infrastructure, allowing users to log in with their current network credentials. 
+  - Priority: High
+  - Status: Open
 
-| ID   | Description                                                  | Priority | Status |
-| ---- | ------------------------------------------------------------ | -------- | ------ |
-| R11  | Users should not have to sign into the system; their current network login should be used for identification. | Med      | Done   |
-| R12  | The user should pick a project first; the tasks available are a derivative of the project. | High     | Open   |
-| R13  | A full-time employee should not be able to submit a time card with less than 40 hours per week recorded. | High     | Open   |
-| R14  | A contractor can submit any number of hours up to 60 without special approval. | Med      | Open   |
-| R15  | A team lead can see his/her team's time cards before they are submitted but cannot approve them until the user submits it. | High     | Open   |
+#### Inventory Management
+- **R2**: Users must be able to view real-time inventory levels across all locations from a centralized dashboard.
+  - Priority: High
+  - Status: Open
+- **R3**: The system must provide functionality for recording shipments, both incoming and outgoing, updating inventory quantities accordingly.
+  - Priority: High
+  - Status: Open
+- **R4**: Users should have the ability to perform inventory adjustments and log reasons for these adjustments to maintain an audit trail.
+  - Priority: Medium
+  - Status: Open
 
-<div align="center"><small><i>Excerpt from Crookshanks Table 2-2 showing example user requirements for a timekeeping system</i></small></div>
+#### Process Modeling
+- **R5**: The system should allow users to model business processes that detail the transformation of inputs into outputs, relevant to the automotive manufacturing industry.
+  - Priority: High
+  - Status: Open
+- **R6**: It should be possible to associate specific inventory items and quantities with each step in a modeled process.
+  - Priority: Medium
+  - Status: Open
 
-- You 
-  - Can
-    - Use
-- Bullet
-  - Points
-    - In
-    - Markdown
+#### Historical Data and Reporting
+- **R7**: Users must be able to access historical inventory data to track changes over time and perform trend analysis.
+  - Priority: Medium
+  - Status: Open
+- **R8**: The system should offer reporting tools, including the ability to generate custom reports based on specific criteria (e.g., time period, location).
+  - Priority: Medium
+  - Status: Open
+
+#### Audit Trail and Security
+- **R9**: Every update made to the inventory or process models must be logged with user identification to create a comprehensive audit trail.
+  - Priority: High
+  - Status: Open
+- **R10**: Access control mechanisms must be in place to ensure users can only view and manipulate inventory and processes relevant to their role.
+  - Priority: High
+  - Status: Open
+
+#### Extensions and Integrations
+- **R11**: The system should support spreadsheet import and export functionalities for easy data manipulation and reporting.
+  - Priority: Low
+  - Status: Open
+- **R12**: Integration with geospatial data visualization tools to enable location-based inventory tracking.
+  - Priority: Low
+  - Status: Open
+
+These requirements serve as a foundational guide for the development and implementation of the IIPMS, ensuring it meets the needs of businesses in managing their inventory and production processes efficiently and effectively.
+
 
 ### Use Cases & User Stories
 
