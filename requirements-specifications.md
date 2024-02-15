@@ -295,7 +295,7 @@ end
 
 A <-->|"REST API"| B
 B <-->|"SQL Queries"| C
-
+```
 
 
 
