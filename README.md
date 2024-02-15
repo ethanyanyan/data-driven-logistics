@@ -23,7 +23,10 @@ Data Driven Logistics is a web-based application designed to empower businesses,
 - **Frontend**: React
 - **Backend**: Node.js with Express
 - **Database**: MySQL
-- **Development Tools**: Git for version control, Postman for API testing
+- **Development Tools**:
+  - **Git**: Used for version control, allowing for efficient tracking of code changes and collaboration between developers.
+  - **Postman**: An API platform for building and using APIs, used here for testing API endpoints, ensuring they behave as expected.
+  - **Prettier**: A code formatter, enforcing a consistent code style across the project's codebase.
 
 ## System Requirements
 

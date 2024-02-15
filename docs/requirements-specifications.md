@@ -1,16 +1,16 @@
 # Requirements and Specification Document
 
-## Integrated Inventory and Process Management System (IIPMS)
+## Data Driven Logistics (DDL)
 
 ### Project Abstract
 
-The goal of the Integrated Inventory and Process Management System (IIPMS) is to develop a comprehensive web application designed for businesses to efficiently track inventory across multiple physical locations. This system aims to model business processes, transforming inputs into outputs, managing shipments, and maintaining precise inventory records. By implementing IIPMS, businesses can gain real-time visibility into inventory levels at any site and any given time, ensuring operational efficiency and informed decision-making.
+The goal of the Data Driven Logistics (DDL) is to develop a comprehensive web application designed for businesses to efficiently track inventory across multiple physical locations. This system aims to model business processes, transforming inputs into outputs, managing shipments, and maintaining precise inventory records. By implementing IIPMS, businesses can gain real-time visibility into inventory levels at any site and any given time, ensuring operational efficiency and informed decision-making.
 
 ### Customer
 
 #### General Population
 
-The primary customer base for the Integrated Inventory and Process Management System (IIPMS) encompasses businesses within the manufacturing sector, with a special focus on automotive manufacturing. This demographic includes small to large-scale manufacturers that operate across multiple physical locations and require efficient, real-time tracking of inventory and production processes. Target customers include:
+The primary customer base for the Data Driven Logistics (DDL) encompasses businesses within the manufacturing sector, with a special focus on automotive manufacturing. This demographic includes small to large-scale manufacturers that operate across multiple physical locations and require efficient, real-time tracking of inventory and production processes. Target customers include:
 
 - **Manufacturing Plant Managers**: Individuals overseeing production and inventory across manufacturing sites.
 - **Supply Chain Coordinators**: Professionals managing the logistics of material movements and production flow.
@@ -30,17 +30,18 @@ The specific customers informing this document include:
 
 The project engages a diverse group of customers, from instructional staff and industry consultants to potential end-users, ensuring a comprehensive understanding of the domain and user needs. This collaboration aims to shape the project's direction, with continued feedback and testing phases expected to refine the system further, fostering enthusiasm and readiness among the customers to utilize the IIPMS upon completion.
 
-
 ### User Requirements
 
-The user requirements for the Integrated Inventory and Process Management System (IIPMS) are organized around different user roles and system functionalities to ensure clarity and ease of understanding. Each requirement is designated a priority level (High, Medium, Low) to guide development focus and resource allocation.
+The user requirements for the Data Driven Logistics (DDL) are organized around different user roles and system functionalities to ensure clarity and ease of understanding. Each requirement is designated a priority level (High, Medium, Low) to guide development focus and resource allocation.
 
 #### General System Access
-- **R1**: System access should be seamlessly integrated with the company's existing single sign-on (SSO) infrastructure, allowing users to log in with their current network credentials. 
+
+- **R1**: System access should be seamlessly integrated with the company's existing single sign-on (SSO) infrastructure, allowing users to log in with their current network credentials.
   - Priority: High
   - Status: Open
 
 #### Inventory Management
+
 - **R2**: Users must be able to view real-time inventory levels across all locations from a centralized dashboard.
   - Priority: High
   - Status: Open
@@ -52,6 +53,7 @@ The user requirements for the Integrated Inventory and Process Management System
   - Status: Open
 
 #### Process Modeling
+
 - **R5**: The system should allow users to model business processes that detail the transformation of inputs into outputs, relevant to the automotive manufacturing industry.
   - Priority: High
   - Status: Open
@@ -60,6 +62,7 @@ The user requirements for the Integrated Inventory and Process Management System
   - Status: Open
 
 #### Historical Data and Reporting
+
 - **R7**: Users must be able to access historical inventory data to track changes over time and perform trend analysis.
   - Priority: Medium
   - Status: Open
@@ -68,6 +71,7 @@ The user requirements for the Integrated Inventory and Process Management System
   - Status: Open
 
 #### Audit Trail and Security
+
 - **R9**: Every update made to the inventory or process models must be logged with user identification to create a comprehensive audit trail.
   - Priority: High
   - Status: Open
@@ -76,6 +80,7 @@ The user requirements for the Integrated Inventory and Process Management System
   - Status: Open
 
 #### Extensions and Integrations
+
 - **R11**: The system should support spreadsheet import and export functionalities for easy data manipulation and reporting.
   - Priority: Low
   - Status: Open
@@ -87,22 +92,22 @@ These requirements serve as a foundational guide for the development and impleme
 
 Sample Table:
 
-| ID   | Description                                                  | Priority | Status |
-| ---- | ------------------------------------------------------------ | -------- | ------ |
-| R11  | Users should not have to sign into the system; their current network login should be used for identification. | Med      | Done   |
-| R12  | The user should pick a project first; the tasks available are a derivative of the project. | High     | Open   |
-| R13  | A full-time employee should not be able to submit a time card with less than 40 hours per week recorded. | High     | Open   |
-| R14  | A contractor can submit any number of hours up to 60 without special approval. | Med      | Open   |
-| R15  | A team lead can see his/her team's time cards before they are submitted but cannot approve them until the user submits it. | High     | Open   |
-
+| ID  | Description                                                                                                                | Priority | Status |
+| --- | -------------------------------------------------------------------------------------------------------------------------- | -------- | ------ |
+| R11 | Users should not have to sign into the system; their current network login should be used for identification.              | Med      | Done   |
+| R12 | The user should pick a project first; the tasks available are a derivative of the project.                                 | High     | Open   |
+| R13 | A full-time employee should not be able to submit a time card with less than 40 hours per week recorded.                   | High     | Open   |
+| R14 | A contractor can submit any number of hours up to 60 without special approval.                                             | Med      | Open   |
+| R15 | A team lead can see his/her team's time cards before they are submitted but cannot approve them until the user submits it. | High     | Open   |
 
 ### Use Cases & User Stories
 
-In alignment with the user requirements outlined previously, the following use cases and user stories detail key scenarios within the Integrated Inventory and Process Management System (IIPMS). Each use case is derived from user stories, ensuring that every major scenario is represented and distinct in its contributions to the system's functionality. Use cases are categorized by priority: "Must Have," "Useful," or "Optional," to guide development focus towards the most critical features by the project deadline.
+In alignment with the user requirements outlined previously, the following use cases and user stories detail key scenarios within the Data Driven Logistics (DDL). Each use case is derived from user stories, ensuring that every major scenario is represented and distinct in its contributions to the system's functionality. Use cases are categorized by priority: "Must Have," "Useful," or "Optional," to guide development focus towards the most critical features by the project deadline.
 
 #### Use Case 1: Real-Time Inventory Tracking
+
 - **Priority**: Must Have
-- **User Story**: 
+- **User Story**:
   > As a plant manager, I want to view real-time inventory levels across all locations, so that I can make informed decisions about resource allocation and production planning.
 - **Acceptance Test**:
   1. Log in to the system using existing network credentials.
@@ -110,8 +115,9 @@ In alignment with the user requirements outlined previously, the following use c
   3. Verify that inventory levels for all locations are displayed in real-time.
 
 #### Use Case 2: Record Shipments
+
 - **Priority**: Must Have
-- **User Story**: 
+- **User Story**:
   > As an inventory specialist, I need to record incoming and outgoing shipments, so that inventory quantities are accurately updated.
 - **Acceptance Test**:
   1. Access the "Shipments" section from the main menu.
@@ -119,8 +125,9 @@ In alignment with the user requirements outlined previously, the following use c
   3. Confirm the inventory levels are adjusted accordingly.
 
 #### Use Case 3: Process Modeling
+
 - **Priority**: Must Have
-- **User Story**: 
+- **User Story**:
   > As a process engineer, I want to model our manufacturing processes in the system, showing how inputs are transformed into outputs, so we can optimize our operations.
 - **Acceptance Test**:
   1. Create a new process model, detailing each step of the manufacturing process.
@@ -128,8 +135,9 @@ In alignment with the user requirements outlined previously, the following use c
   3. Validate that the model accurately reflects the transformation process.
 
 #### Use Case 4: Audit Trail
+
 - **Priority**: Must Have
-- **User Story**: 
+- **User Story**:
   > As a compliance officer, I need to see an audit trail of updates made to inventory and processes, so we can ensure data integrity and accountability.
 - **Acceptance Test**:
   1. Navigate to the "Audit Log" section.
@@ -137,8 +145,9 @@ In alignment with the user requirements outlined previously, the following use c
   3. Verify the accuracy of the log entries against known updates.
 
 #### Use Case 5: Spreadsheet Import/Export
+
 - **Priority**: Useful
-- **User Story**: 
+- **User Story**:
   > As an inventory manager, I want to import inventory data from spreadsheets to quickly update the system and export data for reporting purposes.
 - **Acceptance Test**:
   1. Access the "Data Management" section and select "Import."
@@ -146,8 +155,9 @@ In alignment with the user requirements outlined previously, the following use c
   3. Verify the inventory in the system is updated accordingly. Repeat the process for exporting data.
 
 #### Use Case 6: Geospatial Data Visualizations
+
 - **Priority**: Optional
-- **User Story**: 
+- **User Story**:
   > As a supply chain coordinator, I would like to visualize inventory distribution and movements on a map, so I can optimize logistics and supply chain operations.
 - **Acceptance Test**:
   1. Go to the "Inventory Map" section.
@@ -158,7 +168,7 @@ Each use case includes specific acceptance tests to validate the implementation.
 
 ### User Interface Requirements
 
-The Integrated Inventory and Process Management System (IIPMS) requires a user-friendly, efficient, and informative interface to facilitate seamless interaction between the users and the system's functionalities. The interface must cater to various user roles, including plant managers, inventory specialists, process engineers, and compliance officers, offering tailored views and functionalities to meet their specific needs. Below are detailed user interface requirements, complemented by conceptual illustrations.
+The Data Driven Logistics (DDL) requires a user-friendly, efficient, and informative interface to facilitate seamless interaction between the users and the system's functionalities. The interface must cater to various user roles, including plant managers, inventory specialists, process engineers, and compliance officers, offering tailored views and functionalities to meet their specific needs. Below are detailed user interface requirements, complemented by conceptual illustrations.
 
 #### Dashboard (Home Page)
 
@@ -204,11 +214,9 @@ The Integrated Inventory and Process Management System (IIPMS) requires a user-f
 
 These user interface requirements and illustrations provide a conceptual overview of how the IIPMS will interact with its users, ensuring a workflow that is both efficient and user-friendly.
 
-
-
 ### Security Requirements
 
-The Integrated Inventory and Process Management System (IIPMS) requires stringent security measures to protect sensitive data, ensure user privacy, and maintain system integrity against potential threats. Given the system's role in managing inventory across multiple locations and modeling business processes, security is paramount to prevent unauthorized access, data breaches, and service disruptions. Here are the key security requirements for the IIPMS:
+The Data Driven Logistics (DDL) requires stringent security measures to protect sensitive data, ensure user privacy, and maintain system integrity against potential threats. Given the system's role in managing inventory across multiple locations and modeling business processes, security is paramount to prevent unauthorized access, data breaches, and service disruptions. Here are the key security requirements for the IIPMS:
 
 #### Authentication and Authorization
 
@@ -249,19 +257,19 @@ These security requirements are essential for safeguarding the IIPMS against var
 
 ### System Requirements
 
-The Integrated Inventory and Process Management System (IIPMS) is designed to operate efficiently and securely within a specified technical environment. Below are the system requirements detailing the external entities, software dependencies, hardware requirements, and performance criteria essential for the successful deployment and operation of the system.
+The Data Driven Logistics (DDL) is designed to operate efficiently and securely within a specified technical environment. Below are the system requirements detailing the external entities, software dependencies, hardware requirements, and performance criteria essential for the successful deployment and operation of the system.
 
-| Requirement Type    | Specification                                   | Details                                                                                     |
-|---------------------|-------------------------------------------------|---------------------------------------------------------------------------------------------|
-| **Operating System**| Cross-platform                                  | Must support Linux, Windows, and macOS for server deployment.                               |
-| **Web Server**      | Node.js with Express                           | Express.js will serve as the web server and API backend, running on Node.js.                |
-| **Database**        | MySQL                                           | The system relies on MySQL for data storage, requiring MySQL Server 5.7 or newer.           |
-| **Frontend**        | Web Browsers                                    | Must be compatible with modern web browsers (Chrome, Firefox, Safari, Edge) supporting ES6. |
-| **Development**     | Node.js                                         | Required for backend development. Version 14.x or newer recommended.                        |
-| **Dependencies**    | React, Node.js, MySQL drivers, etc.            | Software libraries and frameworks specified in `package.json` for Node.js applications.     |
-| **Performance**     | Response Time < 2 seconds                      | For user interactions through the web interface under normal load conditions.               |
-| **Backup**          | Daily backups                                  | Automated backups of the database and critical data.                                       |
-| **Security**        | TLS 1.2 or higher                              | For encrypting data in transit. HTTPS should be enforced for all web interactions.          |
+| Requirement Type     | Specification                       | Details                                                                                     |
+| -------------------- | ----------------------------------- | ------------------------------------------------------------------------------------------- |
+| **Operating System** | Cross-platform                      | Must support Linux, Windows, and macOS for server deployment.                               |
+| **Web Server**       | Node.js with Express                | Express.js will serve as the web server and API backend, running on Node.js.                |
+| **Database**         | MySQL                               | The system relies on MySQL for data storage, requiring MySQL Server 5.7 or newer.           |
+| **Frontend**         | Web Browsers                        | Must be compatible with modern web browsers (Chrome, Firefox, Safari, Edge) supporting ES6. |
+| **Development**      | Node.js                             | Required for backend development. Version 14.x or newer recommended.                        |
+| **Dependencies**     | React, Node.js, MySQL drivers, etc. | Software libraries and frameworks specified in `package.json` for Node.js applications.     |
+| **Performance**      | Response Time < 2 seconds           | For user interactions through the web interface under normal load conditions.               |
+| **Backup**           | Daily backups                       | Automated backups of the database and critical data.                                        |
+| **Security**         | TLS 1.2 or higher                   | For encrypting data in transit. HTTPS should be enforced for all web interactions.          |
 
 These system requirements ensure that the IIPMS is built on a solid and scalable foundation, capable of handling the demands of modern inventory and process management within the specified technical environment. Proper adherence to these requirements will facilitate a seamless and efficient operation, ensuring reliability, security, and optimal performance of the system.
 
@@ -277,18 +285,18 @@ You can make headings at different levels by writing `# Heading` with the number
 
 #### Technology Stack
 
-Given the project's requirements and the development team's expertise, we have chosen the MERN stack with MySQL for the Integrated Inventory and Process Management System (IIPMS). Below is a diagram illustrating the components of our chosen technology stack:
+Given the project's requirements and the development team's expertise, we have chosen the MERN stack with MySQL for the Data Driven Logistics (DDL). Below is a diagram illustrating the components of our chosen technology stack:
 
 ```mermaid
 flowchart RL
 subgraph Front End
 	A(Javascript: React)
 end
-	
+
 subgraph Back End
 	B(Javascript: Node.js with Express)
 end
-	
+
 subgraph Database
 	C[(MySQL)]
 end
@@ -296,8 +304,6 @@ end
 A <-->|"REST API"| B
 B <-->|"SQL Queries"| C
 ```
-
-
 
 #### Database
 
