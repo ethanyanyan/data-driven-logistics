@@ -4,7 +4,7 @@
 
 ### Project Abstract
 
-The goal of the Data Driven Logistics (DDL) is to develop a comprehensive web application designed for businesses to efficiently track inventory across multiple physical locations. This system aims to model business processes, transforming inputs into outputs, managing shipments, and maintaining precise inventory records. By implementing IIPMS, businesses can gain real-time visibility into inventory levels at any site and any given time, ensuring operational efficiency and informed decision-making.
+The goal of the Data Driven Logistics (DDL) is to develop a comprehensive web application designed for businesses to efficiently track inventory across multiple physical locations. This system aims to model business processes, transforming inputs into outputs, managing shipments, and maintaining precise inventory records. By implementing DDL, businesses can gain real-time visibility into inventory levels at any site and any given time, ensuring operational efficiency and informed decision-making.
 
 ### Customer
 
@@ -23,12 +23,11 @@ The primary customer base for the Data Driven Logistics (DDL) encompasses busine
 The specific customers informing this document include:
 
 - **CS506 Instructional Staff**: The instructional team of the CS506 course acts as the project's primary customer, providing initial requirements and guiding the development process to ensure the project meets both educational objectives and real-world applicability.
-- **Industry Consultants**: Experts in automotive manufacturing who have collaborated with the instructional staff to define specific industry needs and challenges, ensuring the system is tailored to address real operational inefficiencies.
-- **Potential End-Users**: A select group of manufacturing plant managers and supply chain coordinators have been consulted to gather detailed user requirements and feedback, crucial for tailoring the system's functionalities to meet end-user expectations effectively.
+- **Student Developers**: The team of students undertaking the project, responsible for gathering requirements, designing, developing, and testing the DDL system.
 
 #### Customer Engagement
 
-The project engages a diverse group of customers, from instructional staff and industry consultants to potential end-users, ensuring a comprehensive understanding of the domain and user needs. This collaboration aims to shape the project's direction, with continued feedback and testing phases expected to refine the system further, fostering enthusiasm and readiness among the customers to utilize the IIPMS upon completion.
+The project engages both the instructional staff and student developers, ensuring a comprehensive understanding of the domain and potential user needs. This collaboration aims to shape the project's direction, with continued feedback and testing phases expected to refine the system further.
 
 ### User Requirements
 
@@ -88,17 +87,8 @@ The user requirements for the Data Driven Logistics (DDL) are organized around d
   - Priority: Low
   - Status: Open
 
-These requirements serve as a foundational guide for the development and implementation of the IIPMS, ensuring it meets the needs of businesses in managing their inventory and production processes efficiently and effectively.
+These requirements serve as a foundational guide for the development and implementation of the DDL, ensuring it meets the needs of businesses in managing their inventory and production processes efficiently and effectively.
 
-Sample Table:
-
-| ID  | Description                                                                                                                | Priority | Status |
-| --- | -------------------------------------------------------------------------------------------------------------------------- | -------- | ------ |
-| R11 | Users should not have to sign into the system; their current network login should be used for identification.              | Med      | Done   |
-| R12 | The user should pick a project first; the tasks available are a derivative of the project.                                 | High     | Open   |
-| R13 | A full-time employee should not be able to submit a time card with less than 40 hours per week recorded.                   | High     | Open   |
-| R14 | A contractor can submit any number of hours up to 60 without special approval.                                             | Med      | Open   |
-| R15 | A team lead can see his/her team's time cards before they are submitted but cannot approve them until the user submits it. | High     | Open   |
 
 ### Use Cases & User Stories
 
@@ -212,11 +202,11 @@ The Data Driven Logistics (DDL) requires a user-friendly, efficient, and informa
 - **Accessibility**: Design elements should adhere to accessibility standards, ensuring the system is usable for all users, including those with disabilities.
 - **Intuitive Navigation**: The navigation structure should be intuitive, with a consistent layout and clear indications of active sections to facilitate easy movement between different parts of the application.
 
-These user interface requirements and illustrations provide a conceptual overview of how the IIPMS will interact with its users, ensuring a workflow that is both efficient and user-friendly.
+These user interface requirements and illustrations provide a conceptual overview of how the DDL will interact with its users, ensuring a workflow that is both efficient and user-friendly.
 
 ### Security Requirements
 
-The Data Driven Logistics (DDL) requires stringent security measures to protect sensitive data, ensure user privacy, and maintain system integrity against potential threats. Given the system's role in managing inventory across multiple locations and modeling business processes, security is paramount to prevent unauthorized access, data breaches, and service disruptions. Here are the key security requirements for the IIPMS:
+The Data Driven Logistics (DDL) requires stringent security measures to protect sensitive data, ensure user privacy, and maintain system integrity against potential threats. Given the system's role in managing inventory across multiple locations and modeling business processes, security is paramount to prevent unauthorized access, data breaches, and service disruptions. Here are the key security requirements for the DDL:
 
 #### Authentication and Authorization
 
@@ -253,7 +243,7 @@ The Data Driven Logistics (DDL) requires stringent security measures to protect 
 - **Requirement**: Conduct regular security assessments, including vulnerability scanning, penetration testing, and code reviews, to identify and remediate potential security weaknesses.
 - **Rationale**: To proactively discover and fix vulnerabilities, reducing the risk of exploitation and enhancing overall system security.
 
-These security requirements are essential for safeguarding the IIPMS against various cyber threats, ensuring the protection of sensitive data, and maintaining user trust and system integrity. Implementing these measures will address potential vulnerabilities and compliance requirements, contributing to a secure and reliable inventory management system.
+These security requirements are essential for safeguarding the DDL against various cyber threats, ensuring the protection of sensitive data, and maintaining user trust and system integrity. Implementing these measures will address potential vulnerabilities and compliance requirements, contributing to a secure and reliable inventory management system.
 
 ### System Requirements
 
@@ -271,7 +261,7 @@ The Data Driven Logistics (DDL) is designed to operate efficiently and securely 
 | **Backup**           | Daily backups                       | Automated backups of the database and critical data.                                        |
 | **Security**         | TLS 1.2 or higher                   | For encrypting data in transit. HTTPS should be enforced for all web interactions.          |
 
-These system requirements ensure that the IIPMS is built on a solid and scalable foundation, capable of handling the demands of modern inventory and process management within the specified technical environment. Proper adherence to these requirements will facilitate a seamless and efficient operation, ensuring reliability, security, and optimal performance of the system.
+These system requirements ensure that the DDL is built on a solid and scalable foundation, capable of handling the demands of modern inventory and process management within the specified technical environment. Proper adherence to these requirements will facilitate a seamless and efficient operation, ensuring reliability, security, and optimal performance of the system.
 
 ### Specification
 
