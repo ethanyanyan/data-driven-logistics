@@ -40,9 +40,11 @@ Data Driven Logistics is a web-based application designed to empower businesses,
 
 ### Prerequisites
 
-- Node.js (v14.x or newer)
-- MySQL Server (v5.7 or newer)
+- Docker
+- Docker Compose
 - Git
+
+Ensure Docker and Docker Compose are installed on your system. For installation instructions, visit the [Docker documentation](https://docs.docker.com/get-docker/) and the [Docker Compose documentation](https://docs.docker.com/compose/install/).
 
 ### Installation
 
@@ -58,27 +60,48 @@ Data Driven Logistics is a web-based application designed to empower businesses,
    cd data-driven-logistics
    ```
 
-3. Install dependencies:
+3. Environment Configuration:
+
+- Before starting the application, you'll need to configure environment variables for the backend and database services. Create `.env` files based on the provided `.env.example` files in the `backend` and `database` directories.
+
+4. Build and Start the Application with Docker Compose:
 
    ```bash
-   npm install
+   docker-compose up --build
    ```
 
-4. Configure the database connection in `config/database.js`.
+5. Accessing the Application:
 
-5. Initialize the database schema:
+- Once the containers are up and running, you can access the frontend of the Data Driven Logistics application by visiting: `http://localhost:3000`.
+- The backend API will be accessible at: `http://localhost:3001`.
 
-   ```bash
-   npm run db:init
-   ```
+### Shutting Down the Application
 
-6. Start the server:
+- To stop and remove the application containers, use the following Docker Compose command in the project directory:
 
-   ```bash
-   npm start
-   ```
+  ```bash
+  docker-compose down
+  ```
 
-7. Access the application at `http://localhost:3000`.
+- To also remove the volumes and network created by Docker Compose, add the `-v` option:
+
+  ```bash
+  docker-compose down -v
+  ```
+
+### Additional Commands
+
+- **Rebuilding After Changes**: If you make changes to the source code, you can rebuild and restart the application with:
+
+  ```bash
+  docker-compose up --build
+  ```
+
+- **Viewing Logs**: To view the logs for running containers, use:
+
+  ```bash
+  docker-compose logs
+  ```
 
 ## Contributing
 
@@ -91,5 +114,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## Acknowledgments
 
 - CS506 Instructional Staff for guidance and support
-- Industry Consultants for invaluable insights into the automotive manufacturing sector
 - All contributors who help make this project better
