@@ -419,7 +419,7 @@ classDiagram
 ```
 
 #### Flowchart
-[Working Flowchart](/pdfs/working-flowchart.pdf)
+[Working Flowchart](pdfs/working-flowchart.pdf)
 
 #### Behavior
 
