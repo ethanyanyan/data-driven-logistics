@@ -297,7 +297,95 @@ B <-->|"SQL Queries"| C
 
 #### Database
 
-![DDL ERD Screenshot](docs/images/DDL_ERD_Screenshot.png)
+```mermaid
+---
+title: Database ERD Diagram
+---
+erDiagram
+    Users {
+        string UserID PK
+        string BusinessID FK
+        string RoleID FK
+        string Username
+        string Password
+        string FirstName
+        string LastName
+    }
+    Roles {
+        string RoleID PK
+        string RoleName
+        string Description
+    }
+    Businesses {
+        string BusinessID PK
+        string BusinessName
+        string Description
+    }
+    Locations {
+        string LocationID PK
+        string BusinessID FK
+        string Latitude
+        string Longitude
+    }
+    LocationTypes {
+        string TypeID PK
+        string Name
+    }
+    Products {
+        string ProductID PK
+        string Name
+        string Description
+        float UnitPrice
+    }
+    Shipments {
+        string ShipmentID PK
+        string SourceID FK
+        string DestinationID FK
+        date DepartureDate
+        date ArrivalDate
+        string Status
+    }
+    ShipmentDetails {
+        string ShipmentDetailID PK
+        string ShipmentID FK
+        string ProductID FK
+        int Quantity
+    }
+    InventoryLevels {
+        string InventoryLevelID PK
+        string LocationID FK
+        string ProductID FK
+        int Quantity
+    }
+    Transactions {
+        string TransactionID PK
+        string ItemID FK
+        string LocationID FK
+        string TypeID FK
+        int Quantity
+        date Date
+        string UserID FK
+    }
+    TransactionTypes {
+        string TypeID PK
+        string Name
+    }
+
+    Users ||--o{ Roles : "has"
+    Users ||--o{ Businesses : "belongs to"
+    Businesses ||--o{ Locations : "has"
+    Locations }|--|| LocationTypes : "is a"
+    Locations ||--o{ InventoryLevels : "stores"
+    Products ||--o{ InventoryLevels : "tracked in"
+    Shipments ||--o{ ShipmentDetails : "includes"
+    Products ||--o{ ShipmentDetails : "contained in"
+    Locations ||--o{ Shipments : "source"
+    Locations ||--o{ Shipments : "destination"
+    Users ||--o{ Transactions : "performs"
+    Products ||--o{ Transactions : "involves"
+    Locations ||--o{ Transactions : "occurs at"
+    TransactionTypes ||--o{ Transactions : "is a"
+```
 
 #### Class Diagram
 
