@@ -422,19 +422,35 @@ classDiagram
 
 ```mermaid
 ---
-title: Sample Program Flowchart
+title: Data Driven Logistics Flowchart
 ---
 graph TD;
-    Start([Start]) --> Input_Data[/Input Data/];
-    Input_Data --> Process_Data[Process Data];
-    Process_Data --> Validate_Data{Validate Data};
-    Validate_Data -->|Valid| Process_Valid_Data[Process Valid Data];
-    Validate_Data -->|Invalid| Error_Message[/Error Message/];
-    Process_Valid_Data --> Analyze_Data[Analyze Data];
-    Analyze_Data --> Generate_Output[Generate Output];
-    Generate_Output --> Display_Output[/Display Output/];
-    Display_Output --> End([End]);
-    Error_Message --> End;
+    Start([Start]) --> Check_Session{Check Session Storage};
+    Check_Session -->|Exists| Load_Dashboard[Load Dashboard];
+    Check_Session -->|Not Exists| Show_Login[Show Login Page];
+    Show_Login --> Login[/Login/];
+    Login --> Validate_Login{Validate Credentials};
+    Validate_Login -->|Valid| Save_Session[Save Session to Storage];
+    Validate_Login -->|Invalid| Display_Error[/Display Error Message/];
+    Save_Session --> Load_Dashboard;
+    Display_Error --> Show_Login;
+    Load_Dashboard --> User_Action{User Actions};
+    User_Action -->|View Inventory| View_Inventory[Display Inventory Levels];
+    User_Action -->|Manage Shipments| Manage_Shipments[Record Incoming/Outgoing Shipments];
+    User_Action -->|Adjust Inventory| Adjust_Inventory[Record Inventory Adjustments];
+    User_Action -->|Model Processes| Model_Processes[Create/Manage Process Models];
+    User_Action -->|Audit Trail| Audit_Trail[View Audit Logs];
+    User_Action -->|Import/Export Data| Data_Import_Export[Manage Spreadsheet Import/Export];
+    User_Action -->|Geospatial Visualizations| Geospatial_Visualizations[Visualize Inventory on Map];
+    User_Action -->|Logout| Logout[Logout and Clear Session];
+    View_Inventory --> User_Action;
+    Manage_Shipments --> User_Action;
+    Adjust_Inventory --> User_Action;
+    Model_Processes --> User_Action;
+    Audit_Trail --> User_Action;
+    Data_Import_Export --> User_Action;
+    Geospatial_Visualizations --> User_Action;
+    Logout --> End([End]);
 ```
 
 #### Behavior
