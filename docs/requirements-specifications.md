@@ -511,25 +511,245 @@ stateDiagram-v2
 
 #### Sequence Diagram
 
+##### System Overview
+
 ```mermaid
 sequenceDiagram
+  participant U as User
+  participant WI as Web Interface (React)
+  participant S as Server (Node.js with Express)
+  participant DB as Database (MySQL)
 
-participant ReactFrontend
-participant DjangoBackend
-participant MySQLDatabase
+  Note over WI,S: Real-Time Inventory Tracking
+  U->>+WI: Request Inventory Data
+  WI->>+S: API Call for Inventory
+  S->>+DB: Query Inventory
+  DB-->>-S: Inventory Data
+  S-->>-WI: Inventory Response
+  WI-->>-U: Display Inventory
 
-ReactFrontend ->> DjangoBackend: HTTP Request (e.g., GET /api/data)
-activate DjangoBackend
+  Note over WI,S: Process Modeling
+  U->>+WI: Access Process Models
+  WI->>+S: Request Process Data
+  S->>+DB: Query Process Models
+  DB-->>-S: Process Model Data
+  S-->>-WI: Process Model Response
+  WI-->>-U: Display Processes
 
-DjangoBackend ->> MySQLDatabase: Query (e.g., SELECT * FROM data_table)
-activate MySQLDatabase
+  Note over WI,S: Shipments Recording
+  U->>+WI: Log Shipment
+  WI->>+S: Shipment Data
+  S->>+DB: Update Shipment Record
+  DB-->>-S: Confirmation
+  S-->>-WI: Update Confirmation
+  WI-->>-U: Display Confirmation
 
-MySQLDatabase -->> DjangoBackend: Result Set
-deactivate MySQLDatabase
+  Note over WI,S: Audit Trail
+  U->>+WI: Request Audit Log
+  WI->>+S: API Call for Audit Log
+  S->>+DB: Query Audit Records
+  DB-->>-S: Audit Data
+  S-->>-WI: Audit Log Response
+  WI-->>-U: Display Audit Log
 
-DjangoBackend -->> ReactFrontend: JSON Response
-deactivate DjangoBackend
+  Note over WI,S: Reporting and Analytics
+  U->>+WI: Request Reports
+  WI->>+S: API Call for Analytics
+  S->>+DB: Generate Report Data
+  DB-->>-S: Reports and Analytics
+  S-->>-WI: Report Response
+  WI-->>-U: Display Reports
 ```
+
+##### Real-Time Inventory Tracking System (RTIS)
+
+```mermaid
+sequenceDiagram
+  participant U as User
+  participant WI as Web Interface (React)
+  participant S as Server (Node.js with Express)
+  participant DB as Database (MySQL)
+  
+  U->WI: Request Inventory Data
+  activate WI
+  WI->S: API Call: GET /inventory
+  activate S
+  S->DB: SQL Query: SELECT inventory
+  activate DB
+  DB-->S: Inventory Data
+  deactivate DB
+  S-->WI: API Data Response: /inventory
+  deactivate S
+  WI-->U: Display Inventory
+  deactivate WI
+
+  note over WI, DB: Optional Features\n- Filtering by location\n- Updating inventory levels\n- Alerting on low stock
+```
+#### Process Modeling
+```mermaid
+sequenceDiagram
+  participant U as User
+  participant WI as Web Interface (React)
+  participant S as Server (Node.js with Express)
+  participant DB as Database (MySQL)
+
+  U->WI: Access Process Modeling
+  activate WI
+  WI->S: API Call: GET /models
+  activate S
+  S->DB: SQL Query: SELECT existing-models
+  activate DB
+  DB-->S: Process Model Data
+  deactivate DB
+  S-->WI: API GET Response (Process Model)
+  deactivate S
+  WI-->U: Display Process Models
+  deactivate WI
+
+  U->WI: Create Process Model
+  activate WI
+  WI->S: API Call: POST /models
+  activate S
+  S->DB: Insert Process Model
+  activate DB
+  DB-->S: Process Inserted Confirmation
+  deactivate DB
+  S-->WI: API POST Response (Process inserted?)
+  deactivate S
+  WI-->U: Display Confirmation
+  deactivate WI
+
+  U->WI: Edit Process Model
+  activate WI
+  WI->S: API Call: PUT /models
+  activate S
+  S->DB: Update Process Model
+  activate DB
+  DB-->S: Process Updated Confirmation
+  deactivate DB
+  S-->WI: API PUT Response (Process updated?)
+  deactivate S
+  WI-->U: Display Confirmation
+  deactivate WI
+
+  U->WI: Delete Process Model
+  activate WI
+  WI->S: API Call: DELETE /models
+  activate S
+  S->DB: Delete Process Model
+  activate DB
+  DB-->S: Process Deleted Confirmation
+  deactivate DB
+  S-->WI: API DELETE Response (Process deleted?)
+  deactivate S
+  WI-->U: Display Confirmation
+  deactivate WI
+```
+
+#### Shipments Recording
+```mermaid
+sequenceDiagram
+  participant U as User
+  participant WI as Web Interface (React)
+  participant S as Server (Node.js with Express)
+  participant DB as Database (MySQL)
+
+  U->WI: Access Shipments Feature
+  activate WI
+  WI->S: API Call: GET /shipments
+  activate S
+  S->DB: SQL Query: SELECT shipments
+  activate DB
+  DB-->S: Shipments Data
+  deactivate DB
+  S-->WI: API GET Response (Shipments Data)
+  deactivate S
+  WI-->U: Display Shipments
+  deactivate WI
+
+  U->WI: Log New Shipment
+  activate WI
+  WI->S: API Call: POST /shipments
+  activate S
+  S->DB: SQL Insert: New Shipment
+  activate DB
+  DB-->S: Shipment Inserted Confirmation
+  deactivate DB
+
+  S-->WI: API POST Response (Shipment Updated)
+
+  WI->S: API Call: PUT /inventory-quantity
+  S->DB: SQL Insert: New Shipment
+
+  activate DB
+  DB-->S: Inventory Updated Confirmation
+  deactivate DB
+
+
+  S-->WI: API PUT Response (Inventory Updated)
+  deactivate S
+  WI-->U: Display Confirmation (Both Shipment & Inventory)
+  deactivate WI
+```
+
+#### Audit Trail
+```mermaid
+sequenceDiagram
+  participant U as User
+  participant WI as Web Interface (React)
+  participant S as Server (Node.js with Express)
+  participant DB as Database (MySQL)
+
+  U->WI: Perform Action (e.g., Update Inventory)
+  activate WI
+  WI->S: API Call (e.g., PUT /inventory)
+  activate S
+  S->DB: Execute Action (e.g., Update Query)
+  activate DB
+  DB-->S: Action Result (success/failure)
+  deactivate DB
+
+  S->DB: Log Interaction in Audit Trail
+  activate DB
+  DB-->S: Logging Confirmation
+  deactivate DB
+
+  S-->WI: API Response (e.g., PUT Response)
+  deactivate S
+  WI-->U: Display Result (e.g., Update Confirmation)
+  deactivate WI
+```
+
+
+
+#### Reporting and Analytics
+```mermaid
+sequenceDiagram
+  participant U as User
+  participant WI as Web Interface (React)
+  participant S as Server (Node.js with Express)
+  participant DB as Database (MySQL)
+
+  U->WI: Request Specific Report/Analytics
+  activate WI
+  WI->S: API Call: GET /reports?type=specificType
+  activate S
+  S->DB: Query for Required Data
+  activate DB
+  DB-->S: Data for Report/Analytics
+  deactivate DB
+
+  S->DB: Perform Data Analysis
+  activate DB
+  DB-->S: Analysis Results
+  deactivate DB
+
+  S-->WI: API GET Response (Report/Analytics Data)
+  deactivate S
+  WI-->U: Display Report/Analytics
+  deactivate WI
+```
+
 
 ### Standards & Conventions
 
