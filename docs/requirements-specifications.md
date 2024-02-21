@@ -456,17 +456,57 @@ graph TD;
 #### Behavior
 
 ```mermaid
----
-title: Sample State Diagram For Coffee Application
----
-stateDiagram
-    [*] --> Ready
-    Ready --> Brewing : Start Brewing
-    Brewing --> Ready : Brew Complete
-    Brewing --> WaterLowError : Water Low
-    WaterLowError --> Ready : Refill Water
-    Brewing --> BeansLowError : Beans Low
-    BeansLowError --> Ready : Refill Beans
+stateDiagram-v2
+    state UserSessionLifecycle {
+        [*] --> LoginScreen: Access Application
+        LoginScreen --> Authenticated: Successful Login
+        Authenticated --> ActiveSession: Navigate Application
+        ActiveSession --> Logout: User Logs Out
+        Logout --> [*]
+    }
+    
+    state InventoryLevelManagement {
+        [*] --> Normal: Inventory at Optimal Level
+        Normal --> LowInventory: Below Threshold
+        LowInventory --> Reorder: Trigger Reorder
+        Reorder --> Normal: Stock Replenished
+    }
+    
+    state OrderProcessing {
+        [*] --> OrderReceived: Order Placed
+        OrderReceived --> Processing: Confirm Inventory
+        Processing --> Shipping: Prepare for Shipment
+        Shipping --> Shipped: Dispatch Order
+        Shipped --> DeliveredOrder: Order Arrives
+        DeliveredOrder --> [*]
+    }
+    
+    state ShipmentLifecycle {
+        [*] --> Created: Create Shipment
+        Created --> InTransit: Dispatch
+        InTransit --> Delivered: Arrive at Destination
+        Delivered --> [*]
+    }
+
+    state HistoricalData {
+        [*] --> FilteredResults: Specific Time and Period
+        FilteredResults --> ExportedResults: User Export 
+    }
+
+    state EditInventory {
+        [*] --> EditedInventory: Add
+        [*] --> EditedInventory: Minus
+    }
+    
+
+    ActiveSession --> UserSessionLifecycle: Logout
+    ActiveSession --> EditInventory: Edit
+    ActiveSession --> InventoryLevelManagement: Access Inventory
+    ActiveSession --> OrderProcessing: Place Order
+    ActiveSession --> ShipmentLifecycle: Create Shipment
+    ActiveSession --> HistoricalData: Access Historical Data
+    EditInventory --> InventoryLevelManagement: User Adjust
+
 ```
 
 #### Sequence Diagram
