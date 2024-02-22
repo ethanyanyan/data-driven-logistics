@@ -62,15 +62,21 @@ Ensure Docker and Docker Compose are installed on your system. For installation 
 
 3. Environment Configuration:
 
-- Before starting the application, you'll need to configure environment variables for the backend and database services. Create `.env` files based on the provided `.env.example` files in the `backend` and `database` directories.
+- Before starting the application, you'll need to configure environment variables for the backend and database services. Create `.env` files based on the provided `.env.example` file.
 
-4. Build and Start the Application with Docker Compose:
+4. Establish SSH Tunnel to Database on University of Wisconsin's Virtual Machine:
+
+   ```bash
+   ssh -f -N -L localhost:53306:localhost:53306 <CSLOGIN>@cs506-team-XX.cs.wisc.edu
+   ```
+
+5. Build and Start the Application with Docker Compose:
 
    ```bash
    docker-compose up --build
    ```
 
-5. Accessing the Application:
+6. Accessing the Application:
 
 - Once the containers are up and running, you can access the frontend of the Data Driven Logistics application by visiting: `http://localhost:3000`.
 - The backend API will be accessible at: `http://localhost:3001`.
