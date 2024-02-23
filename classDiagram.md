@@ -1,5 +1,5 @@
 ```mermaid
---- title: Class Diagram ---
+%% Class Diagram
 classDiagram
     class User {
         -UserID: string
