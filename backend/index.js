@@ -4,12 +4,16 @@ const mysql = require("mysql2");
 require("dotenv").config();
 const applyRoutesMapping = require("./routes-map");
 const path = require("path");
+const { passport } = require("./middleware/auth");
 
 // Initialize express app
 const app = express();
 
 // Use CORS
 app.use(cors());
+
+// Initialize passport
+app.use(passport.initialize());
 
 // Body parser middleware to parse JSON bodies
 app.use(express.json());
