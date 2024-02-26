@@ -46,15 +46,6 @@ const pool = mysql.createPool({
   queueLimit: 0,
 });
 
-app.get("/test-db", (req, res) => {
-  pool.query("SELECT 1 + 1 AS solution", (error, results) => {
-    if (error) {
-      return res.status(500).json({ error: error.message });
-    }
-    res.status(200).json({ solution: results[0].solution });
-  });
-});
-
 // Start the server if this script is run directly
 if (require.main === module) {
   app.listen(PORT, () => {

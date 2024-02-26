@@ -1,51 +1,58 @@
+require("dotenv").config();
 const pool = require("../config/dbConfig");
 const bcrypt = require("bcrypt");
 const saltRounds = 10; // Cost factor for hashing
 
 class User {
   constructor(userObj) {
-    this.userID = userObj.userID;
-    this.businessID = userObj.businessID;
-    this.roleID = userObj.roleID;
-    this.username = userObj.username;
-    this.password = userObj.password; // This will be a hashed password
-    this.firstName = userObj.firstName;
-    this.lastName = userObj.lastName;
+    this.UserID = userObj.UserID;
+    this.BusinessID = userObj.BusinessID;
+    this.RoleID = userObj.RoleID;
+    this.Username = userObj.Username;
+    this.Password = userObj.Password; // This will be a hashed password
+    this.FirstName = userObj.FirstName;
+    this.LastName = userObj.LastName;
   }
 
   // Hash password and save a user to the database
   static async save(userObj) {
+    const connection = await pool.getConnection();
     try {
-      const hashedPassword = await this.hashPassword(userObj.password); // Added await here
+      await connection.beginTransaction();
+      const hashedPassword = await this.hashPassword(userObj.Password);
 
-      const [result] = await pool.execute(
+      const [result] = await connection.query(
         "INSERT INTO Users (BusinessID, RoleID, Username, Password, FirstName, LastName) VALUES (?, ?, ?, ?, ?, ?)",
         [
-          userObj.businessID,
-          userObj.roleID,
-          userObj.username,
+          userObj.BusinessID,
+          userObj.RoleID,
+          userObj.Username,
           hashedPassword,
-          userObj.firstName,
-          userObj.lastName,
+          userObj.FirstName,
+          userObj.LastName,
         ],
       );
+      await connection.commit();
       return result;
     } catch (error) {
+      await connection.rollback();
       throw error;
+    } finally {
+      connection.release();
     }
   }
 
   // Static method to hash a password
-  static hashPassword(password) {
-    return bcrypt.hash(password, saltRounds);
+  static hashPassword(Password) {
+    return bcrypt.hash(Password, saltRounds);
   }
 
   // Find a user by username
-  static async findByUsername(username) {
+  static async findByUsername(Username) {
     try {
       const [rows] = await pool.execute(
         "SELECT * FROM Users WHERE Username = ?",
-        [username],
+        [Username],
       );
       if (rows.length > 0) {
         return new User(rows[0]);
@@ -58,9 +65,9 @@ class User {
   }
 
   // Verify user's password
-  async verifyPassword(password) {
+  async verifyPassword(Password) {
     try {
-      return await bcrypt.compare(password, this.password);
+      return await bcrypt.compare(Password, this.Password);
     } catch (error) {
       throw error;
     }
