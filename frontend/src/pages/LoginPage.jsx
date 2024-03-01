@@ -1,4 +1,3 @@
-// src/components/Pages/LoginPage.js
 import React from "react";
 import LoginForm from "../components/Forms/LoginForm";
 
