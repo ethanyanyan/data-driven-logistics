@@ -12,16 +12,15 @@ function LoginForm() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    if (error !== "") {
+      setError("");
+    }
     const result = await login(username, password);
 
     if (result.success) {
-      console.log("Login successful:", result.data);
-      setError("");
-
       navigate("/dashboard");
     } else {
-      console.error("Login failed:", result.error);
-      setError("Login failed. Please check your credentials."); // Update to display error message
+      setError("Login failed. Please check your credentials.");
     }
   };
 
