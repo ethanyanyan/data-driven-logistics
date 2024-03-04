@@ -13,8 +13,6 @@ const db = require("../config/dbConfig");
 router.post("/", async (req, res) => {
     const { SourceID, DestinationID, DepartureDate, ArrivalDate, Status } = req.body;
     const connection = await db.getConnection();
-    console.log("Request body: ", req.body)
-    console.log("SourceID: ", SourceID, "DestinationID: ", DestinationID, "DepartureDate: ", DepartureDate, "ArrivalDate: ", ArrivalDate, "Status: ", Status);
     try {
       // Insert the new shipment into the database
       const [result] = await connection.query(
@@ -22,16 +20,14 @@ router.post("/", async (req, res) => {
         [SourceID, DestinationID, DepartureDate, ArrivalDate, Status]
       );
       console.log("Shipment logged successfully", result);
-      res.status(201).json({
-        status: 201,
+      res.status(200).json({
         message: "Shipment logged successfully",
-        data: { id: result.insertId, ...req.body }
+        data: { ShipmentId: result.insertId, ...req.body }
       });
     } catch (error) {
       // Handle database errors gracefully
       console.error("Database error: ", error);
       return res.status(500).json({ 
-        status: 500,
         error: "Database error occurred." 
       });
     } finally {
@@ -50,22 +46,19 @@ router.get("/:id", async (req, res) => {
       // Retrieve the shipment with the given id from the database
       const [rows] = await connection.query("SELECT * FROM Shipments WHERE ShipmentID = ?", [id]);
       if (rows.length > 0) {
-        console.log(`Shipment id ${id} retrieved successfully`, rows[0]);
         res.status(200).json({
-          status: 200,
+          message: `Shipment id ${id} retrieved successfully`,
           data: rows[0]
         });
       } else {
         res.status(404).json({ 
-          status: 404,
-          message: `Shipment with id ${id} not found` 
+          error: `Shipment with id ${id} not found` 
         });
       }
     } catch (error) {
       // Handle database errors gracefully
       console.error("Database error: ", error);
       return res.status(500).json({ 
-        status: 500,
         error: "Database error occurred." 
       });
     } finally {
@@ -75,6 +68,7 @@ router.get("/:id", async (req, res) => {
       }
     }
   });
+
 // Endpoint for getting all shipments with support for filtering and sorting
 router.get("/", async (req, res) => {
     // TODO: Do further work on filtering and sorting
@@ -84,14 +78,13 @@ router.get("/", async (req, res) => {
       const [rows] = await connection.query("SELECT * FROM Shipments");
       console.log("Shipments retrieved successfully", rows);
       res.status(200).json({
-        status: 200,
+        message: "Shipments retrieved successfully",
         data: rows
       });
     } catch (error) {
       // Handle database errors gracefully
       console.error("Database error: ", error);
       return res.status(500).json({ 
-        status: 500,
         error: "Database error occurred." 
       });
     } finally {
