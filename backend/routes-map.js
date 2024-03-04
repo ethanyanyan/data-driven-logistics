@@ -8,6 +8,7 @@ APIBASE = "/api/v1/";
 let mapping = {
   [`${APIBASE}users/`]: require("./routes/users"),
   [`${APIBASE}companies/`]: require("./routes/companies"),
+  [`${APIBASE}shipments/`]: require("./routes/shipments"),
 };
 
 function applyMappingToApp(app) {
