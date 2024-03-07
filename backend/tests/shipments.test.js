@@ -24,9 +24,9 @@ describe("API routes", () => {
   });
 
   test("GET /:id should return a shipment", async () => {
-    const res = await request(app).get("/api/v1/shipments/22");
+    const res = await request(app).get("/api/v1/shipments/1");
     expect(res.statusCode).toEqual(200);
-    expect(res.body.data).toHaveProperty("ShipmentID");
+    expect(res.body.data).toHaveProperty("shipmentID");
     // Add more assertions based on your specific requirements
   });
 
@@ -46,15 +46,15 @@ describe("API routes", () => {
 
   // Create one for failing post with an invalid body
   // NOTE: Testcase fails. No typecheck for backend yet
-    test("POST / should fail with invalid body", async () => {
-        const newShipment = {
-        SourceID: "1", // shd be integer
-        DepartureDate: "2023-01-10",
-        ArrivalDate: "2023-01-12",
-        Status: "Delivered",
-        };
-        const res = await request(app).post("/api/v1/shipments").send(newShipment);
-        expect(res.statusCode).toEqual(400);
-        // Add more assertions based on your specific requirements
-    });
+  test("POST / should fail with invalid body", async () => {
+    const newShipment = {
+      SourceID: "1", // shd be integer
+      DepartureDate: "2023-01-10",
+      ArrivalDate: "2023-01-12",
+      Status: "Delivered",
+    };
+    const res = await request(app).post("/api/v1/shipments").send(newShipment);
+    expect(res.statusCode).toEqual(400);
+    // Add more assertions based on your specific requirements
+  });
 });
