@@ -1,88 +1,74 @@
-const db = require("../config/dbConfig");
+const Shipment = require("./../models/shipments");
 
-// Logs a new shipments
+// Logs a new shipment
 async function logShipment(req, res) {
-  const { SourceID, DestinationID, DepartureDate, ArrivalDate, Status } = req.body;
-  const connection = await db.getConnection();
+  const {
+    SourceID,
+    UserID,
+    DestinationID,
+    DepartureDate,
+    ArrivalDate,
+    Status,
+  } = req.body;
+
   try {
-    // Insert the new shipment into the database
-    const [result] = await connection.query(
-      "INSERT INTO Shipments (SourceID, DestinationID, DepartureDate, ArrivalDate, Status) VALUES (?, ?, ?, ?, ?)",
-      [SourceID, DestinationID, DepartureDate, ArrivalDate, Status]
+    const newShipment = new Shipment(
+      null,
+      SourceID,
+      UserID,
+      DestinationID,
+      DepartureDate,
+      ArrivalDate,
+      Status,
     );
-    console.log("Shipment logged successfully", result);
+    const result = await newShipment.save();
     res.status(200).json({
       message: "Shipment logged successfully",
-      data: { ShipmentId: result.insertId, ...req.body }
+      data: { ShipmentId: result.insertId, ...req.body },
     });
   } catch (error) {
-    // Handle database errors gracefully
-    console.error("Database error: ", error);
-    return res.status(500).json({ 
-      error: "Database error occurred." 
-    });
-  } finally {
-    // Release connection back to pool
-    if (connection) {
-      connection.release();
-    }
+    console.error("Error logging shipment:", error);
+    res.status(500).json({ error: "Database error occurred." });
   }
 }
 
-// Get staus and details of a particular shipment
+// Get status and details of a particular shipment
 async function getShipment(req, res) {
-  const id = req.params.id;
-  const connection = await db.getConnection();
   try {
-    // Retrieve the shipment with the given id from the database for a particular user
-    const [rows] = await connection.query("SELECT * FROM Shipments WHERE ShipmentID = ?", [id]);
-    if (rows.length > 0) {
+    const shipment = await Shipment.findByID(req.params.id);
+    if (shipment) {
       res.status(200).json({
-        message: `Shipment id ${id} retrieved successfully`,
-        data: rows[0]
+        message: `Shipment id ${req.params.id} retrieved successfully`,
+        data: shipment,
       });
     } else {
-      res.status(404).json({ 
-        error: `Shipment with id ${id} not found` 
+      res.status(404).json({
+        error: `Shipment with id ${req.params.id} not found`,
       });
     }
   } catch (error) {
-    // Handle database errors gracefully
     console.error("Database error: ", error);
-    return res.status(500).json({ 
-      error: "Database error occurred." 
+    res.status(500).json({
+      error: "Database error occurred.",
     });
-  } finally {
-    // Release connection back to pool
-    if (connection) {
-      connection.release();
-    }
   }
 }
 
-// Get all shipments for a particular user
+// Get all shipments
 async function getAllShipments(req, res) {
-  const connection = await db.getConnection();
   try {
-    // Retrieve all shipments from the database
-    const [rows] = await connection.query("SELECT * FROM Shipments");
-    console.log("Shipments retrieved successfully", rows);
+    const shipments = await Shipment.findAll();
+    console.log("Shipments retrieved successfully", shipments);
     res.status(200).json({
       message: "Shipments retrieved successfully",
-      data: rows
+      data: shipments,
     });
   } catch (error) {
-    // Handle database errors gracefully
     console.error("Database error: ", error);
-    return res.status(500).json({ 
-      error: "Database error occurred." 
+    res.status(500).json({
+      error: "Database error occurred.",
     });
-  } finally {
-    // Release connection back to pool
-    if (connection) {
-      connection.release();
-    }
   }
 }
 
-module.exports = {logShipment, getShipment, getAllShipments};
+module.exports = { logShipment, getShipment, getAllShipments };
