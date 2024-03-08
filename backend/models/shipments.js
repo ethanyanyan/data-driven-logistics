@@ -8,7 +8,7 @@ class Shipment {
     destinationID,
     departureDate,
     arrivalDate,
-    status,
+    status
   ) {
     this.shipmentID = shipmentID;
     this.sourceID = sourceID;
@@ -58,7 +58,7 @@ class Shipment {
           row.DestinationID,
           row.DepartureDate,
           row.ArrivalDate,
-          row.Status,
+          row.Status
         );
       } else {
         return null;
@@ -82,8 +82,8 @@ class Shipment {
             row.DestinationID,
             row.DepartureDate,
             row.ArrivalDate,
-            row.Status,
-          ),
+            row.Status
+          )
       );
     } catch (error) {
       throw new Error("Error retrieving shipments: " + error.message);
@@ -91,13 +91,37 @@ class Shipment {
   }
 
   // Static method to update a shipment status
-  static async updateStatus(shipmentID, newStatus) {
-    const query = `UPDATE Shipments SET Status = ? WHERE ShipmentID = ?`;
+  static async updateShipment(shipmentID, updateData) {
+    let query = "UPDATE Shipments SET ";
+    const queryParams = [];
+    let isFirst = true;
+
+    // Construct query dynamically based on the fields in updateData
+    for (const [key, value] of Object.entries(updateData)) {
+      if (!isFirst) query += ", ";
+      query += `${key} = ?`;
+      queryParams.push(value);
+      isFirst = false;
+    }
+
+    query += " WHERE ShipmentID = ?";
+    queryParams.push(shipmentID);
+
     try {
-      const [result] = await db.pool.query(query, [newStatus, shipmentID]);
+      const [result] = await db.pool.query(query, queryParams);
+      return result.changedRows > 0;
+    } catch (error) {
+      throw new Error("Error updating shipment: " + error.message);
+    }
+  }
+
+  static async delete(shipmentID) {
+    const query = `DELETE FROM Shipments WHERE ShipmentID = ?`;
+    try {
+      const [result] = await db.pool.query(query, [shipmentID]);
       return result;
     } catch (error) {
-      throw new Error("Error updating shipment status: " + error.message);
+      throw new Error("Error deleting shipment: " + error.message);
     }
   }
 }

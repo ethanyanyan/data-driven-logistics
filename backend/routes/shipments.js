@@ -21,4 +21,10 @@ router.get("/:id", shipmentController.getShipment);
 // Endpoint for getting all shipments with future support for filtering and sorting
 router.get("/", shipmentController.getAllShipments);
 
+// Endpoint to update shipments details - body should contain ONLY the fields to be updated
+router.patch("/:id", shipmentController.updateShipment);
+
+// Endpoint to delete shipments
+router.delete("/:id", shipmentController.deleteShipment);
+
 module.exports = router;

@@ -19,7 +19,7 @@ async function logShipment(req, res) {
       DestinationID,
       DepartureDate,
       ArrivalDate,
-      Status,
+      Status
     );
     const result = await newShipment.save();
     res.status(200).json({
@@ -58,7 +58,6 @@ async function getShipment(req, res) {
 async function getAllShipments(req, res) {
   try {
     const shipments = await Shipment.findAll();
-    console.log("Shipments retrieved successfully", shipments);
     res.status(200).json({
       message: "Shipments retrieved successfully",
       data: shipments,
@@ -71,4 +70,71 @@ async function getAllShipments(req, res) {
   }
 }
 
-module.exports = { logShipment, getShipment, getAllShipments };
+// Update a shipment
+async function updateShipment(req, res) {
+  const updateData = {};
+  const allowedUpdates = [
+    "SourceID",
+    "DestinationID",
+    "DepartureDate",
+    "ArrivalDate",
+    "Status",
+  ];
+
+  // Collect fields to update
+  for (const field of allowedUpdates) {
+    if (req.body.hasOwnProperty(field)) {
+      updateData[field] = req.body[field];
+    }
+  }
+
+  try {
+    const shipmentUpdated = await Shipment.updateShipment(
+      req.params.id,
+      updateData
+    );
+    if (shipmentUpdated) {
+      res.status(200).json({
+        message: `Shipment id ${req.params.id} updated successfully`,
+        data: shipmentUpdated,
+      });
+    } else {
+      res
+        .status(404)
+        .json({ error: `Shipment with id ${req.params.id} not found` });
+    }
+  } catch (error) {
+    console.error("Database error: ", error);
+    res.status(500).json({ error: "Database error occurred." });
+  }
+}
+
+// Delete a shipment
+async function deleteShipment(req, res) {
+  try {
+    const shipment = await Shipment.findByID(req.params.id);
+    if (shipment) {
+      await Shipment.delete(req.params.id);
+      res.status(200).json({
+        message: `Shipment id ${req.params.id} deleted successfully`,
+      });
+    } else {
+      res.status(404).json({
+        error: `Shipment with id ${req.params.id} not found`,
+      });
+    }
+  } catch (error) {
+    console.error("Database error: ", error);
+    res.status(500).json({
+      error: "Database error occurred.",
+    });
+  }
+}
+
+module.exports = {
+  logShipment,
+  getShipment,
+  getAllShipments,
+  updateShipment,
+  deleteShipment,
+};
