@@ -57,19 +57,26 @@ class UserController {
             };
             const token = generateToken(user);
             return res.json({
+              success: true,
               message: "Login successful",
               token: token,
               user: userForResponse,
             });
           } else {
-            return res.status(401).json({ message: "Invalid credentials" });
+            return res
+              .status(401)
+              .json({ success: false, message: "Invalid credentials" });
           }
         });
       } else {
-        return res.status(401).json({ message: "Invalid credentials" });
+        return res
+          .status(401)
+          .json({ success: false, message: "Invalid credentials" });
       }
     } catch (error) {
-      return res.status(500).json({ error: "Internal server error" });
+      return res
+        .status(500)
+        .json({ success: false, error: "Internal server error" });
     }
   }
 

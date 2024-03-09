@@ -1,10 +1,11 @@
 // src/components/LoginForm.js
 import React, { useState } from "react";
-import { login } from "../../services/userService";
+import { useAuth } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import "./LoginForm.css";
 
 function LoginForm() {
+  const { login } = useAuth();
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -15,9 +16,9 @@ function LoginForm() {
     if (error !== "") {
       setError("");
     }
-    const result = await login(username, password);
+    const isLoggedIn = await login(username, password);
 
-    if (result.success) {
+    if (isLoggedIn) {
       navigate("/dashboard");
     } else {
       setError("Login failed. Please check your credentials.");
