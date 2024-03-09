@@ -18,8 +18,8 @@ const jwtOptions = {
 // JWT strategy for handling JWT
 const strategy = new JwtStrategy(jwtOptions, async (jwt_payload, done) => {
   try {
-    // Use the findByUsername method or equivalent based on your User model
-    const user = await User.findByUsername(jwt_payload.username);
+    // Use the findByUserID method or equivalent based on your User model
+    const user = await User.findByUserID(jwt_payload.UserID);
     if (user) {
       return done(null, user);
     } else {
@@ -34,7 +34,11 @@ passport.use(strategy);
 
 // Function to generate a JWT
 const generateToken = (user) => {
-  return jwt.sign({ username: user.username }, SECRET_KEY, { expiresIn: "1h" });
+  return jwt.sign(
+    { Username: user.Username, UserID: user.UserID },
+    SECRET_KEY,
+    { expiresIn: "1h" },
+  );
 };
 
 // Middleware to require login/auth

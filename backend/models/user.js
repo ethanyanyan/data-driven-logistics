@@ -1,5 +1,5 @@
 require("dotenv").config();
-const pool = require("../config/dbConfig");
+const db = require("../config/dbConfig");
 const bcrypt = require("bcrypt");
 const saltRounds = 10; // Cost factor for hashing
 
@@ -47,12 +47,12 @@ class User {
     return bcrypt.hash(Password, saltRounds);
   }
 
-  // Find a user by username
-  static async findByUsername(Username) {
+  // Find a user by UserID
+  static async findByUserID(UserID) {
     try {
-      const [rows] = await pool.execute(
-        "SELECT * FROM Users WHERE Username = ?",
-        [Username],
+      const [rows] = await db.pool.execute(
+        "SELECT * FROM Users WHERE UserID = ?",
+        [UserID],
       );
       if (rows.length > 0) {
         return new User(rows[0]);
