@@ -1,8 +1,8 @@
 // ProtectedRoute.test.jsx
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import ProtectedRoute from './ProtectedRoute'; // Adjust the import path as necessary
-import { AuthContext } from './../contexts/AuthContext'; // Adjust the import path as necessary
+import ProtectedRoute from './ProtectedRoute'; 
+import { AuthContext } from './../contexts/AuthContext'; 
 
 // Mock component that will try to access a protected route
 const ProtectedComponent = () => <div>Protected content</div>;

@@ -1,7 +1,5 @@
 // AuthContext.test.jsx
 import { fireEvent, render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import { waitFor } from '@testing-library/react';
 import { AuthProvider, useAuth } from './AuthContext'; 
 
 // Mock component to use AuthContext
