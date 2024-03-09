@@ -1,6 +1,11 @@
 // AuthContext.test.jsx
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { AuthProvider, useAuth } from './AuthContext'; 
+import { loginAPI } from '../services/userService';
+
+jest.mock("./../services/userService", () => ({
+    loginAPI: jest.fn(),
+  }));
 
 // Mock component to use AuthContext
 const MockComponent = () => {
@@ -21,11 +26,17 @@ test('AuthContext provides authentication state and functions', async () => {
     </AuthProvider>
   );
 
+  loginAPI.mockResolvedValue({ success: true });
+
   // Simulate login
   fireEvent.click(screen.getByText(/log in/i));
-  expect(screen.getByText(/is logged in: Yes/i)).toBeInTheDocument();
+  await waitFor(() => {
+    expect(screen.getByText(/is logged in: Yes/i)).toBeInTheDocument();
+  });
 
   // Simulate logout
   fireEvent.click(screen.getByText(/log out/i));
-  expect(screen.getByText(/is logged in: No/i)).toBeInTheDocument();
+  await waitFor(() => {
+    expect(screen.getByText(/is logged in: No/i)).toBeInTheDocument();
+  });
 });
