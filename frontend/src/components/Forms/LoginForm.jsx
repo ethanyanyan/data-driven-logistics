@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import "./LoginForm.css";
+import logo from '../../assets/images/logo.png';
 
 function LoginForm() {
   const { login } = useAuth();
@@ -27,6 +28,9 @@ function LoginForm() {
 
   return (
     <div className="form-container">
+      <div className="logo-container">
+        <img src={logo} alt="Logo" />
+      </div>
       <form onSubmit={handleSubmit} className="form-box">
         <div className="form-field">
           <label htmlFor="username">Username:</label>
