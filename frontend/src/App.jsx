@@ -1,5 +1,5 @@
 import './App.css'
-import DataDrivenLogisticsRouter from './components/router/DataDrivenLogisticsRouter'
+import DataDrivenLogisticsRouter from './routes/DataDrivenLogisticsRouter'
 
 function App() {
     return <DataDrivenLogisticsRouter/>
