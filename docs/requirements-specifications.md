@@ -8,15 +8,10 @@ The goal of the Data Driven Logistics (DDL) is to develop a comprehensive web ap
 
 ### Customer
 
-#### General Population
+#### Target User Personas
 
-The primary customer base for the Data Driven Logistics (DDL) encompasses businesses within the manufacturing sector, with a special focus on automotive manufacturing. This demographic includes small to large-scale manufacturers that operate across multiple physical locations and require efficient, real-time tracking of inventory and production processes. Target customers include:
-
-- **Manufacturing Plant Managers**: Individuals overseeing production and inventory across manufacturing sites.
-- **Supply Chain Coordinators**: Professionals managing the logistics of material movements and production flow.
-- **Inventory Specialists**: Staff responsible for tracking stock levels, managing shipments, and ensuring material availability.
-- **Business Analysts**: Analysts looking to derive insights from inventory and process data to optimize operations.
-- **IT and System Administrators**: Those managing system implementation, integration, and maintenance.
+- **Corporate Manager**: Focuses on aggregated data across all facilities, concerned with summary statistics, facility management at a macro level, and strategic decision-making.
+- **Facility Manager**: Manages the operations of a single facility, focusing on detailed inventory management, process modeling, and day-to-day operational decisions.
 
 #### Specific Customers for This Document
 
@@ -35,29 +30,29 @@ The user requirements for the Data Driven Logistics (DDL) are organized around d
 
 #### General System Access
 
-- **R1**: System access should be seamlessly integrated with the company's existing single sign-on (SSO) infrastructure, allowing users to log in with their current network credentials.
+- **R1**: Secure login mechanism with role-based access control to differentiate between corporate and facility managers.
   - Priority: High
   - Status: Open
 
-#### Inventory Management
+#### Inventory and Facility Management
 
-- **R2**: Users must be able to view real-time inventory levels across all locations from a centralized dashboard.
+- **R2**: Ability for corporate managers to view, create, and deactivate facilities within the system.
   - Priority: High
   - Status: Open
-- **R3**: The system must provide functionality for recording shipments, both incoming and outgoing, updating inventory quantities accordingly.
+- **R3**: Real-time tracking of inventory levels and shipments at each facility for facility managers.
   - Priority: High
   - Status: Open
-- **R4**: Users should have the ability to perform inventory adjustments and log reasons for these adjustments to maintain an audit trail.
+- **R4**: Aggregate inventory and shipment reports for corporate managers covering all facilities.
+  - Priority: High
+  - Status: Open
+
+#### Process Modeling and Shipments
+
+- **R5**: Facility managers can model processes that transform inputs into outputs, including potential waste production.
   - Priority: Medium
   - Status: Open
-
-#### Process Modeling
-
-- **R5**: The system should allow users to model business processes that detail the transformation of inputs into outputs, relevant to the automotive manufacturing industry.
+- **R6**: Automated inventory updates following shipment records or process execution events.
   - Priority: High
-  - Status: Open
-- **R6**: It should be possible to associate specific inventory items and quantities with each step in a modeled process.
-  - Priority: Medium
   - Status: Open
 
 #### Historical Data and Reporting
@@ -94,65 +89,69 @@ These requirements serve as a foundational guide for the development and impleme
 
 In alignment with the user requirements outlined previously, the following use cases and user stories detail key scenarios within the Data Driven Logistics (DDL). Each use case is derived from user stories, ensuring that every major scenario is represented and distinct in its contributions to the system's functionality. Use cases are categorized by priority: "Must Have," "Useful," or "Optional," to guide development focus towards the most critical features by the project deadline.
 
-#### Use Case 1: Real-Time Inventory Tracking
+#### Use Case 1: Facility Overview for Corporate Manager
 
 - **Priority**: Must Have
 - **User Story**:
-  > As a plant manager, I want to view real-time inventory levels across all locations, so that I can make informed decisions about resource allocation and production planning.
+  > As a corporate manager, I want to see a count of how many facilities I have, so I can have a high-level overview of our operational scale.
 - **Acceptance Test**:
-  1. Log in to the system using existing network credentials.
-  2. Navigate to the dashboard and select the "Inventory Levels" view.
-  3. Verify that inventory levels for all locations are displayed in real-time.
+  1. Log in to the system with corporate manager credentials.
+  2. Access the dashboard to view a summary of all facilities.
+  3. Verify the total count of facilities is displayed accurately.
 
-#### Use Case 2: Record Shipments
+#### Use Case 2: Aggregate Inventory Tracking
 
 - **Priority**: Must Have
 - **User Story**:
-  > As an inventory specialist, I need to record incoming and outgoing shipments, so that inventory quantities are accurately updated.
+  > As a corporate manager, I want to see an aggregate of the inventory that has come into and gone out from all facilities over an arbitrary time span, so I can understand inventory flow and make informed strategic decisions.
 - **Acceptance Test**:
-  1. Access the "Shipments" section from the main menu.
-  2. Enter shipment details including type (incoming/outgoing), quantities, and items.
-  3. Confirm the inventory levels are adjusted accordingly.
+  1. Log in to the system with corporate manager credentials.
+  2. Navigate to the "Inventory Reports" section.
+  3. Select a time span and verify the aggregate inventory data is displayed correctly.
 
-#### Use Case 3: Process Modeling
+#### Use Case 3: Facility Creation
 
 - **Priority**: Must Have
 - **User Story**:
-  > As a process engineer, I want to model our manufacturing processes in the system, showing how inputs are transformed into outputs, so we can optimize our operations.
+  > As a corporate manager, I want to create a new facility, so we can expand our operations to new locations.
 - **Acceptance Test**:
-  1. Create a new process model, detailing each step of the manufacturing process.
-  2. Associate specific inventory items with each process step.
-  3. Validate that the model accurately reflects the transformation process.
+  1. Log in to the system with corporate manager credentials.
+  2. Navigate to the "Facilities Management" section and select "Create New Facility."
+  3. Enter the necessary information for the new facility and confirm creation.
+  4. Verify the new facility is listed in the system.
 
-#### Use Case 4: Audit Trail
+#### Use Case 4: Deactivating a Facility
 
 - **Priority**: Must Have
 - **User Story**:
-  > As a compliance officer, I need to see an audit trail of updates made to inventory and processes, so we can ensure data integrity and accountability.
+  > As a corporate manager, I want to mark that a facility has ceased operation as of some date, so it's not included in aggregates after that date, ensuring accurate reporting.
 - **Acceptance Test**:
-  1. Navigate to the "Audit Log" section.
-  2. Select a date range and review all changes, including who made the change and what was changed.
-  3. Verify the accuracy of the log entries against known updates.
+  1. Log in to the system with corporate manager credentials.
+  2. Navigate to the "Facilities Management" section and select the facility to deactivate.
+  3. Mark the facility as ceased operations with the specified date.
+  4. Verify the facility is no longer included in future aggregate reports.
 
-#### Use Case 5: Spreadsheet Import/Export
+#### Use Case 5: Facility Inventory Overview
 
-- **Priority**: Useful
+- **Priority**: Must Have
 - **User Story**:
-  > As an inventory manager, I want to import inventory data from spreadsheets to quickly update the system and export data for reporting purposes.
+  > As a facility manager, I want to view what I have in my facility's inventory, so I can manage day-to-day operations effectively.
 - **Acceptance Test**:
-  1. Access the "Data Management" section and select "Import."
-  2. Upload a spreadsheet file with inventory data and complete the import process.
-  3. Verify the inventory in the system is updated accordingly. Repeat the process for exporting data.
+  1. Log in to the system with facility manager credentials.
+  2. Navigate to the "Inventory" section for their facility.
+  3. Verify that current inventory levels are accurately displayed.
 
-#### Use Case 6: Geospatial Data Visualizations
+#### Use Case 6: Historical Inventory Tracking
 
-- **Priority**: Optional
+- **Priority**: Must Have
 - **User Story**:
-  > As a supply chain coordinator, I would like to visualize inventory distribution and movements on a map, so I can optimize logistics and supply chain operations.
+  > As a facility manager, I want to view what I used to have in my facility's inventory at some past time, and what I will have in the future, so I can plan for inventory needs and audits.
 - **Acceptance Test**:
-  1. Go to the "Inventory Map" section.
-  2. Select parameters for visualization, including locations and inventory types.
-  3. Review the map to ensure it accurately represents the current inventory distribution and movements.
+  1. Log in to the system with facility manager credentials.
+  2. Navigate to the "Inventory History" section.
+  3. Select a past or future date to view inventory levels for that time.
+  4. Verify the displayed inventory levels match historical records or future projections.
+  
 
 Each use case includes specific acceptance tests to validate the implementation. These scenarios provide concrete examples that the customer will use to determine if the respective use case has been successfully implemented. The prioritization of use cases ensures that development efforts are aligned with the most critical functionalities required by the deadline.
 

@@ -1,9 +1,10 @@
 // src/services/authService.js
 
+// TODO: Define this elsewhere
 const API_BASE_URL = "http://localhost:3001/api/v1/users";
 
 // Function to login
-export const login = async (username, password) => {
+export const loginAPI = async (username, password) => {
   try {
     const response = await fetch(`${API_BASE_URL}/login`, {
       method: "POST",

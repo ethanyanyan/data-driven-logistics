@@ -71,6 +71,7 @@ CREATE TABLE Shipments (
     DepartureDate DATE,
     ArrivalDate DATE,
     Status VARCHAR(255),
+    FOREIGN KEY (UserID) REFERENCES Users(UserID), 
     FOREIGN KEY (SourceID) REFERENCES Locations(LocationID),
     FOREIGN KEY (DestinationID) REFERENCES Locations(LocationID)
 );
