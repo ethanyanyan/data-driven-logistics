@@ -2,21 +2,21 @@ const db = require("../config/dbConfig");
 
 class Shipment {
   constructor(
-    shipmentID,
-    sourceID,
-    userID,
-    destinationID,
-    departureDate,
-    arrivalDate,
-    status
+    ShipmentID,
+    SourceID,
+    UserID,
+    DestinationID,
+    DepartureDate,
+    ArrivalDate,
+    Status,
   ) {
-    this.shipmentID = shipmentID;
-    this.sourceID = sourceID;
-    this.userID = userID;
-    this.destinationID = destinationID;
-    this.departureDate = departureDate;
-    this.arrivalDate = arrivalDate;
-    this.status = status;
+    this.ShipmentID = ShipmentID;
+    this.SourceID = SourceID;
+    this.UserID = UserID;
+    this.DestinationID = DestinationID;
+    this.DepartureDate = DepartureDate;
+    this.ArrivalDate = ArrivalDate;
+    this.Status = Status;
   }
 
   // Save instance to database
@@ -27,13 +27,13 @@ class Shipment {
             VALUES (?, ?, ?, ?, ?, ?, ?)
         `;
     const values = [
-      this.shipmentID,
-      this.sourceID,
-      this.destinationID,
-      this.departureDate,
-      this.arrivalDate,
-      this.status,
-      this.userID
+      this.ShipmentID,
+      this.SourceID,
+      this.DestinationID,
+      this.DepartureDate,
+      this.ArrivalDate,
+      this.Status,
+      this.UserID,
     ];
 
     try {
@@ -45,12 +45,12 @@ class Shipment {
   }
 
   // Static method to find a shipment by ID
-  static async findByID(shipmentID) {
-    // cast shipmentId to int
-    shipmentID = parseInt(shipmentID);
+  static async findByID(ShipmentID) {
+    // cast ShipmentID to int
+    ShipmentID = parseInt(ShipmentID);
     const query = `SELECT * FROM Shipments WHERE ShipmentID = ?`;
     try {
-      const [rows] = await db.pool.query(query, [shipmentID]);
+      const [rows] = await db.pool.query(query, [ShipmentID]);
       if (rows.length > 0) {
         const row = rows[0];
         return new Shipment(
@@ -60,7 +60,7 @@ class Shipment {
           row.DestinationID,
           row.DepartureDate,
           row.ArrivalDate,
-          row.Status
+          row.Status,
         );
       } else {
         return null;
@@ -84,16 +84,16 @@ class Shipment {
             row.DestinationID,
             row.DepartureDate,
             row.ArrivalDate,
-            row.Status
-          )
+            row.Status,
+          ),
       );
     } catch (error) {
       throw new Error("Error retrieving shipments: " + error.message);
     }
   }
 
-  // Static method to update a shipment status
-  static async updateShipment(shipmentID, updateData) {
+  // Static method to update a shipment Status
+  static async updateShipment(ShipmentID, updateData) {
     let query = "UPDATE Shipments SET ";
     const queryParams = [];
     let isFirst = true;
@@ -106,9 +106,9 @@ class Shipment {
       isFirst = false;
     }
     query += " WHERE ShipmentID = ?";
-    // typecast shipmentID to int
-    shipmentID = parseInt(shipmentID);
-    queryParams.push(shipmentID);
+    // typecast ShipmentID to int
+    ShipmentID = parseInt(ShipmentID);
+    queryParams.push(ShipmentID);
 
     try {
       const [result] = await db.pool.query(query, queryParams);
@@ -118,10 +118,10 @@ class Shipment {
     }
   }
 
-  static async delete(shipmentID) {
+  static async delete(ShipmentID) {
     const query = `DELETE FROM Shipments WHERE ShipmentID = ?`;
     try {
-      const [result] = await db.pool.query(query, [shipmentID]);
+      const [result] = await db.pool.query(query, [ShipmentID]);
       return result;
     } catch (error) {
       throw new Error("Error deleting shipment: " + error.message);

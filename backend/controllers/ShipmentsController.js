@@ -3,23 +3,23 @@ const Shipment = require("./../models/shipments");
 // Logs a new shipment
 async function logShipment(req, res) {
   const {
-    sourceID,
-    userID,
-    destinationID,
-    departureDate,
-    arrivalDate,
-    status,
+    SourceID,
+    UserID,
+    DestinationID,
+    DepartureDate,
+    ArrivalDate,
+    Status,
   } = req.body;
 
   try {
     const newShipment = new Shipment(
-      shipmentID = null,
-      sourceID,
-      userID,
-      destinationID,
-      departureDate,
-      arrivalDate,
-      status
+      (ShipmentID = null),
+      SourceID,
+      UserID,
+      DestinationID,
+      DepartureDate,
+      ArrivalDate,
+      Status,
     );
     const result = await newShipment.save();
     res.status(200).json({
@@ -27,7 +27,6 @@ async function logShipment(req, res) {
       data: result,
     });
   } catch (error) {
-    console.error("Error logging shipment:", error);
     res.status(500).json({ error: "Database error occurred." });
   }
 }
@@ -47,7 +46,6 @@ async function getShipment(req, res) {
       });
     }
   } catch (error) {
-    console.error("Database error: ", error);
     res.status(500).json({
       error: "Database error occurred.",
     });
@@ -63,7 +61,6 @@ async function getAllShipments(req, res) {
       data: shipments,
     });
   } catch (error) {
-    console.error("Database error: ", error);
     res.status(500).json({
       error: "Database error occurred.",
     });
@@ -74,11 +71,11 @@ async function getAllShipments(req, res) {
 async function updateShipment(req, res) {
   const updateData = {};
   const allowedUpdates = [
-    "sourceID",
-    "destinationID",
-    "departureDate",
-    "arrivalDate",
-    "status",
+    "SourceID",
+    "DestinationID",
+    "DepartureDate",
+    "ArrivalDate",
+    "Status",
   ];
 
   // Collect fields to update
@@ -91,7 +88,7 @@ async function updateShipment(req, res) {
   try {
     const shipmentUpdated = await Shipment.updateShipment(
       req.params.id,
-      updateData
+      updateData,
     );
     if (shipmentUpdated) {
       res.status(200).json({
@@ -105,7 +102,6 @@ async function updateShipment(req, res) {
         .json({ error: `Shipment with id ${req.params.id} not found` });
     }
   } catch (error) {
-    console.error("Database error: ", error);
     res.status(500).json({ error: "Database error occurred." });
   }
 }
@@ -125,7 +121,6 @@ async function deleteShipment(req, res) {
       });
     }
   } catch (error) {
-    console.error("Database error: ", error);
     res.status(500).json({
       error: "Database error occurred.",
     });

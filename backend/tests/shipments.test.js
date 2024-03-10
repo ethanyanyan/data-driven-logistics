@@ -43,7 +43,6 @@ describe("Shipment API routes", () => {
     // Make the request to the API
     const res = await request(app).get(BASE + "1");
     expect(res.status).toBe(200);
-    console.log(res.body.data);
     expect(res.body.data).toMatchObject({
       shipmentID: expect.any(Number),
       sourceID: expect.any(Number),
@@ -118,14 +117,13 @@ describe("Shipment API routes", () => {
       userID: 1,
       departureDate: "2023-01-15",
       arrivalDate: "2023-01-19",
-      status: "Delivered"
+      status: "Delivered",
     };
 
     db.pool.query.mockResolvedValueOnce([mockApiResponse]);
 
     const res = await request(app).post(BASE).send(postData);
     expect(res.status).toBe(200);
-    console.log(res.body)
     expect(res.body.data).toMatchObject({
       shipmentID: expect.any(Number),
       sourceID: expect.any(Number),
@@ -136,61 +134,4 @@ describe("Shipment API routes", () => {
       status: expect.any(String),
     });
   });
-
-  // it("should update a shipment for PATCH /:id", async () => {
-  //   // Firstly, Mock a POST request to create a shipment
-  //   const postData = {
-  //     sourceID: 1,
-  //     destinationID: 2,
-  //     userID: 1,
-  //     departureDate: "2023-01-15",
-  //     arrivalDate: "2023-01-19",
-  //     status: "Delivered"
-  //   };
-
-  //   const mockPostApiResponse = {
-  //     shipmentID: 1,
-  //     sourceID: 1,
-  //     userID: 1,
-  //     destinationID: 2,
-  //     departureDate: "2023-01-15",
-  //     arrivalDate: "2023-01-19",
-  //     status: "Delivered",
-  //   };
-
-  //   db.pool.query.mockResolvedValueOnce([mockPostApiResponse]);
-
-  //   const postRes = await request(app).post(BASE).send(postData);
-  //   console.log("HEREEEE", postRes.body);
-  //   const shipmentID = postRes.body.data.shipmentID;
-
-  //   // Mock the patch for that shipmentid
-  //   const mockApiResponse = {
-  //     shipmentID: shipmentID,
-  //     sourceID: 1,
-  //     userID: 1,
-  //     destinationID: 2,
-  //     departureDate: "2023-01-15",
-  //     arrivalDate: "2023-01-19",
-  //     status: "In Transit",
-  //   };
-
-  //   const patchData = {
-  //     status: "In Transit",
-  //   };  
-
-  //   db.pool.query.mockResolvedValueOnce([mockApiResponse]);
-
-  //   const res = await request(app).patch(BASE + shipmentID).send(patchData);
-  //   expect(res.status).toBe(200);
-  //   expect(res.body.data).toMatchObject({
-  //     shipmentID: expect.any(Number),
-  //     sourceID: expect.any(Number),
-  //     userID: expect.any(Number),
-  //     destinationID: expect.any(Number),
-  //     departureDate: expect.any(String),
-  //     arrivalDate: expect.any(String),
-  //     status: "In transit"
-  //   });
-  // });
 });
