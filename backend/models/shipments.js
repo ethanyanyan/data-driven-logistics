@@ -23,17 +23,17 @@ class Shipment {
   async save() {
     const query = `
             INSERT INTO Shipments 
-            (ShipmentID, SourceID, UserID, DestinationID, DepartureDate, ArrivalDate, Status) 
+            (ShipmentID, SourceID, DestinationID, DepartureDate, ArrivalDate, Status, UserID) 
             VALUES (?, ?, ?, ?, ?, ?, ?)
         `;
     const values = [
       this.shipmentID,
       this.sourceID,
-      this.userID,
       this.destinationID,
       this.departureDate,
       this.arrivalDate,
       this.status,
+      this.userID
     ];
 
     try {
@@ -46,6 +46,8 @@ class Shipment {
 
   // Static method to find a shipment by ID
   static async findByID(shipmentID) {
+    // cast shipmentId to int
+    shipmentID = parseInt(shipmentID);
     const query = `SELECT * FROM Shipments WHERE ShipmentID = ?`;
     try {
       const [rows] = await db.pool.query(query, [shipmentID]);
@@ -103,8 +105,9 @@ class Shipment {
       queryParams.push(value);
       isFirst = false;
     }
-
     query += " WHERE ShipmentID = ?";
+    // typecast shipmentID to int
+    shipmentID = parseInt(shipmentID);
     queryParams.push(shipmentID);
 
     try {

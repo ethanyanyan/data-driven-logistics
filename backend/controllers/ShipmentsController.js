@@ -3,28 +3,28 @@ const Shipment = require("./../models/shipments");
 // Logs a new shipment
 async function logShipment(req, res) {
   const {
-    SourceID,
-    UserID,
-    DestinationID,
-    DepartureDate,
-    ArrivalDate,
-    Status,
+    sourceID,
+    userID,
+    destinationID,
+    departureDate,
+    arrivalDate,
+    status,
   } = req.body;
 
   try {
     const newShipment = new Shipment(
-      null,
-      SourceID,
-      UserID,
-      DestinationID,
-      DepartureDate,
-      ArrivalDate,
-      Status
+      shipmentID = null,
+      sourceID,
+      userID,
+      destinationID,
+      departureDate,
+      arrivalDate,
+      status
     );
     const result = await newShipment.save();
     res.status(200).json({
       message: "Shipment logged successfully",
-      data: { ShipmentId: result.insertId, ...req.body },
+      data: result,
     });
   } catch (error) {
     console.error("Error logging shipment:", error);
@@ -74,11 +74,11 @@ async function getAllShipments(req, res) {
 async function updateShipment(req, res) {
   const updateData = {};
   const allowedUpdates = [
-    "SourceID",
-    "DestinationID",
-    "DepartureDate",
-    "ArrivalDate",
-    "Status",
+    "sourceID",
+    "destinationID",
+    "departureDate",
+    "arrivalDate",
+    "status",
   ];
 
   // Collect fields to update
@@ -96,7 +96,8 @@ async function updateShipment(req, res) {
     if (shipmentUpdated) {
       res.status(200).json({
         message: `Shipment id ${req.params.id} updated successfully`,
-        data: shipmentUpdated,
+        // Ok I want the return data to call getShipment
+        data: await Shipment.findByID(req.params.id),
       });
     } else {
       res
