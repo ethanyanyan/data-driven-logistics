@@ -1,4 +1,4 @@
-const Shipment = require("./../models/shipments");
+const Shipment = require("./../models/Shipments");
 
 // Logs a new shipment
 async function logShipment(req, res) {
