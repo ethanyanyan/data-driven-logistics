@@ -7,7 +7,7 @@
 
 const db = require("../config/dbConfig");
 const bcrypt = require("bcrypt");
-const User = require("../models/user");
+const User = require("../models/User");
 
 class UserController {
   // Registers a new user

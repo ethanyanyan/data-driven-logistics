@@ -1,5 +1,5 @@
 // tests/user.model.test.js
-const User = require("../models/user");
+const User = require("../models/User");
 const bcrypt = require("bcrypt");
 
 describe("User Model", () => {
