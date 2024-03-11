@@ -44,12 +44,12 @@ describe("Shipment API routes", () => {
     const res = await request(app).get(BASE + "1");
     expect(res.status).toBe(200);
     expect(res.body.data).toMatchObject({
-      shipmentID: expect.any(Number),
-      sourceID: expect.any(Number),
-      destinationID: expect.any(Number),
-      departureDate: expect.any(String),
-      arrivalDate: expect.any(String),
-      status: expect.any(String),
+      ShipmentID: expect.any(Number),
+      SourceID: expect.any(Number),
+      DestinationID: expect.any(Number),
+      DepartureDate: expect.any(String),
+      ArrivalDate: expect.any(String),
+      Status: expect.any(String),
     });
   });
 
@@ -80,12 +80,12 @@ describe("Shipment API routes", () => {
     expect(res.body.data).toHaveLength(2);
     for (let shipment of res.body.data) {
       expect(shipment).toMatchObject({
-        shipmentID: expect.any(Number),
-        sourceID: expect.any(Number),
-        destinationID: expect.any(Number),
-        departureDate: expect.any(String),
-        arrivalDate: expect.any(String),
-        status: expect.any(String),
+        ShipmentID: expect.any(Number),
+        SourceID: expect.any(Number),
+        DestinationID: expect.any(Number),
+        DepartureDate: expect.any(String),
+        ArrivalDate: expect.any(String),
+        Status: expect.any(String),
       });
     }
   });
@@ -102,22 +102,22 @@ describe("Shipment API routes", () => {
 
   it("should create a new shipment for POST /", async () => {
     const mockApiResponse = {
-      shipmentID: 1,
-      sourceID: 1,
-      userID: 1,
-      destinationID: 2,
-      departureDate: "2023-01-15",
-      arrivalDate: "2023-01-19",
-      status: "Delivered",
+      ShipmentID: 1,
+      SourceID: 1,
+      UserID: 1,
+      DestinationID: 2,
+      DepartureDate: "2023-01-15",
+      ArrivalDate: "2023-01-19",
+      Status: "Delivered",
     };
 
     const postData = {
-      sourceID: 1,
-      destinationID: 2,
-      userID: 1,
-      departureDate: "2023-01-15",
-      arrivalDate: "2023-01-19",
-      status: "Delivered",
+      SourceID: 1,
+      DestinationID: 2,
+      UserID: 1,
+      DepartureDate: "2023-01-15",
+      ArrivalDate: "2023-01-19",
+      Status: "Delivered",
     };
 
     db.pool.query.mockResolvedValueOnce([mockApiResponse]);
@@ -125,13 +125,13 @@ describe("Shipment API routes", () => {
     const res = await request(app).post(BASE).send(postData);
     expect(res.status).toBe(200);
     expect(res.body.data).toMatchObject({
-      shipmentID: expect.any(Number),
-      sourceID: expect.any(Number),
-      userID: expect.any(Number),
-      destinationID: expect.any(Number),
-      departureDate: expect.any(String),
-      arrivalDate: expect.any(String),
-      status: expect.any(String),
+      ShipmentID: expect.any(Number),
+      SourceID: expect.any(Number),
+      UserID: expect.any(Number),
+      DestinationID: expect.any(Number),
+      DepartureDate: expect.any(String),
+      ArrivalDate: expect.any(String),
+      Status: expect.any(String),
     });
   });
 });
