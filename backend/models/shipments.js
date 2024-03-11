@@ -1,17 +1,6 @@
 const db = require("../config/dbConfig");
 
 class Shipment {
-  /**
-   * Constructs a Shipment instance with detailed information.
-   *
-   * @param {number} ShipmentID - The unique identifier of the shipment.
-   * @param {number} SourceID - The identifier for the source location of the shipment.
-   * @param {number} UserID - The identifier for the user responsible for the shipment.
-   * @param {number} DestinationID - The identifier for the destination location of the shipment.
-   * @param {Date} DepartureDate - The scheduled departure date of the shipment.
-   * @param {Date} ArrivalDate - The scheduled arrival date of the shipment.
-   * @param {string} Status - The current status of the shipment.
-   */
   constructor(
     ShipmentID,
     SourceID,
@@ -30,11 +19,7 @@ class Shipment {
     this.Status = Status;
   }
 
-  /**
-   * Saves the current shipment instance to the database.
-   *
-   * @return {Promise<object>} The result object from the database operation.
-   */
+  // Save instance to database
   async save() {
     const query = `
             INSERT INTO Shipments 
@@ -59,12 +44,7 @@ class Shipment {
     }
   }
 
-  /**
-   * Finds a shipment by its unique identifier.
-   *
-   * @param {number} ShipmentID - The unique identifier of the shipment to find.
-   * @return {Promise<Shipment|null>} The found shipment as a Shipment instance, or null if not found.
-   */
+  // Static method to find a shipment by ID
   static async findByID(ShipmentID) {
     // cast ShipmentID to int
     ShipmentID = parseInt(ShipmentID);
@@ -90,11 +70,7 @@ class Shipment {
     }
   }
 
-  /**
-   * Retrieves all shipments from the database.
-   *
-   * @return {Promise<Array<Shipment>>} An array of all Shipment instances.
-   */
+  // Static method to retrieve all shipments
   static async findAll() {
     const query = `SELECT * FROM Shipments`;
     try {
@@ -116,13 +92,7 @@ class Shipment {
     }
   }
 
-  /**
-   * Updates specified details of a shipment by its unique identifier.
-   *
-   * @param {number} ShipmentID - The unique identifier of the shipment to update.
-   * @param {object} updateData - An object containing the shipment attributes to update.
-   * @return {Promise<boolean>} True if the update was successful, false otherwise.
-   */
+  // Static method to update a shipment Status
   static async updateShipment(ShipmentID, updateData) {
     let query = "UPDATE Shipments SET ";
     const queryParams = [];
@@ -148,42 +118,13 @@ class Shipment {
     }
   }
 
-  /**
-   * Deletes a shipment from the database by its unique identifier, along with any associated shipment details.
-   *
-   * This method first deletes all entries in the ShipmentDetails table that are associated with the specified ShipmentID.
-   * After successfully removing these details, it proceeds to delete the shipment itself from the Shipments table.
-   * The operations are performed in a transaction to ensure data integrity - if any step fails, the transaction is rolled back.
-   *
-   * @param {number} ShipmentID - The unique identifier of the shipment to delete.
-   * @return {Promise<object>} The result object from the database operation, indicating the outcome of the deletion.
-   * @throws {Error} If an error occurs during the deletion process, including issues with deleting shipment details or the shipment itself.
-   */
   static async delete(ShipmentID) {
-    const connection = await db.pool.getConnection();
-
+    const query = `DELETE FROM Shipments WHERE ShipmentID = ?`;
     try {
-      await connection.beginTransaction();
-
-      await connection.query(
-        "DELETE FROM ShipmentDetails WHERE ShipmentID = ?",
-        [ShipmentID],
-      );
-
-      const [result] = await connection.query(
-        "DELETE FROM Shipments WHERE ShipmentID = ?",
-        [ShipmentID],
-      );
-
-      await connection.commit();
+      const [result] = await db.pool.query(query, [ShipmentID]);
       return result;
     } catch (error) {
-      await connection.rollback();
-      throw new Error(
-        "Error deleting shipment and its details: " + error.message,
-      );
-    } finally {
-      connection.release();
+      throw new Error("Error deleting shipment: " + error.message);
     }
   }
 }
