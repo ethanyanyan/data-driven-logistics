@@ -37,6 +37,7 @@ class User {
    */
   static async save(userObj) {
     const connection = await db.pool.getConnection();
+
     try {
       await connection.beginTransaction();
       const hashedPassword = await this.hashPassword(userObj.Password);
