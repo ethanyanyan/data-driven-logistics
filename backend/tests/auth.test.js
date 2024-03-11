@@ -48,8 +48,6 @@ describe("Authentication and Protected Route Tests", () => {
       .get("/api/v1/users/profile")
       .set("Authorization", `Bearer ${token}`);
 
-    console.log(response);
-
     expect(response.statusCode).toBe(200);
     expect(response.body).toEqual({
       UserID: expect.any(Number),
