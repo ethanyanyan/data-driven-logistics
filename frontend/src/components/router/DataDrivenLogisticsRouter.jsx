@@ -4,6 +4,7 @@ import DataDrivenLogistics from "../navigation/DataDrivenLogistics";
 import Dashboard from "../../pages/Dashboard";
 import LoginPage from "../../pages/LoginPage";
 import ShipmentTracking from "../../pages/ShipmentTracking";
+import Signup from "../../pages/Signup"
 
 export default function DataDrivenLogisticsRouter() {
     return <BrowserRouter>
@@ -11,7 +12,8 @@ export default function DataDrivenLogisticsRouter() {
             <Route path="/" element={<DataDrivenLogistics />}>
                 <Route path="/" element={<LoginPage />} />  
                 <Route path="/dashboard" element={<Dashboard />} /> 
-                <Route path="/shipment-tracking" element={<ShipmentTracking />} /> 
+                <Route path="/shipment-tracking" element={<ShipmentTracking />} />
+                <Route path="/signup" element={<Signup />} /> 
                 {/* Add future routes here! */}
             </Route>
         </Routes>

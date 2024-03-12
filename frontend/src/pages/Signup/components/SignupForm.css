@@ -1,0 +1,92 @@
+.signup-form {
+    display: grid;
+    grid-template-areas: 
+        "Firs Last"
+        "Role Comp"
+        "User User"
+        "Pass Pass"
+        "Conf Conf"
+        "Subm Subm";
+    gap: 10px;
+    grid-template-rows: auto;
+    grid-template-columns: 1fr 1fr;
+    width: 50%;
+}
+
+.signup-form > fieldset {
+    border: none;
+}
+
+.signup-form input {
+    width: 100%;
+    border-radius: 5px;
+    border-color: var(--logo-dark-blue);
+    padding: 5px 10px;
+    font-size: clamp(0.5rem, 1.3vw, 1.2rem);
+}
+
+.signup-form button {
+    padding: 8px 50px;
+    font-size: clamp(0.7rem, 1.3vw, 1.5rem);
+    font-weight: bold;
+    border-color: var(--logo-dark-blue);
+    color: var(--logo-dark-blue);
+    background: white;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: color 0.3s ease, background-color 0.3s ease, transform 0.3s ease;
+    transform: scale(1.00);
+}
+
+.signup-form button:hover { /* submit button should invert colors and scale up slightly on hover */
+    color: white;
+    background: var(--logo-dark-blue);
+    transition: color 0.3s ease, background-color 0.3s ease, transform 0.3s ease;
+    transform: scale(1.05);
+  }
+
+.signup-form > .first {
+    grid-area: Firs;
+}
+
+.signup-form > .last {
+    grid-area: Last;
+}
+
+.signup-form > .role {
+    grid-area: Role;
+}
+
+.signup-form > .company {
+    grid-area: Comp;
+}
+
+.signup-form > .username {
+    grid-area: User;
+}
+
+.signup-form > .password {
+    grid-area: Pass;
+}
+
+.signup-form > .confirm-password {
+    grid-area: Conf;
+}
+
+.signup-form > .submit {
+    grid-area: Subm;
+    display: flex;
+    justify-content: center;
+}
+
+.signup-form .visually-hidden { /* Hide all labels */
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+  
