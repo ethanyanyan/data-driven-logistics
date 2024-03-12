@@ -48,7 +48,7 @@ The user requirements for the Data Driven Logistics (DDL) system aim for clear c
 
 #### Security
 
-- **R9**: The system SHALL enforce access control mechanisms, ensuring users can access and manipulate only inventory and processes relevant to their roles.
+- **R9**: The system should enforce access control mechanisms, ensuring facility managers can access and manipulate only inventory relevant to them.
   - Priority: High
   - Status: Open
 
@@ -129,3 +129,13 @@ Consistent with the previously defined user requirements, the subsequent section
   4. Verify that the facility should not be listed on the page.
   5. Verify that the corresponding facility manager should see empty inventory level
   4. Verify the facility is no longer included in future aggregation reports.
+
+#### Use Case 8: Security Issues for a Corporate
+
+- **Priority**: High
+- **User Story**:
+  > As a corporate manager, I don't want a facility manager to be able to touch other manager's inventory. Moreover, I don't want a facility manager to access the page that i could access.
+- **Acceptance Test**:
+  1. Log in to the system with a facility manager account.
+  2. Verify that it naviagates to the dashboard to view a summary of all facilities.
+  3. Verify that there is no way to access other inventories, or even the facility management page which is only managed by the corporate manager.
