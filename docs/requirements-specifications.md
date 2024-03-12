@@ -302,71 +302,72 @@ title: Database ERD Diagram
 ---
 erDiagram
     Users {
-        string UserID PK
-        string BusinessID FK
-        string RoleID FK
+        int UserID PK
+        int BusinessID FK
+        int RoleID FK
         string Username
         string Password
         string FirstName
         string LastName
     }
     Roles {
-        string RoleID PK
+        int RoleID PK
         string RoleName
         string Description
     }
     Businesses {
-        string BusinessID PK
+        int BusinessID PK
         string BusinessName
         string Description
     }
     Locations {
-        string LocationID PK
-        string BusinessID FK
+        int LocationID PK
+        int BusinessID FK
         string Latitude
         string Longitude
     }
     LocationTypes {
-        string TypeID PK
+        int TypeID PK
         string Name
     }
     Products {
-        string ProductID PK
+        int ProductID PK
         string Name
         string Description
         float UnitPrice
     }
     Shipments {
-        string ShipmentID PK
-        string SourceID FK
-        string DestinationID FK
+        int ShipmentID PK
+        int UserID FK
+        int SourceID FK
+        int DestinationID FK
         date DepartureDate
         date ArrivalDate
         string Status
     }
     ShipmentDetails {
-        string ShipmentDetailID PK
-        string ShipmentID FK
-        string ProductID FK
+        int ShipmentDetailID PK
+        int ShipmentID FK
+        int ProductID FK
         int Quantity
     }
     InventoryLevels {
-        string InventoryLevelID PK
-        string LocationID FK
-        string ProductID FK
+        int InventoryLevelID PK
+        int LocationID FK
+        int ProductID FK
         int Quantity
     }
     Transactions {
-        string TransactionID PK
-        string ItemID FK
-        string LocationID FK
-        string TypeID FK
+        int TransactionID PK
+        int ItemID FK
+        int LocationID FK
+        int TypeID FK
         int Quantity
         date Date
-        string UserID FK
+        int UserID FK
     }
     TransactionTypes {
-        string TypeID PK
+        int TypeID PK
         string Name
     }
 
@@ -392,7 +393,7 @@ erDiagram
 %% Class Diagram
 classDiagram
     class User {
-        -UserID: string
+        -UserID: int
         -Username: string
         -Password: string
         -FirstName: string
@@ -400,29 +401,30 @@ classDiagram
         +authenticateUser()
     }
     class Role {
-        -RoleID: string
+        -RoleID: int
         -RoleName: string
         -Description: string
     }
     class Business {
-        -BusinessID: string
+        -BusinessID: int
         -BusinessName: string
         -Description: string
     }
     class Location {
-        -LocationID: string
+        -LocationID: int
         -Latitude: string
         -Longitude: string
         +getInventoryLevels()
     }
     class Product {
-        -ProductID: string
+        -ProductID: int
         -Name: string
         -Description: string
         -UnitPrice: float
     }
     class Shipment {
-        -ShipmentID: string
+        -ShipmentID: int
+        -UserID: int
         -DepartureDate: date
         -ArrivalDate: date
         -Status: string
@@ -430,22 +432,22 @@ classDiagram
         +getShipments()
     }
     class ShipmentDetail {
-        -ShipmentDetailID: string
+        -ShipmentDetailID: int
         -Quantity: int
     }
     class InventoryLevel {
-        -InventoryLevelID: string
+        -InventoryLevelID: int
         -Quantity: int
         +updateQuantity()
     }
     class Transaction {
-        -TransactionID: string
+        -TransactionID: int
         -Quantity: int
         -Date: date
         +logInteraction()
     }
     class TransactionType {
-        -TypeID: string
+        -TypeID: int
         -Name: string
     }
     class Report {
