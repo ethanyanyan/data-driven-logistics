@@ -10,6 +10,7 @@ install_dependencies_frontend:
     - npm install
   only:
     - master
+    - eyy/ci-pipeline
 
 install_dependencies_backend:
   stage: install_dependencies
@@ -18,6 +19,7 @@ install_dependencies_backend:
     - npm install
   only:
     - master
+    - eyy/ci-pipeline
 
 build_frontend:
   stage: build
@@ -29,6 +31,7 @@ build_frontend:
       - frontend/build
   only:
     - master
+    - eyy/ci-pipeline
 
 build_backend:
   stage: build
@@ -40,6 +43,7 @@ build_backend:
       - backend/dist
   only:
     - master
+    - eyy/ci-pipeline
 
 test_frontend:
   stage: test
@@ -48,6 +52,7 @@ test_frontend:
     - npm test
   only:
     - master
+    - eyy/ci-pipeline
 
 test_backend:
   stage: test
@@ -56,3 +61,4 @@ test_backend:
     - npm test
   only:
     - master
+    - eyy/ci-pipeline
