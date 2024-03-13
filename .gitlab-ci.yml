@@ -8,7 +8,7 @@ install_dependencies_frontend:
   image: node:16
   script:
     - cd frontend
-    - npm install
+    - npm install --verbose
   only:
     - master
     - eyy/ci-pipeline
