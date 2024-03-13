@@ -5,6 +5,7 @@ stages:
 
 install_dependencies_frontend:
   stage: install_dependencies
+  image: node:16
   script:
     - cd frontend
     - npm install
