@@ -1,0 +1,58 @@
+stages:
+  - install_dependencies
+  - build
+  - test
+
+install_dependencies_frontend:
+  stage: install_dependencies
+  script:
+    - cd frontend
+    - npm install
+  only:
+    - master
+
+install_dependencies_backend:
+  stage: install_dependencies
+  script:
+    - cd backend
+    - npm install
+  only:
+    - master
+
+build_frontend:
+  stage: build
+  script:
+    - cd frontend
+    - npm run build
+  artifacts:
+    paths:
+      - frontend/build
+  only:
+    - master
+
+build_backend:
+  stage: build
+  script:
+    - cd backend
+    - npm run build
+  artifacts:
+    paths:
+      - backend/dist
+  only:
+    - master
+
+test_frontend:
+  stage: test
+  script:
+    - cd frontend
+    - npm test
+  only:
+    - master
+
+test_backend:
+  stage: test
+  script:
+    - cd backend
+    - npm test
+  only:
+    - master
