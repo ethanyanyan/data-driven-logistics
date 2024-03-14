@@ -4,9 +4,6 @@ stages:
 
 image: node:16
 
-variables:
-  JWT_SECRET: "your_jwt_secret_here" # Replace this with your actual JWT secret
-
 cache:
   key: ${CI_COMMIT_REF_SLUG}
   paths:
@@ -20,9 +17,8 @@ install_dependencies_frontend:
     - npm ci
   cache:
     key: ${CI_COMMIT_REF_SLUG}-frontend
-  only:
-    - master
-    - eyy/ci-pipeline
+  rules:
+    - if: "$CI_COMMIT_BRANCH"
 
 install_dependencies_backend:
   stage: install_dependencies
@@ -31,9 +27,8 @@ install_dependencies_backend:
     - npm ci
   cache:
     key: ${CI_COMMIT_REF_SLUG}-backend
-  only:
-    - master
-    - eyy/ci-pipeline
+  rules:
+    - if: "$CI_COMMIT_BRANCH"
 
 test_frontend:
   stage: test
@@ -43,9 +38,8 @@ test_frontend:
     - npm test
   cache:
     key: ${CI_COMMIT_REF_SLUG}-frontend-test
-  only:
-    - master
-    - eyy/ci-pipeline
+  rules:
+    - if: "$CI_COMMIT_BRANCH"
 
 test_backend:
   stage: test
@@ -55,6 +49,5 @@ test_backend:
     - npm test
   cache:
     key: ${CI_COMMIT_REF_SLUG}-backend-test
-  only:
-    - master
-    - eyy/ci-pipeline
+  rules:
+    - if: "$CI_COMMIT_BRANCH"
