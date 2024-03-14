@@ -14,6 +14,7 @@ describe("Basic testing config", () => {
 
   it("should return status 200 for GET /", async () => {
     const res = await request(app).get("/");
+    console.log(res);
     expect(res.statusCode).toBe(200);
   });
 
