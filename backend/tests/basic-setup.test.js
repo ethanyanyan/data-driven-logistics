@@ -12,10 +12,10 @@ describe("Basic testing config", () => {
     expect(result).toBe(2);
   });
 
-  it("should return status 200 for GET /", async () => {
-    const res = await request(app).get("/");
-    console.log(res);
+  it("should return status 200 for GET /api/status", async () => {
+    const res = await request(app).get("/api/status");
     expect(res.statusCode).toBe(200);
+    expect(res.body).toEqual({ status: "OK" });
   });
 
   // Add more test cases for other routes and logic as needed
