@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const LocationController = require('../controllers/LocationController');
 
-router.post("/", LocationController.createLocation);
+router.post("/", LocationController.createLocation); // BusinessID, Latitude, Longitude
 
 router.get("/:id", LocationController.getLocation);
 
