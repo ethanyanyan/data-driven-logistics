@@ -21,7 +21,13 @@ async function createItem(req, res) {
     const result = await newInventory.save();
     res.status(200).json({
       message: "Item logged successfully",
-      data: result,
+      data: {
+        InventoryLevelID: result.insertId,
+        LocationID,
+        ProductID,
+        Quantity,
+      
+      },
     });
   } catch (error) {
     res.status(500).json({ error: "Database error occurred." });
@@ -148,7 +154,7 @@ async function deleteInventory(req, res) {
 // Temp route for testing
 async function getAllProducts(req, res) {
   try {
-    const [results] = await db.pool.query("SELECT * FROM Products");
+    const results = await db.pool.query("SELECT * FROM Products");
     res.status(200).json(results);
   } catch (error) {
     res.status(500).json({ error: "Database error occurred." });

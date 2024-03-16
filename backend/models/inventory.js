@@ -24,7 +24,7 @@ class Items {
 
     try {
       const [result] = await db.pool.query(query, values);
-      return result;
+      return values;
     } catch (error) {
       throw new Error("Error saving the item(s): " + error.message);
     }
