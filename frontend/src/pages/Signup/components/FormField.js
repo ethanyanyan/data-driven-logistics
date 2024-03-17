@@ -19,15 +19,13 @@ import DefaultInput from "./inputs/Default"
  */
 function FormField(props) {
 
+    // Select which type of Input component to render
     let Input = DefaultInput;
-
-    useEffect(() => {
-        if (props.type === "select") {
-            Input = RoleSelector;
-        } else if (props.type === "search") {
-            Input = CompanySearch;
-        }
-    }, [props.type]);
+    if (props.type === "select") {
+        Input = RoleSelector;
+    } else if (props.type === "search") {
+        Input = CompanySearch;
+    }
 
     return (
         <fieldset className={props.name}>
