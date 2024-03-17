@@ -3,6 +3,13 @@ const app = require("../index");
 const BASE = "/api/v1/inventory/";
 const db = require("../config/dbConfig");
 const InventoryLevel = require("./../models/InventoryLevel");
+const {
+  mockInventoryPostReq,
+  mockInventoryPostRes,
+  mockInventoryDbAllRows,
+  mockInventoryDbRow,
+  mockInventoryDeleteRes,
+} = require("./constants/inventory");
 
 jest.mock("../config/dbConfig", () => ({
   pool: {
@@ -19,26 +26,12 @@ describe("Inventory API routes", () => {
     const mockDbResponse = {
       insertId: 1,
     };
-    const mockRequestBody = {
-      LocationID: 1,
-      ProductID: 1,
-      Quantity: 10,
-    };
+    const mockRequestBody = mockInventoryPostReq;
 
     db.pool.query.mockResolvedValueOnce([mockDbResponse]);
-
     const res = await request(app).post(BASE).send(mockRequestBody);
-    console.log("!!", res.body);
     expect(res.status).toBe(200);
-    expect(res.body).toMatchObject({
-      message: "Item logged successfully",
-      data: {
-        InventoryLevelID: expect.any(Number),
-        LocationID: expect.any(Number),
-        ProductID: expect.any(Number),
-        Quantity: expect.any(Number),
-      },
-    });
+    expect(res.body).toMatchObject(mockInventoryPostRes);
   });
 
   it("should handle database errors for GET /:id", async () => {
@@ -52,16 +45,9 @@ describe("Inventory API routes", () => {
 
   it("should return a inventory for GET /:id", async () => {
     // Mock data that the route handler is expected to receive from the database
-    const mockApiResponse = [
-      {
-        InventoryLevelID: 1,
-        LocationID: 1,
-        ProductID: 1,
-        Quantity: 10,
-      },
-    ];
+    const mockDBResponse = [mockInventoryDbRow];
     // Mock the query function to return the mockDbResult
-    db.pool.query.mockResolvedValueOnce([mockApiResponse]);
+    db.pool.query.mockResolvedValueOnce([mockDBResponse]);
     // Make the request to the API
     const res = await request(app).get(BASE + "1");
     expect(res.status).toBe(200);
@@ -74,23 +60,18 @@ describe("Inventory API routes", () => {
   });
 
   it("Should return all inventory for GET /", async () => {
-    const mockApiResponse = [
-      {
-        InventoryLevelID: 1,
-        LocationID: 1,
-        ProductID: 1,
-        Quantity: 10,
-      },
-      {
-        InventoryLevelID: 2,
-        LocationID: 1,
-        ProductID: 1,
-        Quantity: 10,
-      },
-    ];
+    const mockApiResponse = mockInventoryDbAllRows;
     db.pool.query.mockResolvedValueOnce([mockApiResponse]);
     const res = await request(app).get(BASE);
     expect(res.status).toBe(200);
     expect(res.body.data).toHaveLength(2);
+  });
+
+  it("should delete an inventory for DELETE /:id", async () => {
+    db.pool.query.mockResolvedValueOnce([[mockInventoryDbRow]]); // Mock findById
+    db.pool.query.mockResolvedValueOnce([mockInventoryDeleteRes]); // Mock delete
+    const res = await request(app).delete(BASE + "1");
+    expect(res.body.message).toBe("InventoryLevel id 1 deleted successfully");
+    expect(res.status).toBe(200);
   });
 });

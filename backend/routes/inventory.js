@@ -23,11 +23,4 @@ router.patch("/:id", inventoryController.updateInventory);
 // Endpoint to delete an item in the inventory
 router.delete("/:id", inventoryController.deleteInventory);
 
-// (MAYBE) HIDDEN ENDPOINT to view all products in the Products table
-router.get("/products", inventoryController.getAllProducts);
-
-// (MAYBE) HIDDEN ENDPOINT to view all locations in the Locations table
-router.get("/locations", inventoryController.getAllLocations);
-
-
 module.exports = router;
