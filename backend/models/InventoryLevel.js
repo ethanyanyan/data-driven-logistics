@@ -52,7 +52,7 @@ class InventoryLevel {
       return false;
     } catch (error) {
       throw new Error(
-        "Error updating the inventory level quantity: " + error.message,
+        "Error updating the inventory level quantity: " + error.message
       );
     }
   }
@@ -78,13 +78,63 @@ class InventoryLevel {
           rows[0].InventoryLevelID,
           rows[0].LocationID,
           rows[0].ProductID,
-          rows[0].Quantity,
+          rows[0].Quantity
         );
       } else {
         return null;
       }
     } catch (error) {
       throw new Error("Error finding the inventory level: " + error.message);
+    }
+  }
+
+  /**
+   * Finds all inventory levels in a location.
+   * @param {number} locationID - The identifier for the location.
+   * @return {Promise<InventoryLevel[]>} An array of InventoryLevel instances.
+   */
+  static async findByID(InventoryID) {
+    // cast ShipmentID to int
+    InventoryID = parseInt(InventoryID);
+    const query = `SELECT * FROM InventoryLevels WHERE InventoryLevelID = ?`;
+    try {
+      const [rows] = await db.pool.query(query, [InventoryID]);
+      if (rows.length > 0) {
+        const row = rows[0];
+        return new InventoryLevel(
+          row.InventoryLevelID,
+          row.LocationID,
+          row.ProductID,
+          row.Quantity
+        );
+      } else {
+        return null;
+      }
+    } catch (error) {
+      throw new Error("Error finding the Item: " + error.message);
+    }
+  }
+
+  /**
+   * Finds all the inventory levels in the database.
+   *
+   * @returns {Promise<InventoryLevel[]>} An array of InventoryLevel instances.
+   */
+  static async findAll() {
+    const query = `SELECT * FROM InventoryLevels`;
+    try {
+      const [rows] = await db.pool.query(query);
+      return rows.map(
+        (row) =>
+          new InventoryLevel(
+            row.InventoryLevelID,
+            row.LocationID,
+            row.ProductID,
+            row.Quantity
+          )
+      );
+    } catch (error) {
+      throw new Error("Error retrieving all items: " + error.message);
     }
   }
 
@@ -117,8 +167,56 @@ class InventoryLevel {
       return false;
     } catch (error) {
       throw new Error(
-        "Error adjusting the inventory level quantity: " + error.message,
+        "Error adjusting the inventory level quantity: " + error.message
       );
+    }
+  }
+
+  /**
+   * Updates an inventory level in the database, given the InventoryLevelID.
+   * Only certain paremeters can be updated - LocationID, ProductID, Quantity
+   * Checks are done in Controller to ensure only those parameters are part of updateData
+   * @param {number} InventoryLevelID - The identifier for the inventory level.
+   * @param {object} updateData - An object containing the fields to update and their new values.
+   * @return {Promise<boolean>} True if the update was successful, false otherwise.
+   */
+  static async update(InventoryLevelID, updateData) {
+    let query = "UPDATE InventoryLevels SET ";
+    const queryParams = [];
+    let isFirst = true;
+    // Construct query dynamically based on the fields in updateData
+    for (const [key, value] of Object.entries(updateData)) {
+      if (!isFirst) query += ", ";
+      query += `${key} = ?`;
+      queryParams.push(value);
+      isFirst = false;
+    }
+    query += " WHERE InventoryLevelID = ?";
+    // typecast ShipmentID to int
+    InventoryLevelID = parseInt(InventoryLevelID);
+    queryParams.push(InventoryLevelID);
+
+    try {
+      const [result] = await db.pool.query(query, queryParams);
+      return result.changedRows > 0;
+    } catch (error) {
+      throw new Error("Error updating InventoryLevel: " + error.message);
+    }
+  }
+
+  /**
+   * Deletes an inventory level from the database, given hte InventoryLevelID.
+   * TODO?: Delete shipment when inventory is deleted
+   * @param {number} InventoryID - The identifier for the inventory level.
+   * @return {Promise<boolean>} True if the deletion was successful, false otherwise.
+   */
+  static async delete(InventoryLevelID) {
+    const query = `DELETE FROM InventoryLevels WHERE InventoryLevelID = ?`;
+    try {
+      const [result] = await db.pool.query(query, InventoryLevelID);
+      return result.affectedRows > 0;
+    } catch (error) {
+      throw new Error("Error deleting the inventory level: " + error.message);
     }
   }
 
