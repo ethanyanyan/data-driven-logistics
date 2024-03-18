@@ -3,13 +3,17 @@ import { Button, Col, Container, Row, Nav} from "react-bootstrap";
 import DataDrivenLogisticsNavbar from "../components/navigation/DataDrivenLogisticsNavbar";
 import { Link } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 
 export default function Dashboard(props) {
+
+    const { logout } = useAuth(); 
 
     const navigate = useNavigate();
 
 
     const handleLogout = () => {
+    logout();
     navigate('/');
     }
 
