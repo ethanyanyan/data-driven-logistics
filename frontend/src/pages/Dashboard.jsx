@@ -2,8 +2,17 @@ import React from "react";
 import { Button, Col, Container, Row, Nav} from "react-bootstrap";
 import DataDrivenLogisticsNavbar from "../components/navigation/DataDrivenLogisticsNavbar";
 import { Link } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
 export default function Dashboard(props) {
+
+    const navigate = useNavigate();
+
+
+    const handleLogout = () => {
+    navigate('/');
+    }
+
     return <div>
         <DataDrivenLogisticsNavbar />
         <h1>Dashboard</h1>
@@ -23,7 +32,7 @@ export default function Dashboard(props) {
                             </Nav>
                         </Row>
                         <Row>
-                            <Button>Logout</Button> {/* TODO: route to modal popup */}
+                            <Button onClick={handleLogout}>Logout</Button> {/* TODO: route to modal popup */}
                         </Row>
                     </Container>
                 </Col>
