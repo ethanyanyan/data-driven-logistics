@@ -37,4 +37,15 @@ describe('Dashboard Page', () => {
     expect(screen.getByRole('button', { name: /refresh/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /filter data/i })).toBeInTheDocument();
   });
+
+  // test logout
+  it('should log out and attempt to redirect to the login page when logout is clicked', () => {
+    renderWithRouter(<Dashboard />);
+
+    // Click the logout button
+    fireEvent.click(screen.getByRole('button', { name: /logout/i }));
+
+    // Check that navigate was called with the correct route for redirection
+    expect(mockNavigate).toHaveBeenCalledWith('/login');
+  });
 });
