@@ -6,7 +6,6 @@ import DataDrivenLogistics from "../components/navigation/DataDrivenLogistics";
 import Dashboard from "../pages/Dashboard";
 import LoginPage from "../pages/LoginPage";
 import ShipmentTracking from "../pages/ShipmentTracking";
-import PageNoMatch from "../pages/PageNoMatch";
 
 export default function DataDrivenLogisticsRouter() {
     return (
@@ -26,9 +25,6 @@ export default function DataDrivenLogisticsRouter() {
                             </ProtectedRoute>
                         } /> 
                         {/* Add future routes here! */}
-                        <Route path="/*" element={
-                            <PageNoMatch></PageNoMatch>
-                        } />
                     </Route>
                 </Routes>
             </BrowserRouter>
