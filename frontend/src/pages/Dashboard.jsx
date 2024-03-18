@@ -2,21 +2,14 @@ import React from "react";
 import { Button, Col, Container, Row, Nav } from "react-bootstrap";
 import DataDrivenLogisticsNavbar from "../components/navigation/DataDrivenLogisticsNavbar";
 import { Link } from "react-router-dom";
-import { useAuth } from '../contexts/AuthContext';
 
 
 export default function Dashboard(props) {
 
-    const { logout } = useAuth();
-
-
-    const handleLogout = () => {
-    logout();
-  };
 
   return (
     <div>
-      <DataDrivenLogisticsNavbar handleLogout={handleLogout} />
+      <DataDrivenLogisticsNavbar />
       <h1>Dashboard</h1>
       <Container>
         <Row>

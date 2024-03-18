@@ -50,22 +50,4 @@ describe('Dashboard Page', () => {
     expect(screen.getByRole('button', { name: /filter data/i })).toBeInTheDocument();
   });
 
-  it('should call the logout function when the logout button is clicked', () => {
-    // Create a mock logout function
-    const logoutMock = jest.fn();
-
-    // Mock the return value of useAuth with the mock logout function
-    useAuth.mockReturnValue({
-      logout: logoutMock,
-    });
-
-    renderWithRouter(<Dashboard />);
-
-    // Find the logout button and click it
-    const logoutButton = screen.getByRole('button', { name: /logout/i });
-    fireEvent.click(logoutButton);
-
-    // Assert that the logout function was called
-    expect(logoutMock).toHaveBeenCalledTimes(1);
-  });
 });

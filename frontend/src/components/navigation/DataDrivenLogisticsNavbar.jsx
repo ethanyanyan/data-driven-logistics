@@ -1,9 +1,11 @@
 import { Button, Container, Navbar, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext";
 
 import logo from '../../assets/images/logo.png';
 
-export default function DataDrivenLogisticsNavbar({ handleLogout }) {
+export default function DataDrivenLogisticsNavbar() {
+  const { logout } = useAuth()
   return (
     <Navbar bg="dark" variant="dark" expand="lg">
       <Container fluid>
@@ -23,7 +25,7 @@ export default function DataDrivenLogisticsNavbar({ handleLogout }) {
             {/* Add any additional navigation links here */}
           </Nav>
           <Nav>
-            <Button variant="outline-light" onClick={handleLogout}>
+            <Button variant="outline-light" onClick={logout}>
               Logout
             </Button>
           </Nav>
