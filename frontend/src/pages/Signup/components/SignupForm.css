@@ -2,8 +2,7 @@
     display: grid;
     grid-template-areas: 
         "Firs Last"
-        "Role Comp"
-        "User User"
+        "User Role"
         "Pass Pass"
         "Conf Conf"
         "Subm Subm";
@@ -17,12 +16,16 @@
     border: none;
 }
 
-.signup-form input {
+.signup-form > fieldset > input {
     width: 100%;
     border-radius: 5px;
     border-color: var(--logo-dark-blue);
     padding: 5px 10px;
     font-size: clamp(0.5rem, 1.3vw, 1.2rem);
+}
+
+.signup-form > fieldset input:focus {
+    outline: none;
 }
 
 .signup-form button {
@@ -89,4 +92,32 @@
     clip: rect(0, 0, 0, 0);
     border: 0;
 }
-  
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    border-radius: 5px;
+    /* border-color: var(--logo-dark-blue); */
+    padding: 5px 10px;
+    font-size: clamp(0.5rem, 1.3vw, 1.2rem);
+   
+    border: var(--logo-dark-blue) 2px solid;
+}
+
+.search-bar > input {
+    border: none;
+    margin-left: 5px;
+}
+
+.search-results {
+    height: 0;
+    opacity: 0;
+    transition: height 0.3s ease, opacity 0.3s ease;
+    max-height: 200px;
+    overflow: scroll;
+}
+
+.search-results.show-results {
+    /* height: var(--results-height); */
+    opacity: 1;
+}

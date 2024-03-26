@@ -11,7 +11,7 @@ fields.
 
 The `FormField` component is embedded within the `Signup` component.
 The component is responsible for selecting which type of input to 
-render (such as `Default`, `RoleSelector`, or `CompanySearch`) based on the
+render (such as `Default`, `Selector`, or `Search`) based on the
 `type` prop passed to it by its parent. It is esentially just a switch. Of note
 here is that the component includes (visually hidden) labels because even though 
 they aren't included in the design visually, it's best to include 

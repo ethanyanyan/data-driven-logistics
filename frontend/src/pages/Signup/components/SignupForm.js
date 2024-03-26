@@ -11,6 +11,9 @@ for sighted users.
 import React, { useState } from 'react';
 import "./SignupForm.css"
 import FormField from './FormField';
+import * as validation from "../validation";
+
+
 
 function SignupForm() {
 
@@ -18,7 +21,6 @@ function SignupForm() {
     first: '',
     last: '',
     role: '',
-    company: '',
     username: '',
     password: '',
     confirmPassword: '',
@@ -35,15 +37,29 @@ function SignupForm() {
   function handleSubmit(e) {
     e.preventDefault();
     // Add form submission logic here
+    // For each of the form fields, 
+    // run each of the accompanying functions
+    // Each function should return true
+    // or false if the test succeeded/failed
+    // and null/an error message
+    // For a given field, the first 
+    // error message obtained should 
+    // be used
   };
 
+  const rolesList = [ // TODO: fetch from backend
+    "Admin",
+    "Contractor",
+    "HR",
+    "Employee",
+    "Manager"
+  ]
 
   const formFields = [
     { name: 'first', type: 'text', placeholder: 'First name' },
     { name: 'last', type: 'text', placeholder: 'Last name' },
-    { name: 'role', type: 'select', placeholder: 'Select your role' },
-    { name: 'company', type: 'search', placeholder: 'Company' },
     { name: 'username', type: 'text', placeholder: 'Username' },
+    { name: 'role', type: 'search', placeholder: 'Role', data: rolesList },
     { name: 'password', type: 'password', placeholder: 'Password' },
     { name: 'confirm-password', type: 'password', placeholder: 'Confirm password' },
   ];
@@ -66,7 +82,6 @@ function SignupForm() {
                 SUBMIT
             </button>
         </div>
-        
     </form>
   );
 }

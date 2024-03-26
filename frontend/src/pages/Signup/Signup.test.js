@@ -9,5 +9,5 @@ test("signup screen displays text", () => {
 
 test("signup screen has submit button", () => {
     render(<Signup />)
-    expect(screen.getByText("Submit")).toBeInTheDocument()
+    expect(screen.getByText("SUBMIT")).toBeInTheDocument()
 })
