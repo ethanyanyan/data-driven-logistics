@@ -17,14 +17,7 @@ import * as v from "../validation";
 
 function SignupForm() {
 
-  const [formData, setFormData] = useState({
-    first: '',
-    last: '',
-    role: '',
-    username: '',
-    password: '',
-    confirmPassword: '',
-  })
+
 
   const [errorObj, setErrorObj] = useState({
     first: '',
@@ -76,68 +69,69 @@ function SignupForm() {
     ],
   }
 
-  function handleInputChange(e) {
-    const { name, value } = e.target
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }))
+  function handleSubmit2(e) {
+    e.preventDefault();
+    console.log("Submitting")
+    const formData = new FormData(e.target);
+    for (var pair of formData.entries()) {
+      console.log(pair[0] + ": " + pair[1]);
+    }
   }
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    // Add form submission logic here
-    // For each of the form fields, 
-    // run each of the accompanying functions
-    // Each function should return true
-    // or false if the test succeeded/failed
-    // and null/an error message
-    // For a given field, the first 
-    // error message obtained should 
-    // be used
-    let success = true;
-    for (const field in validationObj) {
-      let val = formData[field]
-      let outputMsg = ""
-      console.log(`got val: ${val} for field: ${field}`)
-      for (let i=0; i<validationObj[field].length; i++) {
-        const func = validationObj[field][i];
-        if (func.length === 1) {
-          const {isValid, errorMsg} = func(val);
-          console.log(`got ${isValid} for ${func.name}`)
-          console.log(`got ${errorMsg} for ${func.name}`)
-          if (isValid === false) {
-            outputMsg = errorMsg;
-            success = false;
-            setSubmitResult("")
-            break
-          }
-        }
-        else {
-          switch (func.name) {
-            case "minLength":
-              console.log("Checking minLength")
-              break;
-            case "maxLength":
-              console.log("Checking maxLength")
-              break;
-            case "matchesTarget":
-              console.log("matchesTarget")
-              break;
-            default:
-              console.error(`Unkown validation function ${func.name} for ${field}`)
-          }
-        }
-      }
-      setErrorObj((prevData) => ({
-        ...prevData,
-        [field]: outputMsg,
-      }))
-    }
-    if (success) {
-      setSubmitResult(`Added user ${formData.username} to your organization`)
-    }
-  };
+  // function handleSubmit(e) {
+  //   e.preventDefault();
+  //   // Add form submission logic here
+  //   // For each of the form fields, 
+  //   // run each of the accompanying functions
+  //   // Each function should return true
+  //   // or false if the test succeeded/failed
+  //   // and null/an error message
+  //   // For a given field, the first 
+  //   // error message obtained should 
+  //   // be used
+  //   let success = true;
+  //   for (const field in validationObj) {
+  //     let val = formData[field]
+  //     let outputMsg = ""
+  //     console.log(`got val: ${val} for field: ${field}`)
+  //     for (let i=0; i<validationObj[field].length; i++) {
+  //       const func = validationObj[field][i];
+  //       if (func.length === 1) {
+  //         const {isValid, errorMsg} = func(val);
+  //         console.log(`got ${isValid} for ${func.name}`)
+  //         console.log(`got ${errorMsg} for ${func.name}`)
+  //         if (isValid === false) {
+  //           outputMsg = errorMsg;
+  //           success = false;
+  //           setSubmitResult("")
+  //           break
+  //         }
+  //       }
+  //       else {
+  //         switch (func.name) {
+  //           case "minLength":
+  //             console.log("Checking minLength")
+  //             break;
+  //           case "maxLength":
+  //             console.log("Checking maxLength")
+  //             break;
+  //           case "matchesTarget":
+  //             console.log("matchesTarget")
+  //             break;
+  //           default:
+  //             console.error(`Unkown validation function ${func.name} for ${field}`)
+  //         }
+  //       }
+  //     }
+  //     setErrorObj((prevData) => ({
+  //       ...prevData,
+  //       [field]: outputMsg,
+  //     }))
+  //   }
+  //   if (success) {
+  //     setSubmitResult(`Added user ${formData.username} to your organization`)
+  //   }
+  // };
 
   const rolesList = [ // TODO: fetch from backend
     "Admin",
@@ -158,15 +152,13 @@ function SignupForm() {
 
 
   return (
-    <form className="signup-form" onSubmit={handleSubmit}>
+    <form className="signup-form" onSubmit={handleSubmit2}>
 
         {formFields.map(fieldObj => (
             <FormField 
                 key={fieldObj.name} 
                 {...fieldObj}
                 error={errorObj[fieldObj.name]}
-                value={formData[fieldObj.name]} 
-                onChange={handleInputChange}
             /> 
         ))}
 

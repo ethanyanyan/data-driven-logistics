@@ -4,7 +4,7 @@ import {FaSearch} from "react-icons/fa";
 
 // TODO: Can parent component own potential results and filtering function
 
-function Search({ name, type, placeholder, value, onChange, data = [] }) {
+function Search({ name, type, placeholder, onChange, data = [] }) {
 
     // const elementRef = useRef(null)
     
@@ -12,6 +12,7 @@ function Search({ name, type, placeholder, value, onChange, data = [] }) {
     const [isFocused, setIsFocused] = useState(false)
     const [firstResHeight, setFirstResHeight] = useState(0)
     const [resHeight, setResHeight] = useState(0)
+    const [value, setValue] = useState("")
 
     useEffect(() => {
         const results = document.getElementsByClassName("search-results")[0]
@@ -54,9 +55,8 @@ function Search({ name, type, placeholder, value, onChange, data = [] }) {
                     type="text"
                     id={name}
                     name={name}
-                    placeholder={placeholder}
                     value={value}
-                    onChange={onChange}
+                    placeholder={placeholder}
                     onFocus={handleFocus}
                     onBlur={handleBlur}
                 />
