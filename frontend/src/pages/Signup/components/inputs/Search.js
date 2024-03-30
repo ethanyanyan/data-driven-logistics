@@ -13,7 +13,6 @@ function Search({ name, type, placeholder, value, onChange, data = [] }) {
     const [firstResHeight, setFirstResHeight] = useState(0)
     const [resHeight, setResHeight] = useState(0)
 
-
     useEffect(() => {
         const results = document.getElementsByClassName("search-results")[0]
         if (results) {
@@ -65,19 +64,27 @@ function Search({ name, type, placeholder, value, onChange, data = [] }) {
             <SearchResults 
                 height={resHeight} 
                 isFocused={isFocused}
-                filteredList={filteredList}/>
+                filteredList={filteredList}
+                name={name}/>
         </div>
         
     )
 }
 
-function SearchResults({height=0, isFocused, filteredList}) {
+function SearchResults({height=0, isFocused, filteredList, name}) {
+
+    function handleResultClicked(e) {
+        console.log("Result clicked.")
+        console.log(e)
+        document.getElementById(name).value = e
+    }
+
     return (
         <div
                 className={`search-results ${isFocused ? "show-results" : ""}`}
                 style={{height: height}}>
                 {filteredList.map((company, idx) => (
-                    <div key={`company-${idx}`}>
+                    <div key={`company-${idx}`} onClick={() => handleResultClicked(company)}>
                         {company}
                     </div>
                 ))}
@@ -86,3 +93,14 @@ function SearchResults({height=0, isFocused, filteredList}) {
 }
 
 export default Search
+
+
+
+
+// TODO: 
+// Handle displaying server-side error
+// Break search function into its own folder?
+// Handle click on search bar dropdown item
+// Connect to backend
+// Cleanup and organization
+// Documentation

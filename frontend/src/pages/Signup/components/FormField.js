@@ -36,6 +36,10 @@ function FormField(props) {
 
             { <Input {...props} /> }
 
+            <div className="form-error">
+                {props.error}
+            </div>
+
         </fieldset>
     )
 }

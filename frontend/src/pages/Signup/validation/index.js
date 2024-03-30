@@ -37,6 +37,13 @@ export function startsCapital(txt) {
   return { isValid: true, errorMsg: null };
 }
 
+export function alphaOnly(txt) {
+    if (/^[a-zA-Z]+$/.test(txt)) {
+      return { isValid: true, errorMsg: null };
+    }
+      return { isValid: false, errorMsg: "Letters only" };
+  }
+
 export function alphaNumericOnly(txt) {
   if (/^[a-zA-Z0-9]+$/.test(txt)) {
     return { isValid: true, errorMsg: null };
@@ -49,4 +56,11 @@ export function matchesTarget(txt, target) {
     return { isValid: false, errorMsg: "Does not match" };
   }
   return { isValid: true, errorMsg: null };
+}
+
+export function matchesOneInList(txt, list) {
+    if (! list.includes(txt)) {
+        return { isValid: false, errorMsg: "Must match value in list" };
+    }
+    return { isValid: true, errorMsg: null };
 }

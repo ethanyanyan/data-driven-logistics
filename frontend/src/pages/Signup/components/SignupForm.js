@@ -8,10 +8,10 @@ is conveyed using the placeholder attribute
 for sighted users.
 */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import "./SignupForm.css"
 import FormField from './FormField';
-import * as validation from "../validation";
+import * as v from "../validation";
 
 
 
@@ -25,6 +25,56 @@ function SignupForm() {
     password: '',
     confirmPassword: '',
   })
+
+  const [errorObj, setErrorObj] = useState({
+    first: '',
+    last: '',
+    role: '',
+    username: '',
+    password: '',
+    confirmPassword: ''
+  })
+
+  const [submitResult, setSubmitResult] = useState("")
+
+  const validationObj = {
+    first: [
+      v.notEmpty, 
+      v.startsCapital, 
+      v.alphaOnly, 
+      v.minLength,
+      v.maxLength
+    ],
+    last: [
+      v.notEmpty, 
+      v.startsCapital, 
+      v.alphaOnly, 
+      v.minLength,
+      v.maxLength
+    ],
+    role: [
+      v.notEmpty
+    ],
+    username: [
+      v.notEmpty, 
+      v.alphaNumericOnly, 
+      v.minLength,
+      v.maxLength
+    ],
+    password: [
+      v.notEmpty, 
+      v.alphaNumericOnly, 
+      v.minLength,
+      v.maxLength
+    ],
+    confirmPassword: [
+      v.notEmpty, 
+      v.alphaNumericOnly, 
+      v.minLength,
+      v.maxLength,
+      v.matchesTarget
+    ],
+  }
 
   function handleInputChange(e) {
     const { name, value } = e.target
@@ -45,6 +95,48 @@ function SignupForm() {
     // For a given field, the first 
     // error message obtained should 
     // be used
+    let success = true;
+    for (const field in validationObj) {
+      let val = formData[field]
+      let outputMsg = ""
+      console.log(`got val: ${val} for field: ${field}`)
+      for (let i=0; i<validationObj[field].length; i++) {
+        const func = validationObj[field][i];
+        if (func.length === 1) {
+          const {isValid, errorMsg} = func(val);
+          console.log(`got ${isValid} for ${func.name}`)
+          console.log(`got ${errorMsg} for ${func.name}`)
+          if (isValid === false) {
+            outputMsg = errorMsg;
+            success = false;
+            setSubmitResult("")
+            break
+          }
+        }
+        else {
+          switch (func.name) {
+            case "minLength":
+              console.log("Checking minLength")
+              break;
+            case "maxLength":
+              console.log("Checking maxLength")
+              break;
+            case "matchesTarget":
+              console.log("matchesTarget")
+              break;
+            default:
+              console.error(`Unkown validation function ${func.name} for ${field}`)
+          }
+        }
+      }
+      setErrorObj((prevData) => ({
+        ...prevData,
+        [field]: outputMsg,
+      }))
+    }
+    if (success) {
+      setSubmitResult(`Added user ${formData.username} to your organization`)
+    }
   };
 
   const rolesList = [ // TODO: fetch from backend
@@ -61,7 +153,7 @@ function SignupForm() {
     { name: 'username', type: 'text', placeholder: 'Username' },
     { name: 'role', type: 'search', placeholder: 'Role', data: rolesList },
     { name: 'password', type: 'password', placeholder: 'Password' },
-    { name: 'confirm-password', type: 'password', placeholder: 'Confirm password' },
+    { name: 'confirmPassword', type: 'password', placeholder: 'Confirm password' },
   ];
 
 
@@ -71,16 +163,23 @@ function SignupForm() {
         {formFields.map(fieldObj => (
             <FormField 
                 key={fieldObj.name} 
-                {...fieldObj} 
+                {...fieldObj}
+                error={errorObj[fieldObj.name]}
                 value={formData[fieldObj.name]} 
                 onChange={handleInputChange}
             /> 
         ))}
 
-        <div className="submit">
+        <div className="submit-container">
+
+            <div className="submit-result-text">
+              {submitResult}
+            </div>
+
             <button type="submit" className="submit-btn">
                 SUBMIT
             </button>
+
         </div>
     </form>
   );

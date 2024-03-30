@@ -72,14 +72,13 @@
     grid-area: Pass;
 }
 
-.signup-form > .confirm-password {
+.signup-form > .confirmPassword {
     grid-area: Conf;
 }
 
-.signup-form > .submit {
+.signup-form > .submit-container {
     grid-area: Subm;
-    display: flex;
-    justify-content: center;
+    text-align: center;
 }
 
 .signup-form .visually-hidden { /* Hide all labels */
@@ -97,16 +96,17 @@
     display: flex;
     align-items: center;
     border-radius: 5px;
-    /* border-color: var(--logo-dark-blue); */
-    padding: 5px 10px;
+    padding-left: 10px;
     font-size: clamp(0.5rem, 1.3vw, 1.2rem);
-   
     border: var(--logo-dark-blue) 2px solid;
 }
 
 .search-bar > input {
     border: none;
     margin-left: 5px;
+    width: 100%;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
 .search-results {
@@ -120,4 +120,13 @@
 .search-results.show-results {
     /* height: var(--results-height); */
     opacity: 1;
+}
+
+.form-error {
+    color: red;
+}
+
+.submit-result-text {
+    color: green;
+    margin-bottom: 10px;
 }
