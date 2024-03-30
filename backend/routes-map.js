@@ -9,6 +9,8 @@ let mapping = {
   [`${APIBASE}users/`]: require("./routes/users"),
   [`${APIBASE}companies/`]: require("./routes/companies"),
   [`${APIBASE}shipments/`]: require("./routes/shipments"),
+  [`${APIBASE}roles/`]: require("./routes/roles"),
+  [`${APIBASE}testing/`]: require("./routes/testing"),
 };
 
 function applyMappingToApp(app) {
