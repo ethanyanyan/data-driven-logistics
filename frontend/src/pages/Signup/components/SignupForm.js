@@ -9,15 +9,16 @@ for sighted users.
 */
 
 import React, { useState, useEffect } from 'react';
+import {useAuth} from "../../../contexts/AuthContext"
 import "./SignupForm.css"
 import FormField from './FormField';
 import * as v from "../validation";
-
+import {API_BASE_URL} from "../../../config"
 
 
 function SignupForm() {
 
-
+  const {user} = useAuth();
 
   const [errorObj, setErrorObj] = useState({
     first: '',
@@ -29,24 +30,24 @@ function SignupForm() {
   })
 
   const [submitResult, setSubmitResult] = useState("")
+  const [rolesList, setRolesList] = useState(["Pending..."])
+  const [roleTitlesList, setRoleTitlesList] = useState([])
+  const [roleNameIdMap, setRoleNameIdMap] = useState({})
 
   const validationObj = {
     first: [
       v.notEmpty, 
       v.startsCapital, 
-      v.alphaOnly, 
-      v.minLength,
-      v.maxLength
+      v.alphaOnly
     ],
     last: [
       v.notEmpty, 
       v.startsCapital, 
-      v.alphaOnly, 
-      v.minLength,
-      v.maxLength
+      v.alphaOnly
     ],
     role: [
-      v.notEmpty
+      v.notEmpty,
+      v.matchesOneInList
     ],
     username: [
       v.notEmpty, 
@@ -69,83 +70,134 @@ function SignupForm() {
     ],
   }
 
+  async function createNewUser(formData) {
+
+    let BusinessID = 1;
+    if (user) {
+      BusinessID = user.BusinessID
+    }
+
+    const newUser = {
+      businessId: BusinessID,
+      roleId: roleNameIdMap[formData.get("role")],
+      username: formData.get("username"),
+      password: formData.get("password"),
+      firstName: formData.get("first"),
+      lastName: formData.get("last"),
+    };
+    console.log("New user")
+    console.log(newUser)
+    
+    const url = `${API_BASE_URL}users/register`
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
+      },
+      mode: "cors",
+      body: JSON.stringify(newUser),
+    })
+    if (response.ok) {
+      console.log("New user added")
+    }
+    else {
+      console.error("Failed to add new user to DB")
+    }
+
+  }
+
   function handleSubmit2(e) {
     e.preventDefault();
-    console.log("Submitting")
+    let success = true;
     const formData = new FormData(e.target);
-    for (var pair of formData.entries()) {
-      console.log(pair[0] + ": " + pair[1]);
+    console.log(formData)
+    for (const [field, val] of formData.entries()) {
+      let outputMsg = "";
+      for (let i=0; i<validationObj[field].length; i++) {
+        const func = validationObj[field][i];
+        let args = null
+
+        switch (func.name) {
+          case "minLength":
+            const MINCHARS = 5
+            args = [val, MINCHARS]
+            break;
+          case "maxLength":
+            const MAXCHARS = 20
+            args = [val, MAXCHARS]
+            break;
+          case "matchesTarget":
+            const passwordVal = formData.password
+            const confirmVal = formData.confirmPassword
+            args = [passwordVal, confirmVal]
+            break;
+          case "matchesOneInList":
+            // const roleNames = rolesList.map(role => role.RoleName)
+            args = [val, rolesList];
+            break;
+          default:
+            args = [val]
+        }
+        
+        const {isValid, errorMsg} = func(...args);
+        if (isValid === false) {
+          outputMsg = errorMsg;
+          success = false;
+          break
+        }
+      }
+      setErrorObj((prevData) => ({
+        ...prevData,
+        [field]: outputMsg,
+      }))
+    }
+    if (success) {
+      setSubmitResult("Adding new user to your organization...")
+      createNewUser(formData)
+    }
+    else {
+      setSubmitResult("")
     }
   }
 
-  // function handleSubmit(e) {
-  //   e.preventDefault();
-  //   // Add form submission logic here
-  //   // For each of the form fields, 
-  //   // run each of the accompanying functions
-  //   // Each function should return true
-  //   // or false if the test succeeded/failed
-  //   // and null/an error message
-  //   // For a given field, the first 
-  //   // error message obtained should 
-  //   // be used
-  //   let success = true;
-  //   for (const field in validationObj) {
-  //     let val = formData[field]
-  //     let outputMsg = ""
-  //     console.log(`got val: ${val} for field: ${field}`)
-  //     for (let i=0; i<validationObj[field].length; i++) {
-  //       const func = validationObj[field][i];
-  //       if (func.length === 1) {
-  //         const {isValid, errorMsg} = func(val);
-  //         console.log(`got ${isValid} for ${func.name}`)
-  //         console.log(`got ${errorMsg} for ${func.name}`)
-  //         if (isValid === false) {
-  //           outputMsg = errorMsg;
-  //           success = false;
-  //           setSubmitResult("")
-  //           break
-  //         }
-  //       }
-  //       else {
-  //         switch (func.name) {
-  //           case "minLength":
-  //             console.log("Checking minLength")
-  //             break;
-  //           case "maxLength":
-  //             console.log("Checking maxLength")
-  //             break;
-  //           case "matchesTarget":
-  //             console.log("matchesTarget")
-  //             break;
-  //           default:
-  //             console.error(`Unkown validation function ${func.name} for ${field}`)
-  //         }
-  //       }
-  //     }
-  //     setErrorObj((prevData) => ({
-  //       ...prevData,
-  //       [field]: outputMsg,
-  //     }))
-  //   }
-  //   if (success) {
-  //     setSubmitResult(`Added user ${formData.username} to your organization`)
-  //   }
-  // };
 
-  const rolesList = [ // TODO: fetch from backend
-    "Admin",
-    "Contractor",
-    "HR",
-    "Employee",
-    "Manager"
-  ]
+
+
+
+
+  useEffect(() => {
+    const fetchRoles = async () => {
+      try {
+        const response = await fetch(`${API_BASE_URL}roles/`);
+        if (!response.ok) {
+          throw new Error('Failed to fetch roles');
+        }
+        const jsonRes = await response.json();
+        const roles = jsonRes.data;
+        // setRolesList(roles)
+        setRolesList(roles.map(role => role.RoleName))
+        setRoleTitlesList(roles.map(role => role.Description))
+        let mapping = {}
+        for (const role of roles) {
+          mapping[role.RoleName] = role.RoleID
+        }
+        setRoleNameIdMap(mapping)
+      } catch (error) {
+        console.error('Error fetching roles:', error.message);
+        setSubmitResult("Cannot connect to server. Please contact support.")
+      }
+    };
+  
+    fetchRoles();
+  }, []);
+  
 
   const formFields = [
     { name: 'first', type: 'text', placeholder: 'First name' },
     { name: 'last', type: 'text', placeholder: 'Last name' },
     { name: 'username', type: 'text', placeholder: 'Username' },
-    { name: 'role', type: 'search', placeholder: 'Role', data: rolesList },
+    { name: 'role', type: 'search', placeholder: 'Role', data: rolesList, titles: roleTitlesList },
     { name: 'password', type: 'password', placeholder: 'Password' },
     { name: 'confirmPassword', type: 'password', placeholder: 'Confirm password' },
   ];

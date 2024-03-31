@@ -117,16 +117,29 @@
     overflow: scroll;
 }
 
+.search-results > div { /*Add font size*/
+    padding-left: 10px;
+    padding-top: 5px;
+    padding-bottom: 2px;
+    border-radius: 2px;
+}
+
+
+.search-results > div:hover {
+    cursor: pointer;
+    background-color: rgb(228, 228, 228);
+}
+
 .search-results.show-results {
     /* height: var(--results-height); */
     opacity: 1;
 }
 
-.form-error {
+.form-error { /*Add font size*/
     color: red;
 }
 
-.submit-result-text {
-    color: green;
+.submit-result-text { /*Add font size*/
     margin-bottom: 10px;
 }
+

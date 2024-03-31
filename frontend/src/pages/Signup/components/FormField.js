@@ -1,5 +1,4 @@
 import React, {useMemo, useEffect} from "react"
-import Selector from "./inputs/Selector"
 import Search from "./inputs/Search"
 import DefaultInput from "./inputs/Default"
 
@@ -21,9 +20,7 @@ function FormField(props) {
 
     // Select which type of Input component to render
     let Input = DefaultInput;
-    if (props.type === "select") {
-        Input = Selector;
-    } else if (props.type === "search") {
+    if (props.type === "search") {
         Input = Search;
     }
 

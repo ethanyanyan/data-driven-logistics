@@ -117,10 +117,6 @@ test("matchesOneInList", () => {
     
     testCases.forEach((testCase) => {
         const { inputs, expected } = testCase;
-        console.log("Test case")
-        console.log(inputs, expected)
-        console.log("Got")
-        console.log(v.matchesOneInList(...inputs))
         expect(v.matchesOneInList(...inputs)).toEqual(expected);
     });
 

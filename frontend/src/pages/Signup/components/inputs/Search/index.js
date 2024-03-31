@@ -4,15 +4,14 @@ import {FaSearch} from "react-icons/fa";
 
 // TODO: Can parent component own potential results and filtering function
 
-function Search({ name, type, placeholder, onChange, data = [] }) {
-
-    // const elementRef = useRef(null)
+function Search({ name, placeholder, data = [], titles=[] }) {
     
     const [filteredList, setFilteredList] = useState(data)
     const [isFocused, setIsFocused] = useState(false)
     const [firstResHeight, setFirstResHeight] = useState(0)
     const [resHeight, setResHeight] = useState(0)
     const [value, setValue] = useState("")
+    
 
     useEffect(() => {
         const results = document.getElementsByClassName("search-results")[0]
@@ -28,9 +27,13 @@ function Search({ name, type, placeholder, onChange, data = [] }) {
     useEffect(() => {
         const newFilteredList = data.filter(item => item.toLowerCase().includes(value.toLowerCase()))
         setFilteredList(newFilteredList)
-        setResHeight(firstResHeight * newFilteredList.length)
-        console.log(`set height triggered to ${firstResHeight * newFilteredList.length}`)
-    }, [value])
+        if (isFocused) {
+            setResHeight(firstResHeight * newFilteredList.length)
+        }
+        else {
+            setResHeight(0)
+        }
+    }, [value, data])
 
     function handleFocus() {
         setIsFocused(true)
@@ -42,10 +45,9 @@ function Search({ name, type, placeholder, onChange, data = [] }) {
         setResHeight(0)
     }
 
-    // The list of results should appear whenever 
-    // The search bar is clicked and disappear whenever
-    // it loses focus
-
+    function handleChange(e) {
+        setValue(e.target.value)
+    }
 
     return (
         <div id = "search-container">
@@ -56,6 +58,7 @@ function Search({ name, type, placeholder, onChange, data = [] }) {
                     id={name}
                     name={name}
                     value={value}
+                    onChange={(e) => handleChange(e)}
                     placeholder={placeholder}
                     onFocus={handleFocus}
                     onBlur={handleBlur}
@@ -65,17 +68,16 @@ function Search({ name, type, placeholder, onChange, data = [] }) {
                 height={resHeight} 
                 isFocused={isFocused}
                 filteredList={filteredList}
+                titles={titles}
                 name={name}/>
         </div>
         
     )
 }
 
-function SearchResults({height=0, isFocused, filteredList, name}) {
+function SearchResults({height=0, isFocused, filteredList, name, titles}) {
 
     function handleResultClicked(e) {
-        console.log("Result clicked.")
-        console.log(e)
         document.getElementById(name).value = e
     }
 
@@ -84,7 +86,11 @@ function SearchResults({height=0, isFocused, filteredList, name}) {
                 className={`search-results ${isFocused ? "show-results" : ""}`}
                 style={{height: height}}>
                 {filteredList.map((company, idx) => (
-                    <div key={`company-${idx}`} onClick={() => handleResultClicked(company)}>
+                    <div 
+                        key={`company-${idx}`} 
+                        onClick={() => handleResultClicked(company)}
+                        title={titles ? titles[idx] : ""}
+                    >
                         {company}
                     </div>
                 ))}
@@ -95,12 +101,13 @@ function SearchResults({height=0, isFocused, filteredList, name}) {
 export default Search
 
 
-
+// TIME:
 
 // TODO: 
+// Create new user on backend
+// Perform logic for validation functions
 // Handle displaying server-side error
-// Break search function into its own folder?
-// Handle click on search bar dropdown item
-// Connect to backend
 // Cleanup and organization
 // Documentation
+
+// 8:00 - 9:20 Implementing logic for validation functions, working on creating new user on backend from frontend form

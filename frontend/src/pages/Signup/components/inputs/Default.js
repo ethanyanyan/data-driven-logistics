@@ -1,4 +1,4 @@
-function DefaultInput({ name, type, placeholder, onChange, data = null }) {
+function DefaultInput({ name, type, placeholder}) {
     return (
         <input
             type={type}
