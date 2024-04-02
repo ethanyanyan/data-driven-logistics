@@ -27,6 +27,10 @@ const buildPath = path.join(__dirname, "..", "frontend", "build");
 // Serve static assets from the build directory
 app.use(express.static(buildPath));
 
+app.get("/api/status", (req, res) => {
+  res.status(200).json({ status: "OK" });
+});
+
 // Serve the 'index.html' file for all non-API routes
 app.get("*", (req, res) => {
   res.sendFile(path.join(buildPath, "index.html"));
@@ -34,17 +38,6 @@ app.get("*", (req, res) => {
 
 // Define PORT
 const PORT = process.env.PORT || 3001;
-
-const pool = mysql.createPool({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  database: process.env.DB_NAME,
-  password: process.env.DB_PASSWORD,
-  port: process.env.DB_PORT,
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0,
-});
 
 // Start the server if this script is run directly
 if (require.main === module) {
