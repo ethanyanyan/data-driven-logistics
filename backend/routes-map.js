@@ -10,6 +10,7 @@ let mapping = {
   [`${APIBASE}companies/`]: require("./routes/companies"),
   [`${APIBASE}shipments/`]: require("./routes/shipments"),
   [`${APIBASE}inventory/`]: require("./routes/inventory"),
+  [`${APIBASE}products/`]: require("./routes/products"),
 
 };
 
