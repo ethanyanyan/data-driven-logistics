@@ -14,13 +14,10 @@ router.get("/:id", productController.getProduct);
 // Endpoint for getting all products
 router.get("/", productController.getAllProducts);
 
-// Endpoint to update the unit price pf a product
+// Endpoint to update the details of a product
 router.patch("/:id", productController.updateDetails);
 
-// // Endpoint to update the description of a product
-// routerß.put("/:id", productController.updateDescription);
-
-// // Endpoint to delete a product
-// router.delete("/:id", productController.deleteInventory);
+// Endpoint to delete a product
+router.delete("/:id", productController.deleteProduct);
 
 module.exports = router;

@@ -14,7 +14,7 @@ async function createProduct(req, res) {
 
   try {
     const newProduct = new Product(
-      ß((ProductID = null)),
+      ((ProductID = null)),
       Name,
       Description,
       UnitPrice
@@ -102,7 +102,7 @@ async function updateDetails(req, res) {
     });
   }
 
-  // update the product objet
+  // update the product object
   try {
     const productUpdated = await product.update(updateData);
     if (productUpdated) {
@@ -122,9 +122,37 @@ async function updateDetails(req, res) {
   }
 }
 
+// Delete a product
+async function deleteProduct(req, res) {
+  try {
+    const product = await Product.findByID(req.params.id);
+    if (product) {
+      const result = await product.delete();
+      if (result) {
+        res.status(200).json({
+          message: `Product id ${req.params.id} deleted successfully`,
+        });
+      } else {
+        res.status(500).json({
+          error: "Database error occurred.",
+        });
+      }
+    } else {
+      res.status(404).json({
+        error: `Product with id ${req.params.id} not found`,
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      error: "Database error occurred.",
+    });
+  }
+}
+
 module.exports = {
   createProduct,
   getProduct,
   getAllProducts,
   updateDetails,
+  deleteProduct
 };
