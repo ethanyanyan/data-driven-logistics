@@ -12,14 +12,17 @@ import React, { useState, useEffect } from 'react';
 import {useAuth} from "../../../contexts/AuthContext"
 import "./SignupForm.css"
 import FormField from './FormField';
-import * as v from "../validation";
 import {API_BASE_URL} from "../../../config"
 import {signupValidationObj as validationObj} from "../validation/signup-val"
 
 
 function SignupForm() {
 
-  const {user} = useAuth();
+  const auth = useAuth();
+  let user = null;
+  if (auth) {
+    user = auth.user; 
+  }
 
   const [errorObj, setErrorObj] = useState({
     first: '',
@@ -34,8 +37,6 @@ function SignupForm() {
   const [rolesList, setRolesList] = useState(["Pending..."])
   const [roleTitlesList, setRoleTitlesList] = useState([])
   const [roleNameIdMap, setRoleNameIdMap] = useState({})
-
-  
 
   async function createNewUser(formData) {
 

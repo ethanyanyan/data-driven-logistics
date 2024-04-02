@@ -81,6 +81,24 @@ Ensure Docker and Docker Compose are installed on your system. For installation 
 - Once the containers are up and running, you can access the frontend of the Data Driven Logistics application by visiting: `http://localhost:3000`.
 - The backend API will be accessible at: `http://localhost:3001`.
 
+### Running the Application Without Docker
+
+If dependencies are already installed, you can start the application using:
+
+- For the Backend:
+
+  ```bash
+  cd backend
+  node index.js
+  ```
+
+- For the Frontend:
+
+  ```bash
+  cd frontend
+  npm start
+  ```
+
 ### Shutting Down the Application
 
 - To stop and remove the application containers, use the following Docker Compose command in the project directory:

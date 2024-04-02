@@ -35,17 +35,6 @@ app.get("*", (req, res) => {
 // Define PORT
 const PORT = process.env.PORT || 3001;
 
-const pool = mysql.createPool({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  database: process.env.DB_NAME,
-  password: process.env.DB_PASSWORD,
-  port: process.env.DB_PORT,
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0,
-});
-
 // Start the server if this script is run directly
 if (require.main === module) {
   app.listen(PORT, () => {

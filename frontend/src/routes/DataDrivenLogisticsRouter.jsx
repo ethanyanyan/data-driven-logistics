@@ -7,6 +7,7 @@ import Dashboard from "../pages/Dashboard";
 import LoginPage from "../pages/LoginPage";
 import ShipmentTracking from "../pages/ShipmentTracking";
 import Signup from "../pages/Signup";
+import PageNoMatch from "../pages/PageNoMatch";
 
 export default function DataDrivenLogisticsRouter() {
     return (
@@ -26,6 +27,9 @@ export default function DataDrivenLogisticsRouter() {
                             </ProtectedRoute>
                         } /> 
                         <Route path="/signup" element={<Signup />} />
+                        <Route path="/*" element={
+                            <PageNoMatch></PageNoMatch>
+                        } />
                         {/* Add future routes here! */}
                     </Route>
                 </Routes>
