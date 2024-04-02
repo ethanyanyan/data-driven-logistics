@@ -14,6 +14,7 @@ import "./SignupForm.css"
 import FormField from './FormField';
 import * as v from "../validation";
 import {API_BASE_URL} from "../../../config"
+import {signupValidationObj as validationObj} from "../validation/signup-val"
 
 
 function SignupForm() {
@@ -34,41 +35,7 @@ function SignupForm() {
   const [roleTitlesList, setRoleTitlesList] = useState([])
   const [roleNameIdMap, setRoleNameIdMap] = useState({})
 
-  const validationObj = {
-    first: [
-      v.notEmpty, 
-      v.startsCapital, 
-      v.alphaOnly
-    ],
-    last: [
-      v.notEmpty, 
-      v.startsCapital, 
-      v.alphaOnly
-    ],
-    role: [
-      v.notEmpty,
-      v.matchesOneInList
-    ],
-    username: [
-      v.notEmpty, 
-      v.alphaNumericOnly, 
-      v.minLength,
-      v.maxLength
-    ],
-    password: [
-      v.notEmpty, 
-      v.alphaNumericOnly, 
-      v.minLength,
-      v.maxLength
-    ],
-    confirmPassword: [
-      v.notEmpty, 
-      v.alphaNumericOnly, 
-      v.minLength,
-      v.maxLength,
-      v.matchesTarget
-    ],
-  }
+  
 
   async function createNewUser(formData) {
 
@@ -99,19 +66,21 @@ function SignupForm() {
       body: JSON.stringify(newUser),
     })
     if (response.ok) {
-      console.log("New user added")
+      setSubmitResult("Successfully added new user")
+      return true
     }
     else {
+      setSubmitResult("Cannot connect to server. Please contact support.")
       console.error("Failed to add new user to DB")
+      return false
     }
 
   }
 
-  function handleSubmit2(e) {
+  function handleSubmit(e) {
     e.preventDefault();
     let success = true;
     const formData = new FormData(e.target);
-    console.log(formData)
     for (const [field, val] of formData.entries()) {
       let outputMsg = "";
       for (let i=0; i<validationObj[field].length; i++) {
@@ -133,7 +102,6 @@ function SignupForm() {
             args = [passwordVal, confirmVal]
             break;
           case "matchesOneInList":
-            // const roleNames = rolesList.map(role => role.RoleName)
             args = [val, rolesList];
             break;
           default:
@@ -154,17 +122,14 @@ function SignupForm() {
     }
     if (success) {
       setSubmitResult("Adding new user to your organization...")
-      createNewUser(formData)
+      if (createNewUser(formData)) {
+        e.target.reset()
+      }
     }
     else {
       setSubmitResult("")
     }
   }
-
-
-
-
-
 
   useEffect(() => {
     const fetchRoles = async () => {
@@ -175,7 +140,6 @@ function SignupForm() {
         }
         const jsonRes = await response.json();
         const roles = jsonRes.data;
-        // setRolesList(roles)
         setRolesList(roles.map(role => role.RoleName))
         setRoleTitlesList(roles.map(role => role.Description))
         let mapping = {}
@@ -204,7 +168,7 @@ function SignupForm() {
 
 
   return (
-    <form className="signup-form" onSubmit={handleSubmit2}>
+    <form className="signup-form" onSubmit={handleSubmit}>
 
         {formFields.map(fieldObj => (
             <FormField 

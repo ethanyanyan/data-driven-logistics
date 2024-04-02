@@ -104,10 +104,10 @@ export default Search
 // TIME:
 
 // TODO: 
-// Create new user on backend
-// Perform logic for validation functions
-// Handle displaying server-side error
 // Cleanup and organization
 // Documentation
 
 // 8:00 - 9:20 Implementing logic for validation functions, working on creating new user on backend from frontend form
+// 9:45 - 10:30 Successfully creating new user in DB from form submission
+// 10:30 - 11 final touches on CSS for signup page, reorganization
+// reorganization, re-factoring, documentation, etc.

@@ -117,11 +117,12 @@
     overflow: scroll;
 }
 
-.search-results > div { /*Add font size*/
+.search-results > div {
     padding-left: 10px;
     padding-top: 5px;
     padding-bottom: 2px;
     border-radius: 2px;
+    font-size: clamp(0.4rem, 1vw, 1rem);
 }
 
 
@@ -131,15 +132,16 @@
 }
 
 .search-results.show-results {
-    /* height: var(--results-height); */
     opacity: 1;
 }
 
-.form-error { /*Add font size*/
+.form-error {
     color: red;
+    font-size: clamp(0.4rem, 1vw, 1rem);
 }
 
-.submit-result-text { /*Add font size*/
+.submit-result-text {
     margin-bottom: 10px;
+    font-size: clamp(0.4rem, 1vw, 1rem);
 }
 
