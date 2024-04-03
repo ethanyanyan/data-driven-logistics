@@ -1,5 +1,5 @@
 // AuthContext.jsx
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import { loginAPI } from "./../services/userService";
 
 export const AuthContext = createContext();
@@ -13,8 +13,8 @@ export const AuthProvider = ({ children }) => {
         const response = await loginAPI(username, password);
         if (response.success) {
             setLoggedIn(true);
-            setUser(response.user); // Store the user data in state
-            localStorage.setItem('token', response.token); // Store the token in local storage
+            setUser(response.data.user); // Store the user data in state
+            localStorage.setItem('token', response.data.token); // Store the token in local storage
             return true
         } else {
             // Handle login failure (e.g., set an error state, log to console)

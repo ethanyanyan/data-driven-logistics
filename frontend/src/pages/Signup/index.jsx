@@ -1,8 +1,15 @@
 import React, {useState} from "react"
 import "./Signup.css"
 import Logo from "../../assets/images/logo.png"
-import SignupForm from "./components/SignupForm"
+import SignupForm from "../../components/Forms/Signup"
 
+/**
+ * Signup page where users can add new 
+ * users to their organization using the
+ * SignupForm component.
+ * 
+ * @returns rendered Signup page.
+ */
 function Signup() {
     return (
         <div className="signup-page">

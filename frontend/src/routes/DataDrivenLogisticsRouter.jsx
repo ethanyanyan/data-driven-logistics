@@ -26,7 +26,11 @@ export default function DataDrivenLogisticsRouter() {
                                 <ShipmentTracking />
                             </ProtectedRoute>
                         } /> 
-                        <Route path="/signup" element={<Signup />} />
+                        <Route path="/signup" element={
+                            <ProtectedRoute>
+                                <Signup />
+                            </ProtectedRoute>
+                        }/>
                         <Route path="/*" element={
                             <PageNoMatch></PageNoMatch>
                         } />

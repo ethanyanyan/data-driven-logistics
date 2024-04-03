@@ -1,3 +1,11 @@
+/**
+ * Tests for the search functions 
+ * used by the search bar component
+ * to filter a list of strings to 
+ * find items containing the 
+ * target string.
+ */
+
 import * as s from "./search-funcs"
 
 test("caseInsensitive", () => {
