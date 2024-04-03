@@ -6,6 +6,7 @@ import DataDrivenLogistics from "../components/navigation/DataDrivenLogistics";
 import Dashboard from "../pages/Dashboard";
 import LoginPage from "../pages/LoginPage";
 import ShipmentTracking from "../pages/ShipmentTracking";
+import People from "../pages/People";
 
 export default function DataDrivenLogisticsRouter() {
     return (
@@ -24,6 +25,11 @@ export default function DataDrivenLogisticsRouter() {
                                 <ShipmentTracking />
                             </ProtectedRoute>
                         } /> 
+                        <Route path="/people" element={
+                            <ProtectedRoute>
+                                <People />
+                            </ProtectedRoute>
+                        } />
                         {/* Add future routes here! */}
                     </Route>
                 </Routes>
