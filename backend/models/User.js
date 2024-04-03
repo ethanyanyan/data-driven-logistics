@@ -36,7 +36,8 @@ class User {
    * @return {Promise<object>} The result object from the database operation.
    */
   static async save(userObj) {
-    const connection = await pool.getConnection();
+    const connection = await db.pool.getConnection();
+
     try {
       await connection.beginTransaction();
       const hashedPassword = await this.hashPassword(userObj.Password);
