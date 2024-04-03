@@ -50,7 +50,7 @@ class User {
           hashedPassword,
           userObj.FirstName,
           userObj.LastName,
-        ],
+        ]
       );
       await connection.commit();
       return result;
@@ -72,7 +72,7 @@ class User {
     try {
       const [rows] = await db.pool.execute(
         "SELECT * FROM Users WHERE UserID = ?",
-        [UserID],
+        [UserID]
       );
       if (rows.length > 0) {
         return new User(rows[0]);
@@ -125,7 +125,7 @@ class User {
       // Hash password if it's in the updateFields
       if (updateFields.hasOwnProperty("Password")) {
         queryParams[queryParams.length - 2] = await this.hashPassword(
-          updateFields["Password"],
+          updateFields["Password"]
         );
       }
 

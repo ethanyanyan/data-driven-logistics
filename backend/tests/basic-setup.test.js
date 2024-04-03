@@ -5,7 +5,7 @@
 
 const request = require("supertest");
 const app = require("../index");
-const BASE = "/api/v1/"
+const BASE = "/api/v1/";
 
 describe("Basic testing config", () => {
   it("does 1 + 1 equal 2", () => {
@@ -14,9 +14,9 @@ describe("Basic testing config", () => {
   });
 
   it("GET <base>/testing/ping should return 'pong'", async () => {
-    const res = await request(app).get(BASE + "testing/ping")
-    expect(res.text).toBe("pong")
-  })
+    const res = await request(app).get(BASE + "testing/ping");
+    expect(res.text).toBe("pong");
+  });
 
   // Add more test cases for other routes and logic as needed
 });

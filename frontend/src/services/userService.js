@@ -1,12 +1,12 @@
 // src/services/authService.js
 
-// TODO: Define this elsewhere
-const API_BASE_URL = "http://localhost:3001/api/v1/users";
+import {API_BASE_URL} from "../config"
+const USERS_BASE_URL = `${API_BASE_URL}users`;
 
 // Function to login
 export const loginAPI = async (username, password) => {
   try {
-    const response = await fetch(`${API_BASE_URL}/login`, {
+    const response = await fetch(`${USERS_BASE_URL}/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -21,7 +21,7 @@ export const loginAPI = async (username, password) => {
       return { success: false, error: data };
     }
   } catch (error) {
-    console.log("Login response error")
+    console.log("Login response error");
     return { success: false, error };
   }
 };
@@ -29,7 +29,7 @@ export const loginAPI = async (username, password) => {
 export const fetchUsersByCompany = async (companyId) => {
   const token = localStorage.getItem("token");
   try {
-    const response = await fetch(`${API_BASE_URL}/${companyId}`, {
+    const response = await fetch(`${USERS_BASE_URL}/${companyId}`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,

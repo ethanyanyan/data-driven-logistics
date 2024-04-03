@@ -1,18 +1,14 @@
 const db = require("../config/dbConfig");
 
 class Role {
-   /**
+  /**
    * Constructs a Role instance with detailed information.
    *
    * @param {number} RoleID - The unique identifier of the role.
    * @param {string} RoleName - The name for the role, like "Admin".
    * @param {string} Description - The text description of the role.
    */
-  constructor(
-    RoleID,
-    RoleName,
-    Description,
-  ) {
+  constructor(RoleID, RoleName, Description) {
     this.RoleID = RoleID;
     this.RoleName = RoleName;
     this.Description = Description;
@@ -28,18 +24,12 @@ class Role {
     try {
       const [rows] = await db.pool.query(query);
       return rows.map(
-        (row) =>
-          new Role(
-            row.RoleID,
-            row.RoleName,
-            row.Description
-          ),
+        (row) => new Role(row.RoleID, row.RoleName, row.Description)
       );
     } catch (error) {
       throw new Error("Error retrieving roles: " + error.message);
     }
   }
-
 }
 
-module.exports = Role
+module.exports = Role;

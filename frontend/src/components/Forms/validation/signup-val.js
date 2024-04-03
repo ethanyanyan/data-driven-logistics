@@ -8,37 +8,16 @@
 import * as v from ".";
 
 export const signupValidationObj = {
-    first: [
-      v.notEmpty, 
-      v.startsCapital, 
-      v.alphaOnly
-    ],
-    last: [
-      v.notEmpty, 
-      v.startsCapital, 
-      v.alphaOnly
-    ],
-    role: [
-      v.notEmpty,
-      v.matchesOneInList
-    ],
-    username: [
-      v.notEmpty, 
-      v.alphaNumericOnly, 
-      v.minLength,
-      v.maxLength
-    ],
-    password: [
-      v.notEmpty, 
-      v.alphaNumericOnly, 
-      v.minLength,
-      v.maxLength
-    ],
-    confirmPassword: [
-      v.notEmpty, 
-      v.alphaNumericOnly, 
-      v.minLength,
-      v.maxLength,
-      v.matchesTarget
-    ],
-  }
+  first: [v.notEmpty, v.startsCapital, v.alphaOnly],
+  last: [v.notEmpty, v.startsCapital, v.alphaOnly],
+  role: [v.notEmpty, v.matchesOneInList],
+  username: [v.notEmpty, v.alphaNumericOnly, v.minLength, v.maxLength],
+  password: [v.notEmpty, v.alphaNumericOnly, v.minLength, v.maxLength],
+  confirmPassword: [
+    v.notEmpty,
+    v.alphaNumericOnly,
+    v.minLength,
+    v.maxLength,
+    v.matchesTarget,
+  ],
+};
