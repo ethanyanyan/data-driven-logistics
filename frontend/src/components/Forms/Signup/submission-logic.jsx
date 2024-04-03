@@ -18,7 +18,7 @@ import {API_BASE_URL} from "../../../config"
  *  submitResult: string
  * } 
  */
-function handleSignupSubmit(e, rolesList, businessId) {
+async function handleSignupSubmit(e, rolesList, businessId) {
   
   let success = true;
   let errorObj = {}
@@ -68,7 +68,7 @@ function handleSignupSubmit(e, rolesList, businessId) {
   // If the form passes all validation functions, attempt
   // to create a new user on backend
   if (success) {
-    const {resultBool, resultTxt} = createNewUser(formData, rolesList, businessId)
+    const {resultBool, resultTxt} = await createNewUser(formData, rolesList, businessId)
     if (resultBool) {
       e.target.reset()
     }

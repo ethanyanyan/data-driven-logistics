@@ -1,13 +1,3 @@
-/*
-Signup form component
-Uses labels for accessibility purposes
-(important for screenreaders) but hides
-them using CSS for a more clean 
-look where the input information
-is conveyed using the placeholder attribute
-for sighted users.
-*/
-
 import React, { useState, useEffect } from 'react';
 import "./SignupForm.css"
 import Search from "../../inputs/Search"
@@ -30,8 +20,8 @@ function SignupForm() {
   // If the user is logged in, attempt to get their business's ID, 
   // otherwise default to 1
   const authCon = useAuth()
-  let BusinessID = authCon.user ? authCon.user.BusinessID : 1;
-
+  const BusinessID = authCon && authCon.user ? authCon.user.BusinessID : 1;
+  
   // Stateful object to store error messages for each input field
   const [errorObj, setErrorObj] = useState({
     first: '',
@@ -52,10 +42,10 @@ function SignupForm() {
   const [roleNamesList, setRoleNamesList] = useState(["Pending..."])
   const [roleTitlesList, setRoleTitlesList] = useState([])
 
-  // Form submission function, functions stored in separate file
-  function handleSubmit(e) {
+  // Form submission function, functions stored in separate file for brevity
+  async function handleSubmit(e) {
     e.preventDefault();
-    const {errorObj, submitResult} = handleSignupSubmit(e, rolesList, BusinessID)
+    const {errorObj, submitResult} = await handleSignupSubmit(e, rolesList, BusinessID)
     setErrorObj(errorObj)
     setSubmitResult(submitResult)
   }
