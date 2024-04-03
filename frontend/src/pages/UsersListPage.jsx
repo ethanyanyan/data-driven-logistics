@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import * as userService from '../services/userService';
+import { ROLES } from '../constants/constants';
+import './UsersListPage.css';
 
 const UsersListPage = () => {
     const { user } = useAuth();
@@ -19,6 +21,7 @@ const UsersListPage = () => {
                 setUsers(usersData);
             } catch (error) {
                 setError('Failed to fetch users');
+                console.error(error);
             }
         };
 
@@ -26,17 +29,38 @@ const UsersListPage = () => {
     }, [user]);
 
     if (error) {
-        return <div>Error: {error}</div>;
+        return <div className="pageContainer">Error: {error}</div>;
     }
 
+    // Function to handle "Add User" button click (TODO)
+    const handleAddUser = () => {
+        console.log('Add User button clicked');
+    };
+
     return (
-        <div>
-            <h1>List of Users</h1>
-            <ul>
-                {users.map((user) => (
-                    <li key={user.UserID}>{user.FirstName + " " + user.LastName}</li> 
-                ))}
-            </ul>
+        <div className="pageContainer">
+            <div className="headerContainer">
+                <h1>List of Users</h1>
+                <button className="addButton" onClick={handleAddUser}>Add User +</button>
+            </div>
+            <table className="tableFullWidth">
+                <thead>
+                    <tr className="strongRowLine">
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Role</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {users.map((user) => (
+                        <tr key={user.UserID} className="strongRowLine">
+                            <td>{user.FirstName}</td>
+                            <td>{user.LastName}</td>
+                            <td>{ROLES[user.RoleID]}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
         </div>
     );
 };
