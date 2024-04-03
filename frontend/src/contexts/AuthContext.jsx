@@ -11,9 +11,9 @@ export const AuthProvider = ({ children }) => {
     // Placeholder function to change login state
     const login = async (username, password) => {
         const response = await loginAPI(username, password);
-        if (response.success) {
+        if (response.data.success) {
             setLoggedIn(true);
-            setUser(response.user); // Store the user data in state
+            setUser(response.data.user); // Store the user data in state
             localStorage.setItem('token', response.token); // Store the token in local storage
             return true
         } else {
