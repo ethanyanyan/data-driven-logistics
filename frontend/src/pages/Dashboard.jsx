@@ -23,6 +23,11 @@ export default function Dashboard(props) {
                   <Nav.Link as={Link} to="/shipment-tracking">Shipment Tracking</Nav.Link>
                 </Nav>
               </Row>
+              <Row>
+                <Nav>
+                  <Nav.Link as={Link} to="/users">Users</Nav.Link>
+                </Nav>
+              </Row>
             </Container>
           </Col>
           <Col xs={12} s={12} md={9} lg={9} xl={9}>
