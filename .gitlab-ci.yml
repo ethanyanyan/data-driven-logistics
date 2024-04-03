@@ -2,7 +2,7 @@ stages:
   - install_dependencies
   - test
 
-image: node:16
+image: node:16-slim
 
 cache:
   key: ${CI_COMMIT_REF_SLUG}
