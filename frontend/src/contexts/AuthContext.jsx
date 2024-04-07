@@ -18,13 +18,18 @@ export const AuthProvider = ({ children }) => {
                 const decoded = jwtDecode(token);
                 if (decoded.exp * 1000 > Date.now()) {
                     setLoggedIn(true); // Token is valid
+                    setUser(decoded); // Set user data from decoded token
                 } else {
                     // Token has expired
                     localStorage.removeItem('token'); // Clear expired token
+                    setLoggedIn(false); // Reflect logged-out state
+                    setUser(null); // Clear user data
                 }
             } catch (error) {
                 console.error("Error decoding token: ", error);
                 localStorage.removeItem('token'); // Clear invalid token
+                setLoggedIn(false); // Reflect logged-out state
+                setUser(null); // Clear user data
             }
         }
     }, []);
