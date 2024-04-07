@@ -1,36 +1,50 @@
 .nav-button {
-    margin-left: 8px;
-    margin-right: 8px;
-    margin-top: 8px;
-    margin-bottom: 8px;
+    margin: 8px;
     background-color: lightskyblue;
     font-weight: bold;
     font-style: oblique;
     font-size: small;
     color: white;
+    border: 2px solid white;
+    border-radius: 20px;
+    transition: background-color 0.3s, color 0.3s;
 }
 
-.nav-container {
-    vertical-align: bottom;
+.nav-button:hover, .nav-button:focus {
+    background-color: white;
+    color: lightskyblue;
 }
 
 .navbar-toggle {
-    margin-left: 8px;
-    margin-right: 8px;
-    margin-top: 8px;
-    margin-bottom: 8px;
+    margin: 8px;
     background-color: white;
     color: seagreen;
 }
 
 .navbar-custom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
     background-color: slategray;
     height: 64px;
-    margin-top: -20px;
-    margin-left: -20px;
-    margin-right: -20px;
-    padding-bottom: 16px;
 }
+
+
+@media (max-width: 768px) {
+    .navbar-collapse {
+        width: 20vw; 
+        margin-left: auto;
+        background-color: slategrey;
+    }
+}
+
+@media (max-width: 576px) {
+    .navbar-text-header {
+        display: none; 
+    }
+}
+
 
 .ddl-logo {
     height: 48px;
@@ -44,14 +58,3 @@
     font-size: x-large;
     color: white;
 }
-
-
-/*
-figure out how to change this to make it so page doesn't have weird bar on left side after zoom out
-.navbar-collapse {
-    background-color: slategrey;
-    margin-top: -2px;
-    margin-left: -10px;
-    margin-right: -10px;
-    padding: 32px;
-}*/

@@ -1,60 +1,54 @@
-import { Button, Container, Navbar, Nav, Image } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
-import { useAuth, AuthContext} from "../../contexts/AuthContext";
-import { useEffect, useContext } from "react";
+import { Container, Navbar, Nav, Image } from "react-bootstrap";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext";
+import logo from '../../assets/images/logo.png';
 import "./DataDrivenLogisticsNavbar.css";
 
-import logo from '../../assets/images/logo.png';
-
-
 export default function DataDrivenLogisticsNavbar() {
-  const { logout } = useAuth()
-  
-  const userData = useContext(AuthContext);
+  const { logout, user } = useAuth();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const currUser = sessionStorage.getItem('token') || "[]";
-    console.log(currUser);
-    }, [userData]);
+  const showPeopleTab = user && [1, 2, 4].includes(user.RoleID);
+  const navigationLinks = [
+    { path: "/shipment-tracking", name: "Shipments" },
+    // Conditionally add "People" tab based on the user's role
+    ...(showPeopleTab ? [{ path: "/users", name: "People" }] : []),
+    { action: logout, name: "Logout" },
+    // Add more links as needed
+  ];
 
-    function handleShipmentsButtonClick() {
-        navigate("/shipment-tracking");
+  // Custom function to handle navigation or actions
+  const handleNavClick = (link) => {
+    if (link.path) {
+      navigate(link.path);
+    } else if (link.action) {
+      link.action();
     }
-
-    function handlePeopleButtonClick() {
-        navigate("/people");
-    }
+  };
 
   return (
     <Navbar className="navbar-custom" expand="lg">
       <Container fluid>
-        <Navbar.Brand as={Link} to="/dashboard">
-          <Image
-            alt="Data Driven Logistics Logo"
-            src={logo}
-            className="ddl-logo"
-          />{' '}
+        <Navbar.Brand as={NavLink} to="/dashboard">
+          <Image alt="Data Driven Logistics Logo" src={logo} className="ddl-logo" />
         </Navbar.Brand>
         <Navbar.Text className="navbar-text-header">
-            Data Driven Logistics
+          Data Driven Logistics
         </Navbar.Text>
         <Navbar.Toggle className="navbar-toggle" aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse className="navbar-collapse" id="basic-navbar-nav">
+        <Navbar.Collapse className="navbar-collapse">
           <Nav className="ms-auto">
-            {/* Add any additional navigation links here.*/}
-            <Button className="nav-button" variant="outline-light" onClick={handlePeopleButtonClick}> 
-                People
-            </Button>
-            {/* Turn more of these into components. Add navigation into onclick link, remove nav methods */}
-            <Button variant="outline-light" className="nav-button" onClick={handleShipmentsButtonClick}>
-                Shipments
-            </Button>
-          </Nav>
-          <Nav>
-            <Button variant="outline-light" className="nav-button" onClick={logout}>
-              Logout
-            </Button>
+            {navigationLinks.map((link, index) => (
+              <Nav.Link
+                key={index}
+                as="button"
+                onClick={() => handleNavClick(link)}
+                className="nav-button"
+                style={{ marginRight: 10 }}
+              >
+                {link.name}
+              </Nav.Link>
+            ))}
           </Nav>
         </Navbar.Collapse>
       </Container>

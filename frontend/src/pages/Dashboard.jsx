@@ -1,6 +1,5 @@
 import React from "react";
 import { Button, Col, Container, Row, Nav } from "react-bootstrap";
-import DataDrivenLogisticsNavbar from "../components/navigation/DataDrivenLogisticsNavbar";
 import { Link } from "react-router-dom";
 
 
@@ -9,7 +8,6 @@ export default function Dashboard(props) {
 
   return (
     <div>
-      <DataDrivenLogisticsNavbar />
       <h1>Dashboard</h1>
       <Container>
         <Row>
