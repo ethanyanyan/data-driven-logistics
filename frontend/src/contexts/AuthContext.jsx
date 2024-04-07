@@ -14,22 +14,21 @@ export const AuthProvider = ({ children }) => {
         const token = localStorage.getItem('token');
         if (token) {
             try {
-                // Decode token to check for expiry
                 const decoded = jwtDecode(token);
                 if (decoded.exp * 1000 > Date.now()) {
-                    setLoggedIn(true); // Token is valid
-                    setUser(decoded); // Set user data from decoded token
+                    setUser(decoded);
+                    setLoggedIn(true);
                 } else {
-                    // Token has expired
-                    localStorage.removeItem('token'); // Clear expired token
-                    setLoggedIn(false); // Reflect logged-out state
-                    setUser(null); // Clear user data
+                    // Token is expired
+                    localStorage.removeItem('token');
+                    setUser(null);
+                    setLoggedIn(false);
                 }
             } catch (error) {
-                console.error("Error decoding token: ", error);
-                localStorage.removeItem('token'); // Clear invalid token
-                setLoggedIn(false); // Reflect logged-out state
-                setUser(null); // Clear user data
+                console.error("Error decoding token:", error);
+                localStorage.removeItem('token');
+                setUser(null);
+                setLoggedIn(false);
             }
         }
     }, []);
