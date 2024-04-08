@@ -1,0 +1,47 @@
+.search-bar {
+  display: flex;
+  align-items: center;
+  border-radius: 5px;
+  padding-left: 10px;
+  font-size: clamp(0.5rem, 1.3vw, 1.2rem);
+  border: var(--logo-dark-blue) 2px solid;
+}
+
+.search-bar > input {
+  border: none;
+  margin-left: 5px;
+  width: 100%;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+/* 
+Important: height attribute can update dynamically
+based on component code beyond the max value here, but
+establishing the maximum height of the search results causes
+results pass this to overflow and require scrolling 
+*/
+.search-results {
+  height: 0;
+  opacity: 0;
+  transition: height 0.3s ease, opacity 0.3s ease;
+  max-height: 200px;
+  overflow-y: scroll;
+}
+
+.search-results > div {
+  padding-left: 10px;
+  padding-top: 5px;
+  padding-bottom: 2px;
+  border-radius: 2px;
+  font-size: clamp(0.4rem, 1vw, 1rem);
+}
+
+.search-results > div:hover {
+  cursor: pointer;
+  background-color: rgb(228, 228, 228);
+}
+
+.search-results.show-results {
+  opacity: 1;
+}
