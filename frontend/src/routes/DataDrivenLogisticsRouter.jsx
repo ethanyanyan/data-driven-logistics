@@ -15,8 +15,9 @@ export default function DataDrivenLogisticsRouter() {
     <AuthProvider>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<DataDrivenLogistics />}>
-            <Route index element={<LoginPage />} />
+          <Route path="/" element={<LoginPage />} />
+
+          <Route element={<DataDrivenLogistics />}>
             <Route
               path="/dashboard"
               element={
@@ -34,14 +35,6 @@ export default function DataDrivenLogisticsRouter() {
               }
             />
             <Route
-              path="/signup"
-              element={
-                <ProtectedRoute>
-                  <Signup />
-                </ProtectedRoute>
-              }
-            />
-            <Route
               path="/users"
               element={
                 <ProtectedRoute>
@@ -49,10 +42,19 @@ export default function DataDrivenLogisticsRouter() {
                 </ProtectedRoute>
               }
             />
-            {/* Add future routes here! */}
-            <Route path="/*" element={<PageNoMatch></PageNoMatch>} />
-            {/* Add future routes here! */}
+            <Route
+              path="/signup"
+              element={
+                <ProtectedRoute>
+                  <Signup />
+                </ProtectedRoute>
+              }
+            />
+            {/* Additional protected routes go here */}
           </Route>
+
+          {/* Catch-all for unmatched routes */}
+          <Route path="*" element={<PageNoMatch />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>
