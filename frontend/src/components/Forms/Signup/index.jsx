@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import "./SignupForm.css";
 import Search from "../../inputs/Search";
-import { API_BASE_URL } from "../../../config";
 import { useAuth } from "../../../contexts/AuthContext";
 import handleSignupSubmit from "./submission-logic";
+import { getAllRolesWithCaching } from "../../../services/roleService";
 
 /**
  * Signup form component.
@@ -35,7 +35,7 @@ function SignupForm() {
   // Note: Having default state of "Pending..." is
   // necessary for roleNamesList because the search component
   // relies on having one search result for calculating
-  // animations based on height
+  // animations based on results height
   const [submitResult, setSubmitResult] = useState("");
   const [rolesList, setRolesList] = useState([]);
   const [roleNamesList, setRoleNamesList] = useState(["Pending..."]);
@@ -53,24 +53,20 @@ function SignupForm() {
     setSubmitResult(submitResult);
   }
 
-  // Fetch list of all role objects from backend
+  // When component mounts, fetch roles from localStorage
+  // or from backend using functionality from roleService
   useEffect(() => {
     const fetchRoles = async () => {
-      try {
-        const response = await fetch(`${API_BASE_URL}roles/`);
-        if (!response.ok) {
-          throw new Error("Failed to fetch roles");
-        }
-        const jsonRes = await response.json();
-        const roles = jsonRes.data;
-        setRolesList(roles);
-        setRoleNamesList(roles.map((role) => role.RoleName));
-        setRoleTitlesList(roles.map((role) => role.Description));
-      } catch (error) {
-        console.error("Error fetching roles:", error.message);
-        setSubmitResult("Cannot connect to server. Please contact support.");
+      const { success, data } = await getAllRolesWithCaching();
+      if (success) {
+        setRolesList(data);
+        setRoleNamesList(data.map((role) => role.RoleName));
+        setRoleTitlesList(data.map((role) => role.Description));
+      } else {
+        setSubmitResult("Failed to connect to server. Please contact support.");
       }
     };
+
     fetchRoles();
   }, []);
 

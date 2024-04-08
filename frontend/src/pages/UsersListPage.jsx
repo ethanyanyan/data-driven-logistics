@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import * as userService from '../services/userService';
 import { ROLES } from '../constants/constants';
@@ -32,16 +33,13 @@ const UsersListPage = () => {
         return <div className="pageContainer">Error: {error}</div>;
     }
 
-    // Function to handle "Add User" button click (TODO)
-    const handleAddUser = () => {
-        console.log('Add User button clicked');
-    };
-
     return (
         <div className="pageContainer">
             <div className="headerContainer">
                 <h1>List of Users</h1>
-                <button className="addButton" onClick={handleAddUser}>Add User +</button>
+                <Link to="/signup">
+                    <button className="addButton">Add User +</button>
+                </Link>
             </div>
             <table className="tableFullWidth">
                 <thead>
