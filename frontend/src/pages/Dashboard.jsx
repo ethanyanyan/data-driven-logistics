@@ -19,7 +19,6 @@ export default function Dashboard(props) {
               <Row>
                 <Nav>
                   <Nav.Link as={Link} to="/shipment-tracking">Shipment Tracking</Nav.Link>
-                  <Nav.Link as={Link} to="/signup">Add Users</Nav.Link>
                 </Nav>
               </Row>
               <Row>
