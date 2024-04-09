@@ -10,7 +10,6 @@ export default function PageNoMatch(props) {
     const [noMatchRoute, setNoMatchRoute] = useState('');
 
     useEffect(() => {
-        console.log("test");
         if(user) {
             setNoMatchRoute('/dashboard');
         }
