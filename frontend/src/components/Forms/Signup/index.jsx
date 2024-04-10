@@ -4,6 +4,7 @@ import Search from "../../inputs/Search";
 import { useAuth } from "../../../contexts/AuthContext";
 import handleSignupSubmit from "./submission-logic";
 import { getAllRolesWithCaching } from "../../../services/roleService";
+import BaseBtn from "../../BaseComponents/BaseBtn";
 
 /**
  * Signup form component.
@@ -123,9 +124,7 @@ function SignupForm() {
       <div className="submit-container">
         <div className="submit-result-text">{submitResult}</div>
 
-        <button type="submit" className="submit-btn">
-          SUBMIT
-        </button>
+        <BaseBtn theme="primary">SUBMIT</BaseBtn>
       </div>
     </form>
   );

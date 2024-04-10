@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import * as userService from '../services/userService';
 import { ROLES } from '../constants/constants';
 import './UsersListPage.css';
+import BaseBtn from "./../components/BaseComponents/BaseBtn";
 
 const UsersListPage = () => {
     const { user } = useAuth();
@@ -37,9 +37,9 @@ const UsersListPage = () => {
         <div className="pageContainer">
             <div className="headerContainer">
                 <h1>List of Users</h1>
-                <Link to="/signup">
-                    <button className="addButton">Add User +</button>
-                </Link>
+                <BaseBtn type="primary" to="/signup">
+                    Add User +
+                </BaseBtn>
             </div>
             <table className="tableFullWidth">
                 <thead>

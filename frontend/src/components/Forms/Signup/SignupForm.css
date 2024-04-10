@@ -28,27 +28,6 @@
   outline: none;
 }
 
-.signup-form button {
-  padding: 8px 50px;
-  font-size: clamp(0.7rem, 1.3vw, 1.5rem);
-  font-weight: bold;
-  border-color: var(--logo-dark-blue);
-  color: var(--logo-dark-blue);
-  background: white;
-  border-radius: 25px;
-  cursor: pointer;
-  transition: color 0.3s ease, background-color 0.3s ease, transform 0.3s ease;
-  transform: scale(1);
-}
-
-.signup-form button:hover {
-  /* submit button should invert colors and scale up slightly on hover */
-  color: white;
-  background: var(--logo-dark-blue);
-  transition: color 0.3s ease, background-color 0.3s ease, transform 0.3s ease;
-  transform: scale(1.05);
-}
-
 .signup-form > .first {
   grid-area: Firs;
 }
