@@ -11,3 +11,7 @@ export const ROLES = {
   8: "Retail Manager",
   9: "Accountant",
 };
+
+export const LOCATIONS = {
+  // TODO: implement location dictionary here
+};
