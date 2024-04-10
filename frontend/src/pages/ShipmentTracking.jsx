@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 //import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import * as userService from '../services/userService';
-import { LOCATIONS } from '../constants/constants';
 import './ShipmentTracking.css';
 
 const ShipmentTracking = () => {
@@ -51,8 +50,8 @@ const ShipmentTracking = () => {
                 <tbody>
                     {shipments.map((shipment) => (
                         <tr key={shipment.ShipmentID} className="strongRowLine">
-                            <td>{LOCATIONS[shipment.SourceID]}</td>
-                            <td>{LOCATIONS[shipment.DestinationID]}</td>
+                            <td>{shipment.SourceID}</td>
+                            <td>{shipment.DestinationID}</td>
                         </tr>
                     ))}
                 </tbody>
