@@ -46,11 +46,10 @@ export const fetchUsersByCompany = async (companyId) => {
   }
 };
 
-
-export const fetchShipmentsByUserID = async (userID) => {
+export const fetchShipmentsByCompany = async (companyId) => {
   const token = localStorage.getItem("token");
   try {
-    const response = await fetch(`${SHIPMENTS_BASE_URL}/${userID}`, {
+    const response = await fetch(`${SHIPMENTS_BASE_URL}/${companyId}`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -65,3 +64,5 @@ export const fetchShipmentsByUserID = async (userID) => {
     throw error;
   }
 };
+
+//implement new shipment logging here.

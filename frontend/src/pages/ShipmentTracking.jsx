@@ -16,8 +16,8 @@ const ShipmentTracking = () => {
         
         const loadShipments = async () => {
             try {
-                const userID = user.userID; 
-                const shipmentsData = await userService.fetchShipmentsByUserID(userID);
+                const companyId = user.BusinessID;
+                const shipmentsData = await userService.fetchShipmentsByCompany(companyId);
                 setShipments(shipmentsData);
             } catch (error) {
                 setError('Failed to fetch shipments');
