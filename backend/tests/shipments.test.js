@@ -113,8 +113,8 @@ describe("Shipment API routes", () => {
 
     const postData = {
       SourceID: 1,
-      DestinationID: 2,
       UserID: 1,
+      DestinationID: 2,
       DepartureDate: "2023-01-15",
       ArrivalDate: "2023-01-19",
       Status: "Delivered",
