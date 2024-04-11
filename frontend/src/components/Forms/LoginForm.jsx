@@ -4,6 +4,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import "./LoginForm.css";
 import logo from '../../assets/images/logo.png';
+import BaseBtn from "./../BaseComponents/BaseBtn";
 
 function LoginForm() {
   const { login } = useAuth();
@@ -51,9 +52,9 @@ function LoginForm() {
           />
         </div>
         {error && <div style={{ color: "red" }}>{error}</div>}
-        <button type="submit" className="form-submit-button">
+        <BaseBtn htmlType="submit" btnType="primary">
           Login
-        </button>
+        </BaseBtn>
       </form>
     </div>
   );
