@@ -3,6 +3,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import logo from '../../assets/images/logo.png';
 import "./DataDrivenLogisticsNavbar.css";
+import BaseBtn from "./../BaseComponents/BaseBtn";
 
 export default function DataDrivenLogisticsNavbar() {
   const { logout, user } = useAuth();
@@ -39,15 +40,13 @@ export default function DataDrivenLogisticsNavbar() {
         <Navbar.Collapse className="navbar-collapse">
           <Nav className="ms-auto">
             {navigationLinks.map((link, index) => (
-              <Nav.Link
+              <BaseBtn
                 key={index}
-                as="button"
                 onClick={() => handleNavClick(link)}
-                className="nav-button"
-                style={{ marginRight: 10 }}
-              >
-                {link.name}
-              </Nav.Link>
+                label={link.name}
+                btnType="primary"
+                size="sm"
+              />
             ))}
           </Nav>
         </Navbar.Collapse>

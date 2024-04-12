@@ -52,9 +52,7 @@ function LoginForm() {
           />
         </div>
         {error && <div style={{ color: "red" }}>{error}</div>}
-        <BaseBtn htmlType="submit" btnType="primary">
-          Login
-        </BaseBtn>
+        <BaseBtn htmlType="submit" btnType="primary" label="Login" />
       </form>
     </div>
   );

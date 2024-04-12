@@ -1,33 +1,48 @@
 /* BaseBtn.css */
 .button {
-    padding: 8px 50px;
-    font-size: clamp(0.7rem, 1.3vw, 1.5rem);
-    font-weight: bold;
-    border-radius: 15px;
-    cursor: pointer;
-    transition: color 0.3s ease, background-color 0.3s ease, transform 0.3s ease;
-    transform: scale(1);
+  font-weight: bold;
+  border-radius: 15px;
+  cursor: pointer;
+  transition:
+    color 0.3s ease,
+    background-color 0.3s ease,
+    transform 0.3s ease;
+  transform: scale(1);
 }
-  
+
+.sm-btn {
+  padding: 4px 12px;
+  font-size: 0.7rem;
+}
+
+.md-btn {
+  padding: 8px 25px;
+  font-size: 1rem;
+}
+
+.lg-btn {
+  padding: 12px 50px;
+  font-size: 1.5rem;
+}
+
 .primary-btn {
-    color: var(--primary-navy);
-    background: white;
-    border: 2px solid var(--primary-navy);
+  color: var(--primary-navy);
+  background: white;
+  border: 2px solid var(--primary-navy);
 }
-  
+
 .primary-btn:hover {
-    color: white;
-    background: var(--primary-navy);
+  color: white;
+  background: var(--primary-navy);
 }
-  
+
 .secondary-btn {
-    color: var(--primary-slate);
-    background: white;
-    border: 2px solid var(--primary-slate);
+  color: var(--primary-slate);
+  background: white;
+  border: 2px solid var(--primary-slate);
 }
-  
+
 .secondary-btn:hover {
-    color: white;
-    background: var(--primary-slate);
+  color: white;
+  background: var(--primary-slate);
 }
-  

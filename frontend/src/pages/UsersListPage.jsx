@@ -78,9 +78,7 @@ const UsersListPage = () => {
                             <td>{user.LastName}</td>
                             <td>{ROLES[user.RoleID]}</td>
                             <td>
-                                <BaseBtn onClick={() => deleteUser(user.UserID)} btnType="secondary">
-                                    Delete
-                                </BaseBtn>
+                                <BaseBtn onClick={() => deleteUser(user.UserID)} btnType="secondary" label="Delete" size="sm" />
                             </td>
                         </tr>
                     ))}

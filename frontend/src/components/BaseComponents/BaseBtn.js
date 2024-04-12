@@ -5,9 +5,11 @@ import "./BaseBtn.css";
 const BaseBtn = ({
   to,
   onClick,
+  label,
   children,
   btnType = "primary",
   htmlType = "button",
+  size = "md",
 }) => {
   const navigate = useNavigate();
 
@@ -31,10 +33,10 @@ const BaseBtn = ({
   return (
     <button
       type={htmlType}
-      className={`button ${btnType === "primary" ? "primary-btn" : "secondary-btn"}`}
+      className={`button ${btnType === "primary" ? "primary-btn" : "secondary-btn"} ${size}-btn`}
       onClick={handleClick}
     >
-      {children}
+      {label || children}
     </button>
   );
 };
