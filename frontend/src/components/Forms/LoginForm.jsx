@@ -1,10 +1,10 @@
-// src/components/LoginForm.js
 import React, { useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import "./LoginForm.css";
 import logo from '../../assets/images/logo.png';
 import BaseBtn from "./../BaseComponents/BaseBtn";
+import BaseInput from "./../BaseComponents/BaseInput";
 
 function LoginForm() {
   const { login } = useAuth();
@@ -35,20 +35,22 @@ function LoginForm() {
       <form onSubmit={handleSubmit} className="form-box">
         <div className="form-field">
           <label htmlFor="username">Username:</label>
-          <input
-            type="text"
+          <BaseInput
             id="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            modelValue={username}
+            onChange={setUsername}
+            placeholder="Enter your username"
+            type="text"
           />
         </div>
         <div className="form-field">
           <label htmlFor="password">Password:</label>
-          <input
-            type="password"
+          <BaseInput
             id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            modelValue={password}
+            onChange={setPassword}
+            placeholder="Enter your password"
+            type="password"
           />
         </div>
         {error && <div style={{ color: "red" }}>{error}</div>}

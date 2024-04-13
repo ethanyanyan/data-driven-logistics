@@ -5,13 +5,14 @@ that we use throughout the app
 :root {
   --primary-navy: #161b33;
   --primary-teal: #007880;
-  --primary-slate: #5F6A7D;
+  --primary-slate: #5f6a7d;
   --secondary-green: #08cc43;
-  --secondary-cyan: #50B2C0;
-  --secondary-cream: #FFFDD0;
+  --secondary-cyan: #50b2c0;
+  --secondary-cream: #fffdd0;
   --additional-charcoal: #303841;
-  --additional-soft-white: #F1F1F1;
-  --additional-gold: #FFD700;
+  --additional-soft-white: #f1f1f1;
+  --additional-gold: #ffd700;
+  --negative-red: #e53e3e;
 }
 
 html,
