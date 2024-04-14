@@ -49,7 +49,7 @@ const mockProductPathResFail = {
     "Product with id 1 failed to update or no changes were made. Make sure the fields are different from the current values.",
 };
 
-module.export = {
+module.exports = {
     mockProductDbRow,
     mockProductPostReq,
     mockProductPostRes,
