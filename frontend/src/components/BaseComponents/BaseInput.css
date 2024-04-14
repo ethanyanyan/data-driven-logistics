@@ -1,0 +1,63 @@
+/* BaseInput Component Styles */
+.input-group {
+  width: 100%;
+  padding: 0.5rem;
+}
+
+.form-control {
+  border-radius: 10px;
+  border: 2px solid var(--primary-slate);
+  transition: all 300ms ease;
+  background-color: var(--additional-soft-white);
+  color: var(--additional-charcoal);
+  align-items: center;
+  height: auto;
+  padding: 12px;
+}
+
+.form-control:focus {
+  border-color: var(--primary-teal);
+  background-color: var(--secondary-cream);
+  outline: none;
+}
+
+.input-group-text {
+  background: none;
+  border: none;
+  color: var(--primary-navy);
+}
+
+.md-input .form-control {
+  font-size: 16px;
+  line-height: 1.6;
+  padding: 12px 24px;
+}
+
+.sm-input .form-control {
+  font-size: 14px;
+  line-height: 1.4;
+  padding: 8px 16px;
+}
+
+.form-control.disabled,
+.form-control:disabled {
+  background-color: var(--additional-soft-white);
+  color: var(--primary-slate);
+  border-color: var(--primary-slate);
+}
+
+.negative .form-control {
+  background-color: var(--secondary-cream);
+  border-color: var(--negative-red);
+  color: var(--negative-red);
+}
+
+.positive .form-control {
+  background-color: var(--additional-soft-white);
+  border-color: var(--secondary-green);
+  color: var(--secondary-green);
+}
+
+.bs-search {
+  font-size: 24px;
+}

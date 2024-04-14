@@ -12,22 +12,26 @@ async function logShipment(req, res) {
   } = req.body;
 
   try {
-    const newShipment = new Shipment(
-      (ShipmentID = null),
+    const shipmentData = {
       SourceID,
       UserID,
       DestinationID,
       DepartureDate,
       ArrivalDate,
       Status,
-    );
+    };
+
+    const newShipment = new Shipment(shipmentData);
     const result = await newShipment.save();
+
     res.status(200).json({
       message: "Shipment logged successfully",
       data: result,
     });
   } catch (error) {
-    res.status(500).json({ error: "Database error occurred." });
+    res
+      .status(500)
+      .json({ error: "Database error occurred: " + error.message });
   }
 }
 
@@ -64,6 +68,26 @@ async function getAllShipments(req, res) {
     res.status(500).json({
       error: "Database error occurred.",
     });
+  }
+}
+
+// Get all shipments by business ID
+async function getShipmentsByBusinessId(req, res) {
+  try {
+    const businessId = req.params.businessId;
+    const shipments = await Shipment.findByBusinessId(businessId);
+    if (shipments.length > 0) {
+      res.status(200).json({
+        message: `Shipments for business id ${businessId} retrieved successfully`,
+        data: shipments,
+      });
+    } else {
+      res
+        .status(404)
+        .json({ error: `No shipments found for business id ${businessId}` });
+    }
+  } catch (error) {
+    res.status(500).json({ error: "Database error occurred." });
   }
 }
 
@@ -131,6 +155,7 @@ module.exports = {
   logShipment,
   getShipment,
   getAllShipments,
+  getShipmentsByBusinessId,
   updateShipment,
   deleteShipment,
 };

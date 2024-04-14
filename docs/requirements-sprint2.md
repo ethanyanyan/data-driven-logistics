@@ -139,3 +139,27 @@ Consistent with the previously defined user requirements, the subsequent section
   1. Log in to the system with a facility manager account.
   2. Verify that it naviagates to the dashboard to view a summary of all facilities.
   3. Verify that there is no way to access other inventories, or even the facility management page which is only managed by the corporate manager.
+
+#### Use Case 9: Users Overview for a Corporate
+
+- **Priority**: High
+- **User Story**:
+  > As a corporate manager, I would like to know the users of this application.
+- **Acceptance Test**:
+  1. Log in to the system.
+  2. Click the "People" button on the page.
+  3. Verify that there are current users in the page.
+
+#### Use Case 10: User Management for a Corporate
+
+- **Priority**: High
+- **User Story**:
+  > As a corporate manager, I would like to manage the users of this application.
+- **Acceptance Test**:
+  1. Log in to the system.
+  2. Click the "People" button on the page.
+  3. Click "Add User", and fill in the corresponding data.
+  4. Verify that a new user is created.
+
+
+

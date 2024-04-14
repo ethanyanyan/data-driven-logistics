@@ -4,30 +4,16 @@ class Shipment {
   /**
    * Constructs a Shipment instance with detailed information.
    *
-   * @param {number} ShipmentID - The unique identifier of the shipment.
-   * @param {number} SourceID - The identifier for the source location of the shipment.
-   * @param {number} UserID - The identifier for the user responsible for the shipment.
-   * @param {number} DestinationID - The identifier for the destination location of the shipment.
-   * @param {Date} DepartureDate - The scheduled departure date of the shipment.
-   * @param {Date} ArrivalDate - The scheduled arrival date of the shipment.
-   * @param {string} Status - The current status of the shipment.
+   * @param {object} row - An object containing all shipment properties.
    */
-  constructor(
-    ShipmentID,
-    SourceID,
-    UserID,
-    DestinationID,
-    DepartureDate,
-    ArrivalDate,
-    Status,
-  ) {
-    this.ShipmentID = ShipmentID;
-    this.SourceID = SourceID;
-    this.UserID = UserID;
-    this.DestinationID = DestinationID;
-    this.DepartureDate = DepartureDate;
-    this.ArrivalDate = ArrivalDate;
-    this.Status = Status;
+  constructor(row) {
+    this.ShipmentID = row.ShipmentID;
+    this.SourceID = row.SourceID;
+    this.UserID = row.UserID;
+    this.DestinationID = row.DestinationID;
+    this.DepartureDate = row.DepartureDate;
+    this.ArrivalDate = row.ArrivalDate;
+    this.Status = row.Status;
   }
 
   /**
@@ -72,21 +58,38 @@ class Shipment {
     try {
       const [rows] = await db.pool.query(query, [ShipmentID]);
       if (rows.length > 0) {
-        const row = rows[0];
-        return new Shipment(
-          row.ShipmentID,
-          row.SourceID,
-          row.UserID,
-          row.DestinationID,
-          row.DepartureDate,
-          row.ArrivalDate,
-          row.Status,
-        );
+        return new Shipment(rows[0]);
       } else {
         return null;
       }
     } catch (error) {
       throw new Error("Error finding the shipment: " + error.message);
+    }
+  }
+
+  /**
+   * Retrieves all shipments associated with a specific business ID by joining the Shipments table with the Users table.
+   * This method assumes that the relationship between users and shipments is established through the UserID,
+   * and that each user is linked to a business via the BusinessID.
+   *
+   * @param {number} businessId - The unique identifier for the business whose shipments are to be retrieved.
+   * @returns {Promise<Array<Shipment>>} An array of Shipment instances, each representing a shipment associated with the given business ID.
+   * @throws {Error} If an error occurs during the database query execution.
+   */
+  static async findByBusinessId(businessId) {
+    const query = `
+      SELECT s.*
+      FROM Shipments s
+      LEFT JOIN Users u ON u.UserID = s.UserID
+      WHERE u.BusinessID = ?;
+    `;
+    try {
+      const [rows] = await db.pool.query(query, [businessId]);
+      return rows.map((row) => new Shipment(row));
+    } catch (error) {
+      throw new Error(
+        "Error finding shipments by business ID: " + error.message,
+      );
     }
   }
 
@@ -99,18 +102,7 @@ class Shipment {
     const query = `SELECT * FROM Shipments`;
     try {
       const [rows] = await db.pool.query(query);
-      return rows.map(
-        (row) =>
-          new Shipment(
-            row.ShipmentID,
-            row.SourceID,
-            row.UserID,
-            row.DestinationID,
-            row.DepartureDate,
-            row.ArrivalDate,
-            row.Status,
-          ),
-      );
+      return rows.map((row) => new Shipment(row));
     } catch (error) {
       throw new Error("Error retrieving shipments: " + error.message);
     }

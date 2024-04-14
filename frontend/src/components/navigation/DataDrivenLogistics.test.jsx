@@ -11,6 +11,12 @@ import DataDrivenLogistics from './DataDrivenLogistics';
 
 // Mock component to display as a child of DataDrivenLogistics
 const MockChildComponent = () => <div>Mock Child Component</div>;
+jest.mock('../../contexts/AuthContext', () => ({
+  useAuth: () => ({
+    logout: jest.fn(), // Mock logout function
+    user: { RoleID: 1 } // Mock user object
+  })
+}));
 
 describe('DataDrivenLogistics', () => {
   it('renders the component with an Outlet that can display nested routes', () => {

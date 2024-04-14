@@ -27,10 +27,6 @@ const buildPath = path.join(__dirname, "..", "frontend", "build");
 // Serve static assets from the build directory
 app.use(express.static(buildPath));
 
-app.get("/api/status", (req, res) => {
-  res.status(200).json({ status: "OK" });
-});
-
 // Serve the 'index.html' file for all non-API routes
 app.get("*", (req, res) => {
   res.sendFile(path.join(buildPath, "index.html"));

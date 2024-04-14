@@ -26,7 +26,7 @@ test('AuthContext provides authentication state and functions', async () => {
     </AuthProvider>
   );
 
-  loginAPI.mockResolvedValue({ success: true });
+  loginAPI.mockResolvedValue({data:{ success: true }});
 
   // Simulate login
   fireEvent.click(screen.getByText(/log in/i));

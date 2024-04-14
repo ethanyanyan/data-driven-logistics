@@ -1,21 +1,56 @@
-import { Container, Navbar } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Container, Navbar, Nav, Image } from "react-bootstrap";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext";
+import logo from '../../assets/images/logo.png';
+import "./DataDrivenLogisticsNavbar.css";
+import BaseBtn from "./../BaseComponents/BaseBtn";
 
-import logo from '../../assets/images/logo.png'
+export default function DataDrivenLogisticsNavbar() {
+  const { logout, user } = useAuth();
+  const navigate = useNavigate();
 
-export default function DataDrivenLogisticsNavbar(props) {
-    return <Navbar bg="dark" variant="dark">
-        <Container fluid>
-            <Navbar.Brand as={Link} to="/dashboard">  
-                <img
-                    alt="Data Driven Logistics Logo"
-                    src={logo}
-                    width="30"
-                    height="30"
-                    className="d-inline-block align-top"
-                />{' '}
-                Data Driven Logistics
-            </Navbar.Brand>
-        </Container>
+  const showPeopleTab = user && [1, 2, 4].includes(user.RoleID);
+  const navigationLinks = [
+    { path: "/shipment-tracking", name: "Shipments" },
+    // Conditionally add "People" tab based on the user's role
+    ...(showPeopleTab ? [{ path: "/users", name: "People" }] : []),
+    { action: logout, name: "Logout" },
+    // Add more links as needed
+  ];
+
+  // Custom function to handle navigation or actions
+  const handleNavClick = (link) => {
+    if (link.path) {
+      navigate(link.path);
+    } else if (link.action) {
+      link.action();
+    }
+  };
+
+  return (
+    <Navbar className="navbar-custom" expand="lg">
+      <Container fluid>
+        <Navbar.Brand as={NavLink} to="/dashboard">
+          <Image alt="Data Driven Logistics Logo" src={logo} className="ddl-logo" />
+        </Navbar.Brand>
+        <Navbar.Text className="navbar-text-header">
+          Data Driven Logistics
+        </Navbar.Text>
+        <Navbar.Toggle className="navbar-toggle" aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse className="navbar-collapse">
+          <Nav className="ms-auto">
+            {navigationLinks.map((link, index) => (
+              <BaseBtn
+                key={index}
+                onClick={() => handleNavClick(link)}
+                label={link.name}
+                btnType="primary"
+                size="sm"
+              />
+            ))}
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
     </Navbar>
+  );
 }
