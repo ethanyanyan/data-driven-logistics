@@ -18,7 +18,7 @@ const ShipmentTracking = () => {
             try {
                 const businessId = user.BusinessID;
                 const shipmentsData = await shipmentService.fetchShipmentsByCompany(businessId);
-                setShipments(shipmentsData.data); // is there a reason I have to do it this way?
+                setShipments(shipmentsData.data); 
             } catch (error) {
                 setError('Failed to fetch shipments');
                 console.error(error);
@@ -44,14 +44,21 @@ const ShipmentTracking = () => {
                         <th>Shipment ID</th>
                         <th>Source</th>
                         <th>Destination</th>
-                        {/* TODO: add more fields here */}
+                        <th>Departure Date</th>
+                        <th>Arrival Date</th>
+                        <th>Status</th>
+                        {/* TODO: add more fields here, like user ID, potentially map field names from database */}
                     </tr>
                 </thead>
                 <tbody>
                     {shipments.map((shipment) => (
                         <tr key={shipment.ShipmentID} className="strongRowLine">
-                            <td>{shipment.SourceID}</td>
+                            <td>{shipment.ShipmentID}</td>
+                            <td>{shipment.SourceID}</td> 
                             <td>{shipment.DestinationID}</td>
+                            <td>{shipment.DepartureDate}</td>
+                            <td>{shipment.ArrivalDate}</td>
+                            <td>{shipment.Status}</td>
                         </tr>
                     ))}
                 </tbody>
