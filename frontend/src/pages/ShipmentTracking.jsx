@@ -10,15 +10,16 @@ const ShipmentTracking = () => {
     const [error, setError] = useState('');
 
     useEffect(() => {
-        if (!user || !user.userID) {
+        if (!user || !user.BusinessID) {
             return;
         }
         
         const loadShipments = async () => {
             try {
-                const companyId = user.BusinessID;
-                const shipmentsData = await userService.fetchShipmentsByCompany(companyId);
-                setShipments(shipmentsData);
+                const businessId = user.BusinessID;
+                const shipmentsData = await userService.fetchShipmentsByCompany(businessId);
+                console.log(shipmentsData);
+                setShipments(shipmentsData); // is there a reason I have to do it this way?
             } catch (error) {
                 setError('Failed to fetch shipments');
                 console.error(error);

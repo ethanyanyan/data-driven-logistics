@@ -19,6 +19,7 @@ const UsersListPage = () => {
             try {
                 const companyId = user.BusinessID; 
                 const usersData = await userService.fetchUsersByCompany(companyId);
+                console.log(usersData);
                 setUsers(usersData);
             } catch (error) {
                 setError('Failed to fetch users');

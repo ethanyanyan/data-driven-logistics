@@ -46,10 +46,10 @@ export const fetchUsersByCompany = async (companyId) => {
   }
 };
 
-export const fetchShipmentsByCompany = async (companyId) => {
+export const fetchShipmentsByCompany = async (businessId) => {
   const token = localStorage.getItem("token");
   try {
-    const response = await fetch(`${SHIPMENTS_BASE_URL}/${companyId}`, {
+    const response = await fetch(`${SHIPMENTS_BASE_URL}/${businessId}`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
