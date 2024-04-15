@@ -34,19 +34,26 @@ const mockProductPatchReq = {
   UnitPrice: 24,
 };
 
+const mockProductUpdateData = {
+  ProductID: 1,
+  Name: "Product 1",
+  Description: "Description 1",
+  UnitPrice: 24,
+}
+
 const mockProductPatchRes = {
   message: "Product id 1 updated successfully",
-  data: {
-    ProductID: 1,
-    Name: "Product 1",
-    Description: "Description 1",
-    UnitPrice: 24,
-  },
+  data: mockProductUpdateData,
 };
+
 
 const mockProductPathResFail = {
   error:
     "Product with id 1 failed to update or no changes were made. Make sure the fields are different from the current values.",
+};
+
+const mockProductDeleteRes = {
+  message: "Product id 1 deleted successfully",
 };
 
 module.exports = {
@@ -57,4 +64,6 @@ module.exports = {
     mockProductPatchReq,
     mockProductPatchRes,
     mockProductPathResFail,
+    mockProductDbAllRows,
+    mockProductDeleteRes
     };
