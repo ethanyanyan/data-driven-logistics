@@ -6,7 +6,7 @@ router.post("/", LocationController.createLocation); // BusinessID, Latitude, Lo
 
 router.get("/:id", LocationController.getLocation);
 
-router.put("/:id", LocationController.updateLocation);
+router.patch("/:id", LocationController.updateLocation);
 
 router.delete("/:id", LocationController.deleteLocation);
 

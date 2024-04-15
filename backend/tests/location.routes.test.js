@@ -41,7 +41,7 @@ describe("LocationAPIs", () => {
 
     db.pool.query.mockResolvedValueOnce([mockDbFindResponse]);
 
-    const res = await request(app).put(BASE + '9999').send(updateData);
+    const res = await request(app).patch(BASE + '9999').send(updateData);
     expect(res.status).toBe(404);
     expect(res.body).toHaveProperty('error', 'Location not found');
   });
