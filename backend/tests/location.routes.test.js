@@ -2,10 +2,10 @@ const request = require("supertest");
 const app = require("../index"); // Make sure this points to your Express app's entry point
 const BASE = "/api/v1/locations/";
 
-describe("LocationController", () => {
+describe("LocationAPIs", () => {
   it("should create a location and return 201", async () => {
     // Mock the location creation data
-    const locationData = {BusinessID: 1, Latitude: "1.23", Longitude: "4.56"};
+    const locationData = {BusinessID: 1, TypeID:1, Latitude: "1.23", Longitude: "4.56"};
 
     const res = await request(app).post(BASE).send(locationData);
     expect(res.status).toBe(201); // Assuming 201 is the success status code for creation
@@ -20,9 +20,9 @@ describe("LocationController", () => {
 
   it("should update a location and return 200", async () => {
     const unixTime = Date.now();
-    const scaledLatitude = (unixTime % 100000) / 1000;
+    const scaledLatitude = ((unixTime % 100000) / 100000) * 180 - 90;
 
-    const updateData = { BusinessID: 1, Latitude: scaledLatitude.toString(), Longitude: "5.6789" };
+    const updateData = { BusinessID: 1, TypeID:1, Latitude: scaledLatitude.toString(), Longitude: "5.6789" };
 
     const res = await request(app).put(BASE + '1').send(updateData);
     expect(res.status).toBe(200);
@@ -30,7 +30,7 @@ describe("LocationController", () => {
   });
 
   it("should return 404 when updating a non-existent location", async () => {
-    const updateData = { BusinessID: 1, Latitude: "2.34", Longitude: "5.67" };
+    const updateData = { BusinessID: 1, TypeID:1, Latitude: "2.34", Longitude: "5.67" };
 
     const res = await request(app).put(BASE + '9999').send(updateData); // Assuming 9999 is a non-existent ID
     expect(res.status).toBe(404);
@@ -39,7 +39,7 @@ describe("LocationController", () => {
 
   it("should create and then delete a location, returning 200", async () => {
     // First, create a location to delete
-    const locationData = { BusinessID: 1, Latitude: "1.23", Longitude: "4.56" };
+    const locationData = { BusinessID: 1, TypeID:1, Latitude: "1.23", Longitude: "4.56" };
     const createRes = await request(app).post(BASE).send(locationData);
     expect(createRes.status).toBe(201);
     const locationId = createRes.body.data.insertId; // Assuming the POST response includes the new location's ID

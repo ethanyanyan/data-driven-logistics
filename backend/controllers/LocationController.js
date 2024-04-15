@@ -2,10 +2,9 @@ const Location = require("../models/Location");
 
 class LocationController {
   static async createLocation(req, res) {
-    const { BusinessID, Latitude, Longitude } = req.body;
-    // console.log(BusinessID, Latitude, Longitude);
+    const { BusinessID, TypeID, Latitude, Longitude } = req.body;
     try {
-      const location = new Location(null, BusinessID, Latitude, Longitude);
+      const location = new Location(null, BusinessID, TypeID, Latitude, Longitude);
       const result = await location.save();
       res.status(201).json({
         message: "Location created successfully",
@@ -20,7 +19,6 @@ class LocationController {
     const { id } = req.params;
     try {
       const location = await Location.findByID(id);
-      // console.log(location);
       if (location) {
         res.status(200).json({
           message: "Location retrieved successfully",
@@ -61,7 +59,6 @@ class LocationController {
     const { id } = req.params;
     try {
       const location = await Location.findByID(id);
-      // console.log(location);
       if (location) {
         await location.delete();
         res.status(200).json({

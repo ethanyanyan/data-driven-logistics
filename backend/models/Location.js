@@ -1,9 +1,10 @@
 const db = require("../config/dbConfig");
 
 class Location {
-  constructor(LocationID, BusinessID, Latitude, Longitude) {
+  constructor(LocationID, BusinessID, TypeID, Latitude, Longitude) {
     this.LocationID = LocationID;
     this.BusinessID = BusinessID;
+    this.TypeID = TypeID
     this.Latitude = Latitude;
     this.Longitude = Longitude;
   }
@@ -15,10 +16,10 @@ class Location {
    */
   async save() {
     const query = `
-            INSERT INTO Locations (BusinessID, Latitude, Longitude) 
-            VALUES (?, ?, ?)
+            INSERT INTO Locations (BusinessID, TypeID, Latitude, Longitude) 
+            VALUES (?, ?, ?, ?)
         `;
-    const values = [this.BusinessID, this.Latitude, this.Longitude];
+    const values = [this.BusinessID, this.TypeID, this.Latitude, this.Longitude];
 
     try {
       const [result] = await db.pool.query(query, values);
@@ -44,6 +45,7 @@ class Location {
         return new Location(
           rows[0].LocationID,
           rows[0].BusinessID,
+          rows[0].TypeID,
           rows[0].Latitude,
           rows[0].Longitude,
         );
