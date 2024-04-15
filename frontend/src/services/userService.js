@@ -3,6 +3,7 @@
 import {API_BASE_URL} from "../config"
 const USERS_BASE_URL = `${API_BASE_URL}users`;
 const SHIPMENTS_BASE_URL = `${API_BASE_URL}shipments`;
+const SHIPMENTS_BASE_URL = `${API_BASE_URL}shipments`;
 
 // Function to login
 export const loginAPI = async (username, password) => {
