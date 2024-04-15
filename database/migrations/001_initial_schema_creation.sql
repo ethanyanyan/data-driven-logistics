@@ -66,6 +66,7 @@ CREATE TABLE Products (
 -- Create Shipments Table
 CREATE TABLE Shipments (
     ShipmentID INT AUTO_INCREMENT PRIMARY KEY,
+    UserID INT,
     SourceID INT,
     DestinationID INT,
     DepartureDate DATE,
