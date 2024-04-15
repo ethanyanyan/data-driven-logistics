@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 //import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import * as userService from '../services/userService';
+import * as shipmentService from '../services/shipmentService';
 import './ShipmentTracking.css';
 
 const ShipmentTracking = () => {
@@ -17,9 +17,8 @@ const ShipmentTracking = () => {
         const loadShipments = async () => {
             try {
                 const businessId = user.BusinessID;
-                const shipmentsData = await userService.fetchShipmentsByCompany(businessId);
-                console.log(shipmentsData);
-                setShipments(shipmentsData); // is there a reason I have to do it this way?
+                const shipmentsData = await shipmentService.fetchShipmentsByCompany(businessId);
+                setShipments(shipmentsData.data); // is there a reason I have to do it this way?
             } catch (error) {
                 setError('Failed to fetch shipments');
                 console.error(error);
