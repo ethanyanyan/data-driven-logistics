@@ -106,6 +106,27 @@ class UserController {
       res.status(500).json({ error: "Database error occurred." });
     }
   }
+
+  // Deletes a user by UserID
+  static async deleteUser(req, res) {
+    try {
+      const { userID } = req.params;
+      const [result] = await db.pool.query(
+        "DELETE FROM Users WHERE UserID = ?",
+        [userID],
+      );
+      if (result.affectedRows) {
+        res
+          .status(200)
+          .json({ success: true, message: "User deleted successfully" });
+      } else {
+        res.status(404).json({ success: false, message: "User not found" });
+      }
+    } catch (error) {
+      console.error("Error deleting user:", error);
+      res.status(500).send({ success: false, message: "Error deleting user" });
+    }
+  }
 }
 
 module.exports = UserController;

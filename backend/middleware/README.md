@@ -5,7 +5,7 @@ server runs the code for a given route. For instance, in
 the code below `requireAuth` is middleware.
 
 ```javascript
-router.get("/profile", requireAuth, (req, res) => { ... }
+router.get("/profile", requireAuth, (req, res) => { ... })
 ```
 
 Adding our authorization middleware into a route makes

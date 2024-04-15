@@ -1,43 +1,23 @@
-.App {
-  text-align: center;
+/*
+CSS variables for useful values 
+that we use throughout the app
+*/
+:root {
+  --primary-navy: #161b33;
+  --primary-teal: #007880;
+  --primary-slate: #5f6a7d;
+  --secondary-green: #08cc43;
+  --secondary-cyan: #50b2c0;
+  --secondary-cream: #fffdd0;
+  --additional-charcoal: #303841;
+  --additional-soft-white: #f1f1f1;
+  --additional-gold: #ffd700;
+  --negative-red: #e53e3e;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-html, body, #root {
+html,
+body,
+#root {
   margin: 0;
   padding: 0;
   width: 100%;
@@ -48,5 +28,5 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #f4f7f6; 
+  /* background-color: #f4f7f6;  <- imo This needs to be defined at a lower level */
 }

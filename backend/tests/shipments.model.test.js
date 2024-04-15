@@ -12,15 +12,15 @@ describe("Shipment Model", () => {
     const mockShipment = { insertId: 1 };
     db.pool.query.mockResolvedValue([mockShipment, undefined]);
 
-    const shipment = new Shipment(
-      null,
-      1,
-      1,
-      2,
-      new Date("2023-01-01"),
-      new Date("2023-01-05"),
-      "Pending",
-    );
+    const shipmentData = {
+      SourceID: 1,
+      UserID: 1,
+      DestinationID: 2,
+      DepartureDate: new Date("2023-01-01"),
+      ArrivalDate: new Date("2023-01-05"),
+      Status: "Pending",
+    };
+    const shipment = new Shipment(shipmentData);
     await shipment.save();
 
     // simulate setting the ShipmentID after the successful save

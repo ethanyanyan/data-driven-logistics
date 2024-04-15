@@ -6,14 +6,6 @@ import { BrowserRouter } from 'react-router-dom';
 import Dashboard from './Dashboard';
 import { useAuth } from '../contexts/AuthContext';
 
-// Mock the DataDrivenLogisticsNavbar to include the logout button
-jest.mock("../components/navigation/DataDrivenLogisticsNavbar", () => ({ handleLogout }) => (
-  <div>
-    Navbar Mock
-    <button onClick={handleLogout}>Logout</button>
-  </div>
-));
-
 // Mock the useAuth hook
 jest.mock('../contexts/AuthContext', () => ({
   useAuth: jest.fn(),
@@ -38,8 +30,6 @@ describe('Dashboard Page', () => {
     });
 
     renderWithRouter(<Dashboard />);
-    // Check for the Navbar
-    expect(screen.getByText('Navbar Mock')).toBeInTheDocument();
     // Check for the Dashboard heading
     expect(screen.getByRole('heading', { name: /dashboard/i })).toBeInTheDocument();
     // Check for the Quick Links section

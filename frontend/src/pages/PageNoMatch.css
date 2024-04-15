@@ -1,0 +1,14 @@
+/* PageNoMatch.css */
+
+
+.no-match-page-container {
+    padding: 40px; 
+    width: 100%;
+    text-align: center;
+}
+
+.no-match-page-ddl-logo {
+    height: 192px;
+    width: 192px;
+    border-radius: 96px;
+}
