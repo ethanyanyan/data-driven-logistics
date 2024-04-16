@@ -1,0 +1,16 @@
+.appContainer {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.mainContent {
+  margin: 1rem;
+  flex-grow: 1;
+}
+
+.pageContainer {
+  padding: 40px;
+  width: 100%;
+  box-sizing: border-box;
+}

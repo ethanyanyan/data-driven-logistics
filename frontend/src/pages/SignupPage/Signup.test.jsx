@@ -1,12 +1,11 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import { MemoryRouter } from "react-router-dom"; 
+import { BrowserRouter as Router } from "react-router-dom"; 
 import Signup from ".";
 
-// Helper function to render the component within a router
 const renderWithRouter = (ui, { route = '/' } = {}) => {
   window.history.pushState({}, 'Test page', route)
-  return render(ui, { wrapper: MemoryRouter });
+  return render(<Router>{ui}</Router>);
 };
 
 test("signup screen displays text", () => {
@@ -16,5 +15,5 @@ test("signup screen displays text", () => {
 
 test("signup screen has submit button", () => {
     renderWithRouter(<Signup />);
-    expect(screen.getByText("SUBMIT")).toBeInTheDocument(); 
+    expect(screen.getByText("SUBMIT")).toBeInTheDocument();
 });
