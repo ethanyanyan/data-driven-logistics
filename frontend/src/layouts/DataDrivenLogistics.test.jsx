@@ -11,7 +11,7 @@ import DataDrivenLogistics from './DataDrivenLogistics';
 
 // Mock component to display as a child of DataDrivenLogistics
 const MockChildComponent = () => <div>Mock Child Component</div>;
-jest.mock('../../contexts/AuthContext', () => ({
+jest.mock('./../contexts/AuthContext', () => ({
   useAuth: () => ({
     logout: jest.fn(), // Mock logout function
     user: { RoleID: 1 } // Mock user object
