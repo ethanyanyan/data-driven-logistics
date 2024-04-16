@@ -25,7 +25,7 @@ const ShipmentTracking = () => {
             }
         };
 
-        loadShipments();
+       loadShipments();
     }, [user]);
 
     if (error) {
@@ -38,6 +38,7 @@ const ShipmentTracking = () => {
                 <h1>Shipment Tracking</h1>
                 {/* TODO: implement new button fields here like this: <button className="addButton">Add User +</button> */}
             </div>
+            { shipments.length != 0 ?
             <table className="tableFullWidth">
                 <thead>
                     <tr className="strongRowLine">
@@ -63,6 +64,7 @@ const ShipmentTracking = () => {
                     ))}
                 </tbody>
             </table>
+            : <h2>No shipments found.</h2>}
         </div>
     );
 };
