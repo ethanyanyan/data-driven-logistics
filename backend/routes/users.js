@@ -22,6 +22,8 @@ router.get("/profile", requireAuth, UserController.getUserProfile);
 // Send list of all users at a company
 router.get("/:companyId", UserController.getUsersByCompany);
 
+router.delete("/:userID", requireAuth, UserController.deleteUser);
+
 // Define a protected route
 
 module.exports = router;

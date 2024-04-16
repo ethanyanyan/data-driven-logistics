@@ -22,30 +22,14 @@ function Search({
   data = [],
   titles = [],
   searchFn = s.caseInsensitiveAlphabetical,
+  value, 
+  onChange
 }) {
-  const [filteredList, setFilteredList] = useState(data);
+  const [filteredList, setFilteredList] = useState([]);
   const [isFocused, setIsFocused] = useState(false);
   const [firstResHeight, setFirstResHeight] = useState(0);
   const [resHeight, setResHeight] = useState(0);
-  const [value, setValue] = useState("");
 
-  // On component render, get the height of the first search result
-  // to use as a basis for animating the height of the search results
-  useEffect(() => {
-    const results = document.getElementsByClassName("search-results")[0];
-    if (results) {
-      const firstRes = results.firstElementChild;
-      if (firstRes) {
-        const h = parseInt(
-          window.getComputedStyle(firstRes).getPropertyValue("height")
-        );
-        setFirstResHeight(h);
-      }
-    }
-  }, []);
-
-  // Whenever the input value changes or when the data changes,
-  // filter the data and update the height of the search results
   useEffect(() => {
     const newFilteredList = searchFn(value, data);
     setFilteredList(newFilteredList);
@@ -54,25 +38,34 @@ function Search({
     } else {
       setResHeight(0);
     }
-  }, [value, data]);
+  }, [value, data, isFocused, firstResHeight, searchFn]);
 
-  function handleFocus() {
+  useEffect(() => {
+    const results = document.getElementsByClassName("search-results")[0];
+    if (results && results.firstElementChild) {
+      const h = parseInt(window.getComputedStyle(results.firstElementChild).getPropertyValue("height"));
+      setFirstResHeight(h || 0);
+    }
+  }, [data]);
+
+  const handleFocus = () => {
     setIsFocused(true);
     setResHeight(firstResHeight * filteredList.length);
-  }
+  };
 
-  function handleBlur() {
+  const handleBlur = () => {
     setIsFocused(false);
-    setResHeight(0);
-  }
+    setTimeout(() => setResHeight(0), 200);
+  };
 
-  function handleChange(e) {
-    setValue(e.target.value);
-  }
+  const handleChange = (e) => {
+    onChange(e.target.value);
+  };
 
-  function handleResultClicked(resultTxt) {
-    setValue(resultTxt);
-  }
+  const handleResultClicked = (resultTxt) => {
+    onChange(resultTxt);
+    setIsFocused(false);
+  };
 
   return (
     <div id="search-container">
@@ -83,7 +76,7 @@ function Search({
           id={name}
           name={name}
           value={value}
-          onChange={(e) => handleChange(e)}
+          onChange={handleChange}
           placeholder={placeholder}
           onFocus={handleFocus}
           onBlur={handleBlur}
@@ -94,45 +87,24 @@ function Search({
         isFocused={isFocused}
         filteredList={filteredList}
         titles={titles}
-        name={name}
         handleResultClicked={handleResultClicked}
       />
     </div>
   );
 }
 
-/**
- * Component responsible for displaying search results under the search bar.
- * Provides scrollable and clickable results.
- * Separated into its own component to leverage height changes in the Search component
- * to nicely trigger re-renders of the SearchResults component.
- *
- * @param {number} [height=0] - The height of the search results component.
- * @param {boolean} isFocused - Indicates whether the search bar is currently focused.
- * @param {Array} filteredList - The list of filtered search results.
- * @param {string} name - The name attribute of the search bar's input element.
- * @param {Array} titles - The titles of the search results, shown when hovering over the result.
- * @param {function} handleResultClicked - Function to run when result is clicked
- * @returns {JSX.Element} - The rendered SearchResults component.
- */
-function SearchResults({
-  height = 0,
-  isFocused,
-  filteredList,
-  name,
-  titles,
-  handleResultClicked,
-}) {
+function SearchResults({ height, isFocused, filteredList, titles, handleResultClicked }) {
   return (
     <div
       className={`search-results ${isFocused ? "show-results" : ""}`}
-      style={{ height: height }}
+      style={{ height: `${height}px` }}
     >
       {filteredList.map((res, idx) => (
         <div
-          key={`result-${idx}`}
+          key={idx}
+          className="search-result-item"
           onClick={() => handleResultClicked(res)}
-          title={titles ? titles[idx] : ""}
+          title={titles[idx] || ""}
         >
           {res}
         </div>

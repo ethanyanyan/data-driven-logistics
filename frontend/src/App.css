@@ -3,8 +3,16 @@ CSS variables for useful values
 that we use throughout the app
 */
 :root {
-  --logo-dark-blue: #0d3440;
-  --gray: #8d8d8d;
+  --primary-navy: #161b33;
+  --primary-teal: #007880;
+  --primary-slate: #5f6a7d;
+  --secondary-green: #08cc43;
+  --secondary-cyan: #50b2c0;
+  --secondary-cream: #fffdd0;
+  --additional-charcoal: #303841;
+  --additional-soft-white: #f1f1f1;
+  --additional-gold: #ffd700;
+  --negative-red: #e53e3e;
 }
 
 html,
