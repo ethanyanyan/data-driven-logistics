@@ -2,13 +2,38 @@ const Location = require("../models/Location");
 
 class LocationController {
   static async createLocation(req, res) {
-    const { BusinessID, TypeID, Latitude, Longitude } = req.body;
+    const { BusinessID, TypeID, Latitude, Longitude, LocationName } = req.body;
     try {
-      const location = new Location(null, BusinessID, TypeID, Latitude, Longitude);
+      const location = new Location(
+        null,
+        BusinessID,
+        TypeID,
+        Latitude,
+        Longitude,
+        LocationName,
+      );
       const result = await location.save();
       res.status(201).json({
         message: "Location created successfully",
         data: result,
+      });
+    } catch (error) {
+      res.status(500).json({ error: "Database error occurred." });
+    }
+  }
+
+  /**
+   * Fetches all locations and returns them.
+   *
+   * @param {express.Request} req The request object.
+   * @param {express.Response} res The response object.
+   */
+  static async getLocations(req, res) {
+    try {
+      const locations = await Location.findAll();
+      res.status(200).json({
+        message: "Locations retrieved successfully",
+        data: locations,
       });
     } catch (error) {
       res.status(500).json({ error: "Database error occurred." });
