@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-//import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import * as shipmentService from '../services/shipmentService';
 import './ShipmentTracking.css';
@@ -36,7 +35,6 @@ const ShipmentTracking = () => {
         <div className="pageContainer">
             <div className="headerContainer">
                 <h1>Shipment Tracking</h1>
-                {/* TODO: implement new button fields here like this: <button className="addButton">Add User +</button> */}
             </div>
             { shipments.length != 0 ?
             <table className="tableFullWidth">
@@ -48,7 +46,6 @@ const ShipmentTracking = () => {
                         <th>Departure Date</th>
                         <th>Arrival Date</th>
                         <th>Status</th>
-                        {/* TODO: add more fields here, like user ID, potentially map field names from database */}
                     </tr>
                 </thead>
                 <tbody>

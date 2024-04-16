@@ -1,4 +1,4 @@
-// src/services/authService.js
+// src/services/shipmentService.js
 
 import {API_BASE_URL} from "../config"
 const SHIPMENTS_BASE_URL = `${API_BASE_URL}shipments`;
