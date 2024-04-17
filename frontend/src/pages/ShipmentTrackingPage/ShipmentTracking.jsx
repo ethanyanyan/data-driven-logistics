@@ -46,12 +46,7 @@ const ShipmentTracking = () => {
 
   useEffect(() => {
     loadShipmentsAndLocations();
-  }, [user]);
-
-  useEffect(() => {
-    // rerender shipments on modal change.
-    loadShipmentsAndLocations();
-  }, [addShipmentModalIsOpen]);
+  }, [user, addShipmentModalIsOpen]); //switch to modal submit
 
   const requestAddShipment = (user) => {
     setAddShipmentModalIsOpen(true);
@@ -243,7 +238,7 @@ const ShipmentTracking = () => {
             <div className="form-field">
               <label htmlFor="destination">Destination:</label>
               <select onChange={setDestination}>
-              {locations.map(location => <option value={location.LocationName}>{location.LocationName}</option>)}
+              {locations.map(location => <option value={location.LocationName}>{location.LocationName}</option>)} {/* load locations only for specific business id. potentially use search rather than dropdown, mount modal*/}
               </select>
             </div>
             ),
