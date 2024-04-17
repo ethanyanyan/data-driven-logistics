@@ -49,6 +49,24 @@ const ShipmentTracking = () => {
     return format(parseISO(dateString), "MMMM d, yyyy h:mm a");
   };
 
+  const getColorOfStatus = (status) => {
+    if(status === 'Completed') {
+      return styles.tableCellInfo;
+    }
+    if(status === 'Delivered') {
+      return styles.tableCellSuccess;
+    }
+    if(status === 'In Transit') {
+      return styles.tableCellWarning;
+    }
+    if(status === 'Delayed') {
+      return styles.tableCellDanger;
+    }
+    else {
+      return styles.tableCell;
+    }
+  };
+
   const sortShipments = (field) => {
     if (sortField !== field) {
       setSortField(field);
@@ -196,7 +214,7 @@ const ShipmentTracking = () => {
                   <td className={styles.tableCell}>
                     {formatDate(shipment.ArrivalDate)}
                   </td>
-                  <td className={styles.tableCell}>{shipment.Status}</td>
+                  <td className={getColorOfStatus(shipment.Status)}>{shipment.Status}</td>
                 </tr>
               ))}
             </tbody>
