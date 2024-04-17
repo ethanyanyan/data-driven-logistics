@@ -4,11 +4,14 @@ import * as userService from '../../services/userService';
 import { ROLES } from '../../constants/constants';
 import styles from '../../styles/Table.module.css'; 
 import BaseBtn from "../../components/BaseComponents/BaseBtn";
+import { SlArrowDown, SlArrowUp } from "react-icons/sl";
 
 const UsersListPage = () => {
     const { user } = useAuth();
     const [users, setUsers] = useState([]);
     const [error, setError] = useState('');
+    const [sortField, setSortField] = useState(null);
+    const [sortDirection, setSortDirection] = useState('ascending');
 
 
     const loadUsers = async () => {
@@ -42,6 +45,27 @@ const UsersListPage = () => {
         }
     };
 
+    const sortUsers = (field) => {
+        const isAscending = (sortField === field) && (sortDirection === 'ascending');
+        setSortDirection(isAscending ? 'descending' : 'ascending');
+        setSortField(field);
+    
+        setUsers(prevUsers => {
+            const sortedUsers = [...prevUsers];
+            sortedUsers.sort((a, b) => {
+                let valA = a[field], valB = b[field];
+                if (typeof valA === 'string') {
+                    valA = valA.toLowerCase();
+                    valB = valB.toLowerCase();
+                }
+                if (valA < valB) return isAscending ? 1 : -1;
+                if (valA > valB) return isAscending ? -1 : 1;
+                return 0;
+            });
+            return sortedUsers;
+        });
+    };
+
     if (error) return <div>Error: {error}</div>;
 
     return (
@@ -56,8 +80,12 @@ const UsersListPage = () => {
                 <table className={styles.tableFullWidth}>
                     <thead>
                         <tr className={styles.strongRowLine}>
-                            <th className={styles.tableHeader}>First Name</th>
-                            <th className={styles.tableHeader}>Last Name</th>
+                        <th className={styles.tableHeader} onClick={() => sortUsers('FirstName')}>
+                            First Name {sortField === 'FirstName' && (sortDirection === 'ascending' ? <SlArrowUp /> : <SlArrowDown />)}
+                        </th>
+                        <th className={styles.tableHeader} onClick={() => sortUsers('LastName')}>
+                            Last Name {sortField === 'LastName' && (sortDirection === 'ascending' ? <SlArrowUp /> : <SlArrowDown />)}
+                        </th>
                             <th className={styles.tableHeader}>Role</th>
                             <th className={styles.tableHeader}>Actions</th>
                         </tr>
