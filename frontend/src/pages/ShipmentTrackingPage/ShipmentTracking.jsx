@@ -4,6 +4,9 @@ import * as shipmentService from "../../services/shipmentService";
 import * as locationService from "../../services/locationService";
 import styles from "../../styles/Table.module.css";
 import { format, parseISO } from "date-fns";
+import BaseBtn from "../../components/BaseComponents/BaseBtn";
+import BaseModal from "../../components/BaseComponents/BaseModal";
+import BaseInput from "../../components/BaseComponents/BaseInput";
 import { SlArrowDown, SlArrowUp } from "react-icons/sl";
 
 const ShipmentTracking = () => {
@@ -14,6 +17,11 @@ const ShipmentTracking = () => {
   const [sortField, setSortField] = useState(null);
   const [sortDirection, setSortDirection] = useState("ascending");
   const [isSorted, setIsSorted] = useState(false);
+  const [addShipmentModalIsOpen, setAddShipmentModalIsOpen] = useState(false);
+
+  //shipment addition modal data
+  const [source, setSource] = useState("");
+  const [destination, setDestination] = useState("");
 
   const loadShipmentsAndLocations = async () => {
     if (!user || !user.BusinessID) {
@@ -39,6 +47,15 @@ const ShipmentTracking = () => {
   useEffect(() => {
     loadShipmentsAndLocations();
   }, [user]);
+
+  useEffect(() => {
+    // rerender shipments on modal change.
+    loadShipmentsAndLocations();
+  }, [addShipmentModalIsOpen]);
+
+  const requestAddShipment = (user) => {
+    setAddShipmentModalIsOpen(true);
+  };
 
   const getLocationNameById = (id) => {
     const location = locations.find((loc) => loc.LocationID === id);
@@ -100,6 +117,9 @@ const ShipmentTracking = () => {
     <div>
       <div className={styles.headerContainer}>
         <h1>Shipment Tracking</h1>
+        <BaseBtn type="primary" onClick={() => requestAddShipment(user)}>
+          Add Shipment +
+        </BaseBtn>
       </div>
       <div className={styles.tableContainer}>
         {shipments.length > 0 ? (
@@ -205,6 +225,38 @@ const ShipmentTracking = () => {
           <h2>No shipments found.</h2>
         )}
       </div>
+      <BaseModal
+        isOpen={addShipmentModalIsOpen}
+        onRequestClose={() => setAddShipmentModalIsOpen(false)}
+        width="400px"
+      >
+        {{
+          header: <h2>Add Shipment</h2>,
+          body: (
+            <p>Please enter shipment information below:</p>,
+            <div className="form-field">
+              <label htmlFor="source">Source:</label>
+              <select onChange={setSource}>
+              {locations.map(location => <option value={location.LocationName}>{location.LocationName}</option>)}
+              </select>
+            </div>,
+            <div className="form-field">
+              <label htmlFor="destination">Destination:</label>
+              <select onChange={setDestination}>
+              {locations.map(location => <option value={location.LocationName}>{location.LocationName}</option>)}
+              </select>
+            </div>
+            ),
+          buttons: (
+            <div>
+              <span style={{ marginRight: "10px" }}>
+                <BaseBtn onClick={() => setAddShipmentModalIsOpen(false)}>Cancel</BaseBtn>
+              </span>
+              <BaseBtn onClick={requestAddShipment}>Confirm</BaseBtn>
+            </div>
+          ),
+        }}
+      </BaseModal>
     </div>
   );
 };
