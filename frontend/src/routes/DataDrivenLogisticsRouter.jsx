@@ -2,13 +2,13 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { AuthProvider } from "../contexts/AuthContext";
 import ProtectedRoute from "./ProtectedRoute";
 
-import DataDrivenLogistics from "../components/navigation/DataDrivenLogistics";
-import Dashboard from "../pages/Dashboard";
-import LoginPage from "../pages/LoginPage";
-import UsersListPage from "../pages/UsersListPage";
-import ShipmentTracking from "../pages/ShipmentTracking";
-import Signup from "../pages/Signup";
-import PageNoMatch from "../pages/PageNoMatch";
+import DataDrivenLogistics from "../layouts/DataDrivenLogistics";
+import Dashboard from "../pages/Dashboard/Dashboard";
+import LoginPage from "../pages/LoginPage/LoginPage";
+import UsersListPage from "../pages/UsersListPage/UsersListPage";
+import ShipmentTracking from "../pages/ShipmentTrackingPage/ShipmentTracking";
+import Signup from "../pages/SignupPage";
+import PageNoMatch from "../pages/NoMatchPage/PageNoMatch";
 
 export default function DataDrivenLogisticsRouter() {
   return (

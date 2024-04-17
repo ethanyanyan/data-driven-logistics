@@ -1,0 +1,41 @@
+/* styles/Table.module.css */
+
+.headerContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.tableContainer {
+  overflow-x: auto;
+  width: 100%;
+}
+
+.tableFullWidth {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+
+.tableCell,
+.tableHeader {
+  padding: 10px;
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
+  text-align: left;
+  transition: background-color 0.3s ease;
+}
+
+.tableCell:last-child,
+.tableHeader:last-child {
+  border-right: none;
+}
+
+.strongRowLine {
+  border-bottom: 2px solid black;
+}
+
+.tableHeader:hover {
+  background-color: #f4f4f4;
+  cursor: pointer;
+}

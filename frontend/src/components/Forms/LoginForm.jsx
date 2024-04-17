@@ -32,7 +32,7 @@ function LoginForm() {
       <div className="logo-container">
         <img src={logo} alt="Logo" />
       </div>
-      <form onSubmit={handleSubmit} className="form-box">
+      <form onSubmit={handleSubmit} className="form-box" action="#">
         <div className="form-field">
           <label htmlFor="username">Username:</label>
           <BaseInput
@@ -41,6 +41,8 @@ function LoginForm() {
             onChange={setUsername}
             placeholder="Enter your username"
             type="text"
+            name="username"
+            autoComplete="username"
           />
         </div>
         <div className="form-field">
@@ -51,6 +53,8 @@ function LoginForm() {
             onChange={setPassword}
             placeholder="Enter your password"
             type="password"
+            name="password"
+            autoComplete="current-password"
           />
         </div>
         {error && <div style={{ color: "red" }}>{error}</div>}
