@@ -62,7 +62,6 @@ export default function DataDrivenLogisticsNavbar() {
       </Container>
     </Navbar>
     <BaseModal
-        ariaHideApp={false}
         isOpen={modalIsOpen}
         onRequestClose={() => setModalIsOpen(false)}
         width="400px"

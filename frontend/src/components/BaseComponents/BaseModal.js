@@ -45,6 +45,7 @@ const BaseModal = ({
     <Modal
       isOpen={isOpen}
       onRequestClose={onRequestClose}
+      ariaHideApp={false}
       style={{
         ...customStyles,
         content: { ...customStyles.content, ...dialogStyle },
