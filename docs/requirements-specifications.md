@@ -343,6 +343,10 @@ erDiagram
         int DestinationID FK
         date DepartureDate
         date ArrivalDate
+        int StatusID FK
+    }
+    ShipmentStatusTypes {
+        int StatusID PK
         string Status
     }
     ShipmentDetails {
@@ -378,6 +382,7 @@ erDiagram
     Locations ||--o{ InventoryLevels : "stores"
     Products ||--o{ InventoryLevels : "tracked in"
     Shipments ||--o{ ShipmentDetails : "includes"
+    Shipments ||--o{ ShipmentStatusTypes : "has"
     Products ||--o{ ShipmentDetails : "contained in"
     Locations ||--o{ Shipments : "source"
     Locations ||--o{ Shipments : "destination"
