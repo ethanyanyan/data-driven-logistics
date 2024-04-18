@@ -13,6 +13,7 @@ const BaseInput = ({
   searchbar = false,
   type = "text",
   onChange,
+  ...props
 }) => {
   const inputRef = useRef(null);
   const [inputType, setInputType] = useState("text");
@@ -47,6 +48,7 @@ const BaseInput = ({
         disabled={disabled}
         onChange={handleChange}
         className={`${disabled ? "disabled" : ""} form-control`}
+        {...props}
       />
       {searchbar && (
         <InputGroup.Text>
