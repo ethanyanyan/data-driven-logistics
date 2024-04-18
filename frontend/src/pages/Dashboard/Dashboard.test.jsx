@@ -1,43 +1,39 @@
-// Dashboard.test.jsx
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
-import '@testing-library/jest-dom';
-import { BrowserRouter } from 'react-router-dom';
+import { render, screen } from '@testing-library/react';
+import { AuthContext } from '../../contexts/AuthContext';
 import Dashboard from './Dashboard';
-import { useAuth } from '../../contexts/AuthContext';
 
-// Mock the useAuth hook
-jest.mock('../../contexts/AuthContext', () => ({
-  useAuth: jest.fn(),
-}));
+// Mock the CorporateManagerDashboard and InventoryManagerDashboard components
+jest.mock('./CorporateManagerDashboard', () => () => <div>Corporate Manager Dashboard</div>);
+jest.mock('./InventoryManagerDashboard', () => () => <div>Inventory Manager Dashboard</div>);
 
-describe('Dashboard Page', () => {
-  beforeEach(() => {
-    // Reset the mock before each test
-    useAuth.mockReset();
+describe('Dashboard', () => {
+  it('renders Corporate Manager Dashboard for roles 1, 2, 4', () => {
+    const user = { RoleID: 1 };
+    render(
+      <AuthContext.Provider value={{ user }}>
+        <Dashboard />
+      </AuthContext.Provider>
+    );
+    expect(screen.getByText('Corporate Manager Dashboard')).toBeInTheDocument();
   });
 
-  // Render the Dashboard within a Router because it contains Link components
-  const renderWithRouter = (ui, { route = '/' } = {}) => {
-    window.history.pushState({}, 'Test page', route);
-    return render(ui, { wrapper: BrowserRouter });
-  };
-
-  it('should render the dashboard page correctly', () => {
-    // Mock the return value of useAuth
-    useAuth.mockReturnValue({
-      logout: jest.fn(),
-    });
-
-    renderWithRouter(<Dashboard />);
-    // Check for the Dashboard heading
-    expect(screen.getByRole('heading', { name: /dashboard/i })).toBeInTheDocument();
-    // Check for the Quick Links section
-    expect(screen.getByRole('heading', { name: /quick links/i })).toBeInTheDocument();
-    // Check for specific links and buttons
-    expect(screen.getByRole('link', { name: /shipment tracking/i })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /refresh/i })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /filter data/i })).toBeInTheDocument();
+  it('renders Inventory Manager Dashboard for other roles', () => {
+    const user = { RoleID: 3 };
+    render(
+      <AuthContext.Provider value={{ user }}>
+        <Dashboard />
+      </AuthContext.Provider>
+    );
+    expect(screen.getByText('Inventory Manager Dashboard')).toBeInTheDocument();
   });
 
+  it('renders Inventory Manager Dashboard when user is not defined', () => {
+    render(
+      <AuthContext.Provider value={{}}>
+        <Dashboard />
+      </AuthContext.Provider>
+    );
+    expect(screen.getByText('Inventory Manager Dashboard')).toBeInTheDocument();
+  });
 });

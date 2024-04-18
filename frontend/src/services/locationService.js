@@ -1,21 +1,96 @@
-import { API_BASE_URL } from "../config";
+// src/services/locationService.js
 
-/**
- * Fetches a list of all locations from the backend.
- * @returns {Promise<{success: boolean, data?: any[], error?: string}>}
- */
+import { API_BASE_URL } from '../config';
+const LOCATIONS_BASE_URL = `${API_BASE_URL}locations`;
+
+const token = localStorage.getItem('token'); // Retrieve the authentication token
+
+// Helper function to handle responses
+const handleResponse = async (response) => {
+  if (!response.ok) {
+    const message = `An error has occurred: ${response.status}`;
+    throw new Error(message);
+  }
+  return response.json();
+};
+
+export const createLocation = async (businessId, latitude, longitude) => {
+  try {
+    const response = await fetch(LOCATIONS_BASE_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ businessId, latitude, longitude }),
+    });
+    return handleResponse(response);
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const getAllLocations = async () => {
   try {
-    const response = await fetch(`${API_BASE_URL}locations/`);
-    const resObj = await response.json();
-    const data = resObj.data;
-    if (response.ok) {
-      return { success: true, data };
-    } else {
-      return { success: false, error: data };
-    }
+    const response = await fetch(LOCATIONS_BASE_URL, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    });
+    const result = await handleResponse(response);
+    console.log("API response data:", result); // Optionally log to verify structure
+    return result; // Assuming handleResponse just returns the JSON parsed object
   } catch (error) {
-    console.error("Error fetching locations:", error);
-    return { success: false, error };
+    console.error('Error fetching locations:', error);
+    throw error;
+  }
+};
+
+
+export const getLocationById = async (locationId) => {
+  try {
+    const response = await fetch(`${LOCATIONS_BASE_URL}/${locationId}`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    });
+    return handleResponse(response);
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const updateLocation = async (locationId, updates) => {
+  try {
+    const response = await fetch(`${LOCATIONS_BASE_URL}/${locationId}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(updates),
+    });
+    return handleResponse(response);
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const deleteLocation = async (locationId) => {
+  try {
+    const response = await fetch(`${LOCATIONS_BASE_URL}/${locationId}`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    });
+    return handleResponse(response);
+  } catch (error) {
+    throw error;
   }
 };
