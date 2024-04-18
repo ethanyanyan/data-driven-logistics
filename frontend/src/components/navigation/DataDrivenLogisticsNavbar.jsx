@@ -1,12 +1,15 @@
+import React, { useState } from "react";
 import { Container, Navbar, Nav, Image } from "react-bootstrap";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import logo from '../../assets/images/logo.png';
 import "./DataDrivenLogisticsNavbar.css";
 import BaseBtn from "./../BaseComponents/BaseBtn";
+import BaseModal from "../../components/BaseComponents/BaseModal";
 
 export default function DataDrivenLogisticsNavbar() {
   const { logout, user } = useAuth();
+  const [modalIsOpen, setModalIsOpen] = useState(false);
   const navigate = useNavigate();
 
   const showPeopleTab = user && [1, 2, 4].includes(user.RoleID);
@@ -14,7 +17,7 @@ export default function DataDrivenLogisticsNavbar() {
     { path: "/shipment-tracking", name: "Shipments" },
     // Conditionally add "People" tab based on the user's role
     ...(showPeopleTab ? [{ path: "/users", name: "People" }] : []),
-    { action: logout, name: "Logout" },
+    { action: () => setModalIsOpen(true), name: "Logout" },
     // Add more links as needed
   ];
 
@@ -27,7 +30,13 @@ export default function DataDrivenLogisticsNavbar() {
     }
   };
 
+  const logoutClick = () => {
+    setModalIsOpen(false);
+    logout();
+  }
+
   return (
+    <div>
     <Navbar className="navbar-custom" expand="lg">
       <Container fluid>
         <Navbar.Brand as={NavLink} to="/dashboard">
@@ -52,5 +61,23 @@ export default function DataDrivenLogisticsNavbar() {
         </Navbar.Collapse>
       </Container>
     </Navbar>
+    <BaseModal
+        isOpen={modalIsOpen}
+        onRequestClose={() => setModalIsOpen(false)}
+        width="400px"
+      >
+        {{
+          header: <h2>Confirm Logout</h2>,
+          buttons: (
+            <div>
+              <span style={{ marginRight: "10px" }}>
+                <BaseBtn onClick={() => setModalIsOpen(false)}>Cancel</BaseBtn>
+              </span>
+              <BaseBtn onClick={() => logoutClick()}>Logout</BaseBtn>
+            </div>
+          ),
+        }}
+      </BaseModal>
+      </div>
   );
 }
