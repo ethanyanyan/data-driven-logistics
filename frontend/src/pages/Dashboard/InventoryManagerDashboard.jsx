@@ -4,6 +4,8 @@ import { getAllItems, createItem, updateInventoryItem, deleteInventoryItem } fro
 import BaseBtn from '../../components/BaseComponents/BaseBtn';
 import BaseInput from '../../components/BaseComponents/BaseInput';
 import styles from '../../styles/Table.module.css'
+import BaseModal from '../../components/BaseComponents/BaseModal';
+import '../../components/BaseComponents/BaseBtn.css'
 
 const FacilityManagerDashboard = () => {
   const [inventory, setInventory] = useState([]);
@@ -61,43 +63,63 @@ const FacilityManagerDashboard = () => {
   };
 
   return (
-    <Container>
-      <h1>Facility Manager Dashboard</h1>
-      <Row>
+      <Container>
+      <Row className="align-items-center mb-4">
         <Col>
+          <h1>Facility Manager Dashboard</h1>
+        </Col>
+        <Col xs="auto">
           <BaseBtn
             btnType="primary"
             label="Create New Item"
             onClick={() => setShowCreateModal(true)}
           />
+        </Col>
+      </Row>
+      <Row>
+        <Col>
           <div className={styles.tableContainer}>
             <Table className={styles.tableFullWidth}>
-            <thead>
-              <tr>
-                <th className={styles.tableHeader}>Inventory Level ID</th>
-                <th className={styles.tableHeader}>Location ID</th>
-                <th className={styles.tableHeader}>Product ID</th>
-                <th className={styles.tableHeader}>Quantity</th>
-                <th className={styles.tableHeader}>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {inventory.map(item => (
-                <tr key={item.InventoryLevelID} className={styles.strongRowLine}>
-                  <td className={styles.tableCell}>{item.InventoryLevelID}</td>
-                  <td className={styles.tableCell}>{item.LocationID}</td>
-                  <td className={styles.tableCell}>{item.ProductID}</td>
-                  <td className={styles.tableCell}>{item.Quantity}</td>
-                  <td className={styles.tableCell}>
-                    <Button variant="primary" size="sm" onClick={() => {
-                      setSelectedItem(item);
-                      setShowEditModal(true);
-                    }}>Edit</Button>{' '}
-                    <Button variant="danger" size="sm" onClick={() => handleDeleteItem(item.InventoryLevelID)}>Delete</Button>
-                  </td>
+              <thead>
+                <tr>
+                  <th className={styles.tableHeader}>Inventory Level ID</th>
+                  <th className={styles.tableHeader}>Location ID</th>
+                  <th className={styles.tableHeader}>Product ID</th>
+                  <th className={styles.tableHeader}>Quantity</th>
+                  <th className={styles.tableHeader}>Actions</th>
                 </tr>
-              ))}
-            </tbody>
+              </thead>
+              <tbody>
+                {inventory.map(item => (
+                  <tr key={item.InventoryLevelID} className={styles.strongRowLine}>
+                    <td className={styles.tableCell}>{item.InventoryLevelID}</td>
+                    <td className={styles.tableCell}>{item.LocationID}</td>
+                    <td className={styles.tableCell}>{item.ProductID}</td>
+                    <td className={styles.tableCell}>{item.Quantity}</td>
+                    <td className={styles.tableCell}>
+                    <BaseBtn
+                      className="edit-btn"
+                      btnType="primary"
+                      size="sm"
+                      onClick={() => {
+                        setSelectedItem(item);
+                        setShowEditModal(true);
+                      }}
+                    >
+                      Edit
+                    </BaseBtn>{' '}
+                    <BaseBtn
+                      className="delete-btn"
+                      btnType="secondary"
+                      size="sm"
+                      onClick={() => handleDeleteItem(item.InventoryLevelID)}
+                    >
+                      Delete
+                    </BaseBtn>
+                  </td>
+                  </tr>
+                ))}
+              </tbody>
             </Table>
           </div>
           <h4>Total Items: {inventory.length}</h4>
@@ -105,66 +127,70 @@ const FacilityManagerDashboard = () => {
       </Row>
 
       {/* Modal for creating a new item */}
-      <Modal show={showCreateModal} onHide={() => setShowCreateModal(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Create New Item</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-        <Form onSubmit={handleCreateItem}>
-          <Form.Group className="mb-3" controlId="itemLocationID">
-            <Form.Label>Location ID</Form.Label>
-            <BaseInput
-              type="text"
-              placeholder="Enter Location ID"
-              modelValue={newItem.LocationID}
-              onChange={(value) => setNewItem({ ...newItem, LocationID: value })}
-              required
-            />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="itemProductID">
-            <Form.Label>Product ID</Form.Label>
-            <BaseInput
-              type="text"
-              placeholder="Enter Product ID"
-              modelValue={newItem.ProductID}
-              onChange={(value) => setNewItem({ ...newItem, ProductID: value })}
-              required
-            />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="itemQuantity">
-            <Form.Label>Quantity</Form.Label>
-            <BaseInput
-              type="number"
-              placeholder="Enter Quantity"
-              modelValue={newItem.Quantity}
-              onChange={(value) => setNewItem({ ...newItem, Quantity: value })}
-              required
-            />
-          </Form.Group>
-          <BaseBtn
-            btnType="primary"
-            label="Create Item"
-            htmlType="submit"
-          />
-        </Form>
-      </Modal.Body>
-      </Modal>
-
-      {/* Modal for editing an item */}
-      {selectedItem && (
-        <Modal show={showEditModal} onHide={() => setShowEditModal(false)}>
-          <Modal.Header closeButton>
-            <Modal.Title>Edit Item</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <Form onSubmit={handleEditItem}>
-              <Form.Group className="mb-3" controlId="editItemName">
-                <Form.Label>Name</Form.Label>
+      <BaseModal isOpen={showCreateModal} onRequestClose={() => setShowCreateModal(false)}>
+        {{
+          header: <h3>Create New Item</h3>,
+          body: (
+            <Form onSubmit={handleCreateItem}>
+              <Form.Group className="mb-3" controlId="itemLocationID">
+                <Form.Label>Location ID</Form.Label>
                 <BaseInput
                   type="text"
-                  placeholder="Enter item name"
-                  modelValue={selectedItem.name}
-                  onChange={(value) => setSelectedItem({ ...selectedItem, name: value })}
+                  placeholder="Enter Location ID"
+                  value={newItem.LocationID}
+                  onChange={(e) => setNewItem({ ...newItem, LocationID: e.target.value })}
+                  required
+                />
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="itemProductID">
+                <Form.Label>Product ID</Form.Label>
+                <BaseInput
+                  type="text"
+                  placeholder="Enter Product ID"
+                  value={newItem.ProductID}
+                  onChange={(e) => setNewItem({ ...newItem, ProductID: e.target.value })}
+                  required
+                />
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="itemQuantity">
+                <Form.Label>Quantity</Form.Label>
+                <BaseInput
+                  type="number"
+                  placeholder="Enter Quantity"
+                  value={newItem.Quantity}
+                  onChange={(e) => setNewItem({ ...newItem, Quantity: e.target.value })}
+                  required
+                />
+              </Form.Group>
+              <BaseBtn btnType="primary" label="Create Item" type="submit" />
+            </Form>
+          ),
+        }}
+      </BaseModal>
+
+      {/* Modal for editing an item */}
+      <BaseModal isOpen={showEditModal} onRequestClose={() => setShowEditModal(false)}>
+        {{
+          header: <h3>Edit Item</h3>,
+          body: selectedItem && (
+            <Form onSubmit={handleEditItem}>
+              <Form.Group className="mb-3" controlId="editItemLocationID">
+                <Form.Label>Location ID</Form.Label>
+                <BaseInput
+                  type="text"
+                  placeholder="Enter Location ID"
+                  value={selectedItem.LocationID}
+                  onChange={(e) => setSelectedItem({ ...selectedItem, LocationID: e.target.value })}
+                  required
+                />
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="editItemProductID">
+                <Form.Label>Product ID</Form.Label>
+                <BaseInput
+                  type="text"
+                  placeholder="Enter Product ID"
+                  value={selectedItem.ProductID}
+                  onChange={(e) => setSelectedItem({ ...selectedItem, ProductID: e.target.value })}
                   required
                 />
               </Form.Group>
@@ -172,31 +198,17 @@ const FacilityManagerDashboard = () => {
                 <Form.Label>Quantity</Form.Label>
                 <BaseInput
                   type="number"
-                  placeholder="Enter item quantity"
-                  modelValue={selectedItem.quantity}
-                  onChange={(value) => setSelectedItem({ ...selectedItem, quantity: value })}
+                  placeholder="Enter Quantity"
+                  value={selectedItem.Quantity}
+                  onChange={(e) => setSelectedItem({ ...selectedItem, Quantity: e.target.value })}
                   required
                 />
               </Form.Group>
-              <Form.Group className="mb-3" controlId="editItemDescription">
-                <Form.Label>Description</Form.Label>
-                <BaseInput
-                  type="text"
-                  placeholder="Enter item description"
-                  modelValue={selectedItem.description}
-                  onChange={(value) => setSelectedItem({ ...selectedItem, description: value })}
-                  required
-                />
-              </Form.Group>
-              <BaseBtn
-                btnType="primary"
-                label="Update Item"
-                htmlType="submit"
-              />
+              <BaseBtn btnType="primary" label="Update Item" type="submit" />
             </Form>
-          </Modal.Body>
-        </Modal>
-      )}
+          ),
+        }}
+      </BaseModal>
     </Container>
   );
 };

@@ -4,15 +4,15 @@ import { Button, Container, Row, Col, Modal, Form, Table } from 'react-bootstrap
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import { getAllLocations, createLocation } from '../../services/locationService'; // Import location service functions
 import BaseBtn from '../../components/BaseComponents/BaseBtn';
-import "./CorporateManagerDashboard.css";
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import icon from 'leaflet/dist/images/marker-icon.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 import BaseInput from '../../components/BaseComponents/BaseInput';
 import styles from '../../styles/Table.module.css'
+import { toast } from "react-toastify";
 
-const Dashboard = () => {
+const CorporateManagerDashboard = () => {
   const [locations, setLocations] = useState([]);
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [newLocation, setNewLocation] = useState({ businessId: '', latitude: '', longitude: '' });
@@ -34,28 +34,58 @@ const Dashboard = () => {
   const fetchLocations = async () => {
     try {
       const response = await getAllLocations();
-      console.log("Fetched locations data:", response); // Confirm the structure
       if (response && Array.isArray(response.data)) {
         setLocations(response.data); // Make sure to set the 'data' array to state
       } else {
         console.error("Received format is incorrect or data is not an array:", response);
         setLocations([]); // Fallback to an empty array to prevent errors
+        toast.error("Failed to fetch locations. Please try again later.");
       }
     } catch (error) {
       console.error('Failed to fetch locations:', error);
       setLocations([]); // Ensure state is always an array
+      toast.error("Failed to fetch locations. Please try again later.");
     }
+  };
+
+  const isValidLatitude = (latitude) => {
+    return !isNaN(latitude) && latitude >= -90 && latitude <= 90;
+  };
+
+  const isValidLongitude = (longitude) => {
+    return !isNaN(longitude) && longitude >= -180 && longitude <= 180;
   };
 
   const handleCreateLocation = async (event) => {
     event.preventDefault();
     try {
       const { businessId, latitude, longitude } = newLocation;
+
+      // Check if businessId is provided
+      if (!businessId) {
+        toast.error("Please enter a valid Business ID.");
+        return;
+      }
+
+      // Check if latitude is valid
+      if (!isValidLatitude(latitude)) {
+        toast.error("Please enter a valid latitude (-90 to 90).");
+        return;
+      }
+
+      // Check if longitude is valid
+      if (!isValidLongitude(longitude)) {
+        toast.error("Please enter a valid longitude (-180 to 180).");
+        return;
+      }
+
       await createLocation(businessId, parseFloat(latitude), parseFloat(longitude));
       fetchLocations();
       setShowCreateModal(false);
+      toast.success("Location created successfully.");
     } catch (error) {
       console.error('Failed to create location:', error);
+      toast.error("Failed to create location. Please try again later.");
     }
   };
 
@@ -123,7 +153,7 @@ const Dashboard = () => {
                 type="text"
                 placeholder="Enter business ID"
                 modelValue={newLocation.businessId}
-                onChange={(value) => setNewLocation({ ...newLocation, businessId: value })}
+                onChange={(value) => setNewLocation(prevState => ({ ...prevState, businessId: value }))}
                 required
               />
             </Form.Group>
@@ -133,7 +163,7 @@ const Dashboard = () => {
                 type="text"
                 placeholder="Enter latitude"
                 modelValue={newLocation.latitude}
-                onChange={(value) => setNewLocation({ ...newLocation, latitude: value })}
+                onChange={(value) => setNewLocation(prevState => ({ ...prevState, latitude: value }))}
                 required
               />
             </Form.Group>
@@ -143,7 +173,7 @@ const Dashboard = () => {
                 type="text"
                 placeholder="Enter longitude"
                 modelValue={newLocation.longitude}
-                onChange={(value) => setNewLocation({ ...newLocation, longitude: value })}
+                onChange={(value) => setNewLocation(prevState => ({ ...prevState, longitude: value }))}
                 required
               />
             </Form.Group>
@@ -159,4 +189,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default CorporateManagerDashboard;

@@ -4,7 +4,7 @@ import InventoryManagerDashboard from './InventoryManagerDashboard';
 import CorporateManagerDashboard from './CorporateManagerDashboard'; 
 
 const Dashboard = () => {
-  const { user } = useAuth(); // Use the useAuth hook to access the current user's info
+  const { user } = useAuth();
 
   // Define the roles that should see the Corporate Manager Dashboard
   const rolesForCorporateManager = [1, 2, 4];
@@ -15,9 +15,9 @@ const Dashboard = () => {
   return (
     <div>
       {showCorporateManagerDashboard ? (
-        <CorporateManagerDashboard user={user} /> // Render the Corporate Manager Dashboard for roles 1, 2, 4
+        <CorporateManagerDashboard user={user} /> 
       ) : (
-        <InventoryManagerDashboard user={user} /> // Render the Inventory Manager Dashboard for other roles
+        <InventoryManagerDashboard user={user} />
       )}
     </div>
   );

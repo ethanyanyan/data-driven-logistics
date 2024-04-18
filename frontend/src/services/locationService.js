@@ -41,7 +41,7 @@ export const getAllLocations = async () => {
     });
     const result = await handleResponse(response);
     console.log("API response data:", result); // Optionally log to verify structure
-    return result; // Assuming handleResponse just returns the JSON parsed object
+    return result; 
   } catch (error) {
     console.error('Error fetching locations:', error);
     throw error;

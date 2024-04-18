@@ -16,7 +16,7 @@ const customStyles = {
   },
 };
 
-Modal.setAppElement("#root");
+if (process.env.NODE_ENV !== 'test') Modal.setAppElement('#root');
 
 const BaseModal = ({
   isOpen,
@@ -29,7 +29,9 @@ const BaseModal = ({
   bgGrey = false,
   hideXBtn = false,
   style,
-  children,
+  header,
+  body,
+  buttons,
 }) => {
   const dialogStyle = {
     width,
@@ -51,19 +53,15 @@ const BaseModal = ({
       }}
     >
       <div className={`modal-header text-${headerAlign}`}>
-        {children.header}
+        {header}
         {!hideXBtn && (
           <button className="close-btn" onClick={onRequestClose}>
             &times;
           </button>
         )}
       </div>
-      <div className="modal-body">{children.body}</div>
-      {children.buttons && (
-        <div className={`modal-footer align-${buttonAlign}`}>
-          {children.buttons}
-        </div>
-      )}
+      <div className="modal-body">{body}</div>
+      {buttons && <div className={`modal-footer align-${buttonAlign}`}>{buttons}</div>}
     </Modal>
   );
 };

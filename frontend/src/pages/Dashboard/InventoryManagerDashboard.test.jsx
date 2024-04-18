@@ -2,6 +2,9 @@ import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import FacilityManagerDashboard from './InventoryManagerDashboard';
+import Modal from 'react-modal';
+
+Modal.setAppElement(document.createElement('div'));
 
 // Helper function to render the component within a router
 const renderWithRouter = (ui, { route = '/' } = {}) => {
@@ -36,4 +39,3 @@ describe('FacilityManagerDashboard', () => {
     expect(screen.getByText(/Total Items: \d+/)).toBeInTheDocument();
   });
 });
-
