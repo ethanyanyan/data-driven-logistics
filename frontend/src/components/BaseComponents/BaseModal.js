@@ -1,8 +1,13 @@
+// BaseModal.js
 import React from "react";
 import Modal from "react-modal";
 import "./BaseModal.css";
 
 const customStyles = {
+  overlay: {
+    zIndex: 9999,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
   content: {
     top: "50%",
     left: "50%",
@@ -48,8 +53,11 @@ const BaseModal = ({
       isOpen={isOpen}
       onRequestClose={onRequestClose}
       style={{
-        ...customStyles,
-        content: { ...customStyles.content, ...dialogStyle },
+        overlay: customStyles.overlay,
+        content: {
+          ...customStyles.content,
+          ...dialogStyle,
+        },
       }}
     >
       <div className={`modal-header text-${headerAlign}`}>

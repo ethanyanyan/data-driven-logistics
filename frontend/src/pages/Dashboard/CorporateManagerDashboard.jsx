@@ -1,9 +1,10 @@
 //CorporateManagerDashboard.jsx
 import React, { useState, useEffect } from 'react';
-import { Button, Container, Row, Col, Modal, Form, Table } from 'react-bootstrap';
+import { Container, Row, Col, Modal, Form, Table } from 'react-bootstrap';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import { getAllLocations, createLocation } from '../../services/locationService'; // Import location service functions
+import { getAllLocations, createLocation } from '../../services/locationService'; 
 import BaseBtn from '../../components/BaseComponents/BaseBtn';
+import BaseModal from '../../components/BaseComponents/BaseModal';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import icon from 'leaflet/dist/images/marker-icon.png';
@@ -35,15 +36,15 @@ const CorporateManagerDashboard = () => {
     try {
       const response = await getAllLocations();
       if (response && Array.isArray(response.data)) {
-        setLocations(response.data); // Make sure to set the 'data' array to state
+        setLocations(response.data);
       } else {
         console.error("Received format is incorrect or data is not an array:", response);
-        setLocations([]); // Fallback to an empty array to prevent errors
+        setLocations([]);
         toast.error("Failed to fetch locations. Please try again later.");
       }
     } catch (error) {
       console.error('Failed to fetch locations:', error);
-      setLocations([]); // Ensure state is always an array
+      setLocations([]);
       toast.error("Failed to fetch locations. Please try again later.");
     }
   };
@@ -61,19 +62,16 @@ const CorporateManagerDashboard = () => {
     try {
       const { businessId, latitude, longitude } = newLocation;
 
-      // Check if businessId is provided
       if (!businessId) {
         toast.error("Please enter a valid Business ID.");
         return;
       }
 
-      // Check if latitude is valid
       if (!isValidLatitude(latitude)) {
         toast.error("Please enter a valid latitude (-90 to 90).");
         return;
       }
 
-      // Check if longitude is valid
       if (!isValidLongitude(longitude)) {
         toast.error("Please enter a valid longitude (-180 to 180).");
         return;
@@ -94,12 +92,14 @@ const CorporateManagerDashboard = () => {
       <h1>Corporate Manager Dashboard</h1>
       <Row>
         <Col>
+        <div style={{ marginBottom: '15px' }}>
           <BaseBtn
-            btnType="primary"
-            label="Create New Location"
-            onClick={() => setShowCreateModal(true)}
+          btnType="primary"
+          label="Create New Location"
+          onClick={() => setShowCreateModal(true)}
           />
-          <div className={styles.tableContainer}>
+        </div>
+          <div className={styles.tableContainer} style={{ maxHeight: '400px', overflowY: 'auto' }}>
             <Table className={styles.tableFullWidth}>
               <thead>
                 <tr>
@@ -130,7 +130,7 @@ const CorporateManagerDashboard = () => {
               <Marker
                 key={location.LocationID}
                 position={[Number(location.Latitude), Number(location.Longitude)]}
-                icon={customIcon} // Assign the custom icon to the marker
+                icon={customIcon}
               >
                 <Popup>
                   {`Location ID: ${location.LocationID}, Business ID: ${location.BusinessID}`}
@@ -141,11 +141,11 @@ const CorporateManagerDashboard = () => {
         </Col>
       </Row>
       {/* Modal for creating a new location */}
-      <Modal show={showCreateModal} onHide={() => setShowCreateModal(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Create New Location</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
+      <BaseModal
+        isOpen={showCreateModal}
+        onRequestClose={() => setShowCreateModal(false)}
+        header={<h3>Create New Location</h3>}
+        body={
           <Form onSubmit={handleCreateLocation}>
             <Form.Group className="mb-3" controlId="locationBusinessId">
               <Form.Label>Business ID</Form.Label>
@@ -183,8 +183,8 @@ const CorporateManagerDashboard = () => {
               htmlType="submit"
             />
           </Form>
-        </Modal.Body>
-      </Modal>
+        }
+      />
     </Container>
   );
 };

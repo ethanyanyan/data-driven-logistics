@@ -21,7 +21,6 @@ const FacilityManagerDashboard = () => {
   const fetchInventory = async () => {
     try {
       const response = await getAllItems();
-      // Set only the data array to the inventory state
       setInventory(response.data);
     } catch (error) {
       console.error('Failed to fetch inventory:', error);

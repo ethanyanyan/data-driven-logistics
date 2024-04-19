@@ -3,9 +3,8 @@
 import { API_BASE_URL } from '../config';
 const LOCATIONS_BASE_URL = `${API_BASE_URL}locations`;
 
-const token = localStorage.getItem('token'); // Retrieve the authentication token
+const token = localStorage.getItem('token');
 
-// Helper function to handle responses
 const handleResponse = async (response) => {
   if (!response.ok) {
     const message = `An error has occurred: ${response.status}`;
@@ -40,7 +39,6 @@ export const getAllLocations = async () => {
       },
     });
     const result = await handleResponse(response);
-    console.log("API response data:", result); // Optionally log to verify structure
     return result; 
   } catch (error) {
     console.error('Error fetching locations:', error);
