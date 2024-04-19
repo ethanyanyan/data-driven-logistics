@@ -37,47 +37,47 @@ export default function DataDrivenLogisticsNavbar() {
 
   return (
     <div>
-    <Navbar className="navbar-custom" expand="lg">
-      <Container fluid>
-        <Navbar.Brand as={NavLink} to="/dashboard">
-          <Image alt="Data Driven Logistics Logo" src={logo} className="ddl-logo" />
-        </Navbar.Brand>
-        <Navbar.Text className="navbar-text-header">
-          Data Driven Logistics
-        </Navbar.Text>
-        <Navbar.Toggle className="navbar-toggle" aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse className="navbar-collapse">
-          <Nav className="ms-auto">
-            {navigationLinks.map((link, index) => (
-              <BaseBtn
-                key={index}
-                onClick={() => handleNavClick(link)}
-                label={link.name}
-                btnType="primary"
-                size="sm"
-              />
-            ))}
-          </Nav>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
-    <BaseModal
-        isOpen={modalIsOpen}
-        onRequestClose={() => setModalIsOpen(false)}
-        width="400px"
-      >
-        {{
-          header: <h2>Confirm Logout</h2>,
-          buttons: (
-            <div>
-              <span style={{ marginRight: "10px" }}>
-                <BaseBtn onClick={() => setModalIsOpen(false)}>Cancel</BaseBtn>
-              </span>
-              <BaseBtn onClick={() => logoutClick()}>Logout</BaseBtn>
-            </div>
-          ),
-        }}
-      </BaseModal>
+      <Navbar className="navbar-custom" expand="lg">
+        <Container fluid>
+          <Navbar.Brand as={NavLink} to="/dashboard">
+            <Image alt="Data Driven Logistics Logo" src={logo} className="ddl-logo" />
+          </Navbar.Brand>
+          <Navbar.Text className="navbar-text-header">
+            Data Driven Logistics
+          </Navbar.Text>
+          <Navbar.Toggle className="navbar-toggle" aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse className="navbar-collapse">
+            <Nav className="ms-auto">
+              {navigationLinks.map((link, index) => (
+                <BaseBtn
+                  key={index}
+                  onClick={() => handleNavClick(link)}
+                  label={link.name}
+                  btnType="primary"
+                  size="sm"
+                />
+              ))}
+            </Nav>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
+      <BaseModal
+          isOpen={modalIsOpen}
+          onRequestClose={() => setModalIsOpen(false)}
+          width="400px"
+        >
+          {{
+            header: <h2>Confirm Logout</h2>,
+            buttons: (
+              <div>
+                <span style={{ marginRight: "10px" }}>
+                  <BaseBtn onClick={() => setModalIsOpen(false)}>Cancel</BaseBtn>
+                </span>
+                <BaseBtn onClick={() => logoutClick()}>Logout</BaseBtn>
+              </div>
+            ),
+          }}
+        </BaseModal>
       </div>
   );
 }
