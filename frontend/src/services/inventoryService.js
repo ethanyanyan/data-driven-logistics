@@ -1,21 +1,21 @@
 // src/services/inventoryService.js
 
-import { API_BASE_URL } from '../config';
+import { API_BASE_URL } from "../config";
 const INVENTORY_BASE_URL = `${API_BASE_URL}inventory`;
 
 export const createItem = async (itemData) => {
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem("token");
   try {
     const response = await fetch(INVENTORY_BASE_URL, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(itemData),
     });
     if (!response.ok) {
-      throw new Error('Failed to create new inventory item');
+      throw new Error("Failed to create new inventory item");
     }
     return await response.json();
   } catch (error) {
@@ -24,17 +24,17 @@ export const createItem = async (itemData) => {
 };
 
 export const getItemById = async (itemId) => {
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem("token");
   try {
     const response = await fetch(`${INVENTORY_BASE_URL}/${itemId}`, {
-      method: 'GET',
+      method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     });
     if (!response.ok) {
-      throw new Error('Failed to fetch inventory item');
+      throw new Error("Failed to fetch inventory item");
     }
     return await response.json();
   } catch (error) {
@@ -43,17 +43,17 @@ export const getItemById = async (itemId) => {
 };
 
 export const getAllItems = async () => {
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem("token");
   try {
     const response = await fetch(INVENTORY_BASE_URL, {
-      method: 'GET',
+      method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     });
     if (!response.ok) {
-      throw new Error('Failed to fetch inventory items');
+      throw new Error("Failed to fetch inventory items");
     }
     return await response.json();
   } catch (error) {
@@ -62,18 +62,18 @@ export const getAllItems = async () => {
 };
 
 export const updateItemQuantity = async (itemId, quantity) => {
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem("token");
   try {
     const response = await fetch(`${INVENTORY_BASE_URL}/${itemId}`, {
-      method: 'PUT',
+      method: "PUT",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({ quantity }),
     });
     if (!response.ok) {
-      throw new Error('Failed to update inventory item quantity');
+      throw new Error("Failed to update inventory item quantity");
     }
     return await response.json();
   } catch (error) {
@@ -82,18 +82,18 @@ export const updateItemQuantity = async (itemId, quantity) => {
 };
 
 export const updateInventoryItem = async (itemId, itemUpdates) => {
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem("token");
   try {
     const response = await fetch(`${INVENTORY_BASE_URL}/${itemId}`, {
-      method: 'PATCH',
+      method: "PATCH",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(itemUpdates),
     });
     if (!response.ok) {
-      throw new Error('Failed to update inventory item');
+      throw new Error("Failed to update inventory item");
     }
     return await response.json();
   } catch (error) {
@@ -102,17 +102,17 @@ export const updateInventoryItem = async (itemId, itemUpdates) => {
 };
 
 export const deleteInventoryItem = async (itemId) => {
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem("token");
   try {
     const response = await fetch(`${INVENTORY_BASE_URL}/${itemId}`, {
-      method: 'DELETE',
+      method: "DELETE",
       headers: {
         Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     });
     if (!response.ok) {
-      throw new Error('Failed to delete inventory item');
+      throw new Error("Failed to delete inventory item");
     }
     return await response.json();
   } catch (error) {

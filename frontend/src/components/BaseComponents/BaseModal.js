@@ -6,7 +6,7 @@ import "./BaseModal.css";
 const customStyles = {
   overlay: {
     zIndex: 9999,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
   content: {
     top: "50%",
@@ -21,7 +21,7 @@ const customStyles = {
   },
 };
 
-if (process.env.NODE_ENV !== 'test') Modal.setAppElement('#root');
+if (process.env.NODE_ENV !== "test") Modal.setAppElement("#root");
 
 const BaseModal = ({
   isOpen,
@@ -69,7 +69,9 @@ const BaseModal = ({
         )}
       </div>
       <div className="modal-body">{body}</div>
-      {buttons && <div className={`modal-footer align-${buttonAlign}`}>{buttons}</div>}
+      {buttons && (
+        <div className={`modal-footer align-${buttonAlign}`}>{buttons}</div>
+      )}
     </Modal>
   );
 };
