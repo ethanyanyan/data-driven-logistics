@@ -11,6 +11,7 @@ let mapping = {
   [`${APIBASE}shipments/`]: require("./routes/shipments"),
   [`${APIBASE}roles/`]: require("./routes/roles"),
   [`${APIBASE}testing/`]: require("./routes/testing"),
+  [`${APIBASE}location-types/`]: require("./routes/locationTypes"),
   [`${APIBASE}inventory/`]: require("./routes/inventory"),
   [`${APIBASE}products/`]: require("./routes/products"),
   [`${APIBASE}locations/`]: require("./routes/locations"),
