@@ -14,6 +14,7 @@ let mapping = {
   [`${APIBASE}inventory/`]: require("./routes/inventory"),
   [`${APIBASE}products/`]: require("./routes/products"),
   [`${APIBASE}locations/`]: require("./routes/locations"),
+  [`${APIBASE}businesses/`]: require("./routes/businesses"),
 };
 
 function applyMappingToApp(app) {

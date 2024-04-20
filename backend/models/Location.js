@@ -25,7 +25,7 @@ class Location {
   async save() {
     const query = `
             INSERT INTO Locations (BusinessID, TypeID, Latitude, Longitude, LocationName) 
-            VALUES (?, ?, ?, ?)
+            VALUES (?, ?, ?, ?, ?)
         `;
     const values = [
       this.BusinessID,
