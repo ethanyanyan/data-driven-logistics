@@ -1,8 +1,13 @@
+// BaseModal.js
 import React from "react";
 import Modal from "react-modal";
 import "./BaseModal.css";
 
 const customStyles = {
+  overlay: {
+    zIndex: 9999,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
   content: {
     top: "50%",
     left: "50%",
@@ -16,7 +21,7 @@ const customStyles = {
   },
 };
 
-Modal.setAppElement("#root");
+if (process.env.NODE_ENV !== "test") Modal.setAppElement("#root");
 
 const BaseModal = ({
   isOpen,
@@ -29,7 +34,9 @@ const BaseModal = ({
   bgGrey = false,
   hideXBtn = false,
   style,
-  children,
+  header,
+  body,
+  buttons,
 }) => {
   const dialogStyle = {
     width,
@@ -46,23 +53,24 @@ const BaseModal = ({
       isOpen={isOpen}
       onRequestClose={onRequestClose}
       style={{
-        ...customStyles,
-        content: { ...customStyles.content, ...dialogStyle },
+        overlay: customStyles.overlay,
+        content: {
+          ...customStyles.content,
+          ...dialogStyle,
+        },
       }}
     >
       <div className={`modal-header text-${headerAlign}`}>
-        {children.header}
+        {header}
         {!hideXBtn && (
           <button className="close-btn" onClick={onRequestClose}>
             &times;
           </button>
         )}
       </div>
-      <div className="modal-body">{children.body}</div>
-      {children.buttons && (
-        <div className={`modal-footer align-${buttonAlign}`}>
-          {children.buttons}
-        </div>
+      <div className="modal-body">{body}</div>
+      {buttons && (
+        <div className={`modal-footer align-${buttonAlign}`}>{buttons}</div>
       )}
     </Modal>
   );
