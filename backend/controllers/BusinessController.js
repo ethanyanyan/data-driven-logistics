@@ -11,7 +11,7 @@ class BusinessController {
         data: result,
       });
     } catch (error) {
-      res.status(500).json({ error: "Database error occurred." });
+      res.status(500).json({ error: "Database error occurred." + " " + error });
     }
   }
 
@@ -23,7 +23,7 @@ class BusinessController {
         data: businesses,
       });
     } catch (error) {
-      res.status(500).json({ error: "Database error occurred." });
+        res.status(500).json({ error: "Database error occurred." + " " + error });
     }
   }
 
@@ -40,7 +40,7 @@ class BusinessController {
         res.status(404).json({ error: "Business not found" });
       }
     } catch (error) {
-      res.status(500).json({ error: "Database error occurred." });
+        res.status(500).json({ error: "Database error occurred." + " " + error });
     }
   }
 
@@ -57,13 +57,13 @@ class BusinessController {
             data: await Business.findByID(id),
           });
         } else {
-          res.status(404).json({ error: "Business update failed" });
+          res.status(404).json({ error: "Business update failed" + " " + error });
         }
       } else {
         res.status(404).json({ error: "Business not found" });
       }
     } catch (error) {
-      res.status(500).json({ error: "Database error occurred." });
+        res.status(500).json({ error: "Database error occurred." + " " + error });
     }
   }
 
@@ -80,7 +80,7 @@ class BusinessController {
         res.status(404).json({ error: "Business not found" });
       }
     } catch (error) {
-      res.status(500).json({ error: "Database error occurred." +  " " + error});
+      res.status(500).json({ error: "Database error occurred." +  " " + error });
     }
   }
 }
