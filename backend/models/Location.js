@@ -1,11 +1,20 @@
 const db = require("../config/dbConfig");
 
 class Location {
-  constructor(LocationID, BusinessID, Latitude, Longitude) {
+  constructor(
+    LocationID,
+    BusinessID,
+    TypeID,
+    Latitude,
+    Longitude,
+    LocationName,
+  ) {
     this.LocationID = LocationID;
     this.BusinessID = BusinessID;
+    this.TypeID = TypeID;
     this.Latitude = Latitude;
     this.Longitude = Longitude;
+    this.LocationName = LocationName;
   }
 
   /**
@@ -15,10 +24,16 @@ class Location {
    */
   async save() {
     const query = `
-            INSERT INTO Locations (BusinessID, Latitude, Longitude) 
-            VALUES (?, ?, ?)
+            INSERT INTO Locations (BusinessID, TypeID, Latitude, Longitude, LocationName) 
+            VALUES (?, ?, ?, ?)
         `;
-    const values = [this.BusinessID, this.Latitude, this.Longitude];
+    const values = [
+      this.BusinessID,
+      this.TypeID,
+      this.Latitude,
+      this.Longitude,
+      this.LocationName,
+    ];
 
     try {
       const [result] = await db.pool.query(query, values);
@@ -26,6 +41,32 @@ class Location {
       return result;
     } catch (error) {
       throw new Error("Error saving the location: " + error.message);
+    }
+  }
+
+  /**
+   * Retrieves all locations from the database.
+   *
+   * @return {Promise<Location[]>} An array of location instances.
+   */
+  static async findAll() {
+    const query = `SELECT * FROM Locations`;
+
+    try {
+      const [rows] = await db.pool.query(query);
+      return rows.map(
+        (row) =>
+          new Location(
+            row.LocationID,
+            row.BusinessID,
+            row.TypeID,
+            row.Latitude,
+            row.Longitude,
+            row.LocationName,
+          ),
+      );
+    } catch (error) {
+      throw new Error("Error retrieving all locations: " + error.message);
     }
   }
 
@@ -44,8 +85,10 @@ class Location {
         return new Location(
           rows[0].LocationID,
           rows[0].BusinessID,
+          rows[0].TypeID,
           rows[0].Latitude,
           rows[0].Longitude,
+          rows[0].LocationName,
         );
       } else {
         return null;

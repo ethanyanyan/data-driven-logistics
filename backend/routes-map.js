@@ -12,6 +12,8 @@ let mapping = {
   [`${APIBASE}roles/`]: require("./routes/roles"),
   [`${APIBASE}testing/`]: require("./routes/testing"),
   [`${APIBASE}inventory/`]: require("./routes/inventory"),
+  [`${APIBASE}products/`]: require("./routes/products"),
+  [`${APIBASE}locations/`]: require("./routes/locations"),
 };
 
 function applyMappingToApp(app) {

@@ -66,14 +66,21 @@ CREATE TABLE Products (
 -- Create Shipments Table
 CREATE TABLE Shipments (
     ShipmentID INT AUTO_INCREMENT PRIMARY KEY,
+    UserID INT,
     SourceID INT,
     DestinationID INT,
     DepartureDate DATE,
     ArrivalDate DATE,
-    Status VARCHAR(255),
+    StatusID INT,
     FOREIGN KEY (UserID) REFERENCES Users(UserID), 
     FOREIGN KEY (SourceID) REFERENCES Locations(LocationID),
     FOREIGN KEY (DestinationID) REFERENCES Locations(LocationID)
+);
+
+-- Create ShipmentStatusType Table
+CREATE TABLE ShipmentStatusType (
+    StatusID INT AUTO_INCREMENT PRIMARY KEY,
+    StatusName VARCHAR(255) NOT NULL
 );
 
 -- Create ShipmentDetails Table

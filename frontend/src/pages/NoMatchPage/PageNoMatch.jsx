@@ -1,8 +1,8 @@
 import { Container, Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { useAuth } from '../contexts/AuthContext';
+import { useAuth } from '../../contexts/AuthContext';
 import React, { useState, useEffect } from 'react';
-import logo from '../assets/images/logo.png';
+import logo from '../../assets/images/logo.png';
 import "./PageNoMatch.css";
 
 export default function PageNoMatch(props) {

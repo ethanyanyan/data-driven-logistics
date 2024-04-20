@@ -4,6 +4,12 @@ import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import App from "./App";
 
+// Mocking the setAppElement method
+jest.mock("react-modal", () => ({
+  ...jest.requireActual("react-modal"),
+  setAppElement: () => {},
+}));
+
 test("renders login page correctly", () => {
   render(<App />);
   // Check for something specific to the LoginPage. For example, the presence of the login form.

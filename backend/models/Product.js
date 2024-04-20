@@ -56,6 +56,25 @@ class Product {
   }
 
   /**
+   * Retrieves all products from the database.
+   * @return {Promise<Product[]>} An array of Product instances representing all products in the database.  
+   * @throws {Error} If an error occurs while retrieving the products.
+   */
+  static async getAll() {
+    const query = `SELECT * FROM Products`;
+
+    try {
+      const [rows] = await db.pool.query(query);
+      return rows.map(
+        (row) =>
+          new Product(row.ProductID, row.Name, row.Description, row.UnitPrice),
+      );
+    } catch (error) {
+      throw new Error("Error retrieving products: " + error.message);
+    }
+  }
+
+  /**
    * Updates specified details of a product by its unique identifier.
    *
    * @param {object} updateData - An object containing the product attributes to update.

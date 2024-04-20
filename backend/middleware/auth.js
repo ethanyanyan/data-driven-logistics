@@ -34,10 +34,17 @@ passport.use(strategy);
 
 // Function to generate a JWT
 const generateToken = (user) => {
+  const payload = {
+    Username: user.Username,
+    UserID: user.UserID,
+    RoleID: user.RoleID,
+    BusinessID: user.BusinessID
+  };
+
   return jwt.sign(
-    { Username: user.Username, UserID: user.UserID, RoleID: user.RoleID, BusinessID: user.BusinessID },
+    payload,
     SECRET_KEY,
-    { expiresIn: "1h" },
+    { expiresIn: "1h" }
   );
 };
 
