@@ -19,13 +19,18 @@ describe("LocationTypeAPIs", () => {
 
     db.pool.query.mockResolvedValueOnce([mockDbResponse]);
 
-    const res = await request(app).get(BASE + '1');
+    const res = await request(app).get(BASE + "1");
     expect(res.status).toBe(200);
-    expect(res.body).toHaveProperty('message', 'Location type retrieved successfully');
-    expect(res.body.data).toEqual(expect.objectContaining({
-      TypeID: 1,
-      Name: "Warehouse",
-    }));
+    expect(res.body).toHaveProperty(
+      "message",
+      "Location type retrieved successfully",
+    );
+    expect(res.body.data).toEqual(
+      expect.objectContaining({
+        TypeID: 1,
+        Name: "Warehouse",
+      }),
+    );
   });
 
   it("should return 404 when retrieving a non-existent location type", async () => {
@@ -33,17 +38,17 @@ describe("LocationTypeAPIs", () => {
 
     db.pool.query.mockResolvedValueOnce([mockDbResponse]);
 
-    const res = await request(app).get(BASE + '9999');
+    const res = await request(app).get(BASE + "9999");
     expect(res.status).toBe(404);
-    expect(res.body).toHaveProperty('error', 'Location type not found');
+    expect(res.body).toHaveProperty("error", "Location type not found");
   });
 
   it("should handle database errors gracefully", async () => {
     const errorMessage = "Database connection lost";
     db.pool.query.mockRejectedValueOnce(new Error(errorMessage));
 
-    const res = await request(app).get(BASE + '1');
+    const res = await request(app).get(BASE + "1");
     expect(res.status).toBe(500);
-    expect(res.body).toHaveProperty('error');
+    expect(res.body).toHaveProperty("error");
   });
 });

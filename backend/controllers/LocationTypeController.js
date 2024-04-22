@@ -3,6 +3,13 @@ const LocationType = require("../models/LocationType");
 class LocationTypeController {
   static async getLocationType(req, res) {
     const { id } = req.params;
+
+    if (!id) {
+      return res
+        .status(400)
+        .json({ error: "Location type ID must be provided" });
+    }
+
     try {
       const locationType = await LocationType.findByID(id);
       if (locationType) {
