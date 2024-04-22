@@ -153,8 +153,8 @@ async function deleteShipment(req, res) {
 }
 
 async function logShipmentDetails(req, res) {
-  const { ShipmentID, ProductID, Quantity } = req.body;
-
+  const ShipmentID  = req.params.id;
+  const { ProductID, Quantity } = req.body
   try {
     const shipmentDetailsData = {
       ShipmentID,
@@ -178,7 +178,6 @@ async function logShipmentDetails(req, res) {
 
 async function getShipmentDetails(req, res) {
   try {
-    console.log("req.params", req.params)
     const shipmentDetails = await ShipmentDetails.findByShipmentID(
       req.params.id
     );

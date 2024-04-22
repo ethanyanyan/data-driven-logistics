@@ -45,6 +45,7 @@ router.delete("/:id", shipmentController.deleteShipment);
 router.get("/:id/details", shipmentController.getShipmentDetails);
 
 // Log a new shipment detail(item) for a specific shipment
+// NOTE: If a shipmentDetail with the same ShipmentID and ProductID already exist, the qty will be updated instead
 router.post("/:id", shipmentController.logShipmentDetails);
 
 module.exports = router;
