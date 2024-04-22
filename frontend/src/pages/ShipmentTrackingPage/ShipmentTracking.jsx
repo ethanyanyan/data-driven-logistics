@@ -26,6 +26,8 @@ const ShipmentTracking = () => {
   const [arrivalDate, setArrivalDate] = useState("");
   const [status, setStatus] = useState("");
 
+  //source/components/forms/validation for validation.
+
   const loadShipmentsAndLocations = async () => {
     if (!user || !user.BusinessID) {
       return;
@@ -50,6 +52,7 @@ const ShipmentTracking = () => {
   useEffect(() => {
     loadShipmentsAndLocations();
   }, [user]);
+  // possibly move modal/ui to services to make files smaller
 
 
   const requestAddShipment = () => {
@@ -57,6 +60,8 @@ const ShipmentTracking = () => {
   };
 
   const addShipment = async () => {
+
+    //source/components/forms/signup/submission-logic line 100 new user
     //error check for proper input
     try {
       const result = await shipmentService.addShipment();
