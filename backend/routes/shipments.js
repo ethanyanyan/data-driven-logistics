@@ -10,25 +10,41 @@ const router = express.Router();
 const shipmentController = require("../controllers/ShipmentsController");
 const db = require("../config/dbConfig");
 
+/**
+ * Endpoints dealing with just the Shipments table itself
+ */
+
 // Endpoint for logging new shipments
 router.post("/", shipmentController.logShipment);
 
-// Endpoint for getting the status and details of a shipment
+// Endpoint for getting the status of a shipment
 router.get("/:id", shipmentController.getShipment);
 
 // Get all shipments by a specific business ID
 router.get(
   "/business/:businessId",
-  shipmentController.getShipmentsByBusinessId,
+  shipmentController.getShipmentsByBusinessId
 );
 
 // Endpoint for getting all shipments with future support for filtering and sorting
 router.get("/", shipmentController.getAllShipments);
 
-// Endpoint to update shipments details - body should contain ONLY the fields to be updated
+// Endpoint to update details of shipments details - body should contain ONLY the fields to be updated
 router.patch("/:id", shipmentController.updateShipment);
 
 // Endpoint to delete shipments
 router.delete("/:id", shipmentController.deleteShipment);
+
+/**
+ * Endpoints dealing with the ShipmentDetails
+ */
+
+// Get every shipment detail for a specific shipment
+
+// Get all shipment details(items) for a specific shipment
+router.get("/:id/details", shipmentController.getShipmentDetails);
+
+// Log a new shipment detail(item) for a specific shipment
+router.post("/:id", shipmentController.logShipmentDetails);
 
 module.exports = router;

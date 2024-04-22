@@ -1,4 +1,5 @@
 const Shipment = require("../models/Shipments");
+const ShipmentDetails = require("../models/ShipmentDetails");
 
 // Logs a new shipment
 async function logShipment(req, res) {
@@ -112,7 +113,7 @@ async function updateShipment(req, res) {
   try {
     const shipmentUpdated = await Shipment.updateShipment(
       req.params.id,
-      updateData,
+      updateData
     );
     if (shipmentUpdated) {
       res.status(200).json({
@@ -151,6 +152,53 @@ async function deleteShipment(req, res) {
   }
 }
 
+async function logShipmentDetails(req, res) {
+  const { ShipmentID, ProductID, Quantity } = req.body;
+
+  try {
+    const shipmentDetailsData = {
+      ShipmentID,
+      ProductID,
+      Quantity,
+    };
+
+    const newShipmentDetails = new ShipmentDetails(shipmentDetailsData);
+    const result = await newShipmentDetails.save();
+
+    res.status(200).json({
+      message: "Shipment details logged successfully",
+      data: result,
+    });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ error: "Database error occurred: " + error.message });
+  }
+}
+
+async function getShipmentDetails(req, res) {
+  try {
+    console.log("req.params", req.params)
+    const shipmentDetails = await ShipmentDetails.findByShipmentID(
+      req.params.id
+    );
+    if (shipmentDetails) {
+      res.status(200).json({
+        message: `Shipment details for shipment id ${req.params.id} retrieved successfully`,
+        data: shipmentDetails,
+      });
+    } else {
+      res.status(404).json({
+        error: `Shipment details for shipment id ${req.params.id} not found`,
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      error: "Database error occurred.",
+    });
+  }
+}
+
 module.exports = {
   logShipment,
   getShipment,
@@ -158,4 +206,6 @@ module.exports = {
   getShipmentsByBusinessId,
   updateShipment,
   deleteShipment,
+  logShipmentDetails,
+  getShipmentDetails,
 };
