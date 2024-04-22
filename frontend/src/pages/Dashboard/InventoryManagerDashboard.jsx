@@ -1,13 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  Container,
-  Row,
-  Col,
-  Modal,
-  Form,
-  Table,
-  Button,
-} from "react-bootstrap";
+import { Container, Row, Col, Form, Table } from "react-bootstrap";
 import {
   getAllItems,
   createItem,
@@ -26,9 +18,9 @@ const FacilityManagerDashboard = () => {
   const [showEditModal, setShowEditModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [newItem, setNewItem] = useState({
-    name: "",
-    quantity: "",
-    description: "",
+    LocationID: "",
+    ProductID: "",
+    Quantity: "",
   });
 
   useEffect(() => {
@@ -44,27 +36,37 @@ const FacilityManagerDashboard = () => {
     }
   };
 
-  const handleCreateItem = async (event) => {
+  const handleCreateItemSubmit = async (event) => {
     event.preventDefault();
+    await handleCreateItem();
+  };
+
+  const handleCreateItem = async () => {
     try {
       await createItem(newItem);
       fetchInventory();
       setShowCreateModal(false);
-      setNewItem({ name: "", quantity: "", description: "" });
+      setNewItem({ LocationID: "", ProductID: "", Quantity: "" });
     } catch (error) {
       console.error("Failed to create item:", error);
+      alert("Failed to create item. Please try again.");
     }
   };
 
-  const handleEditItem = async (event) => {
+  const handleEditItemSubmit = async (event) => {
     event.preventDefault();
+    await handleEditItem();
+  };
+
+  const handleEditItem = async () => {
     try {
-      await updateInventoryItem(selectedItem.id, selectedItem);
+      await updateInventoryItem(selectedItem.InventoryLevelID, selectedItem);
       fetchInventory();
       setShowEditModal(false);
       setSelectedItem(null);
     } catch (error) {
       console.error("Failed to update item:", error);
+      alert("Failed to update item. Please try again.");
     }
   };
 
@@ -150,72 +152,68 @@ const FacilityManagerDashboard = () => {
       <BaseModal
         isOpen={showCreateModal}
         onRequestClose={() => setShowCreateModal(false)}
-      >
-        {{
-          header: <h3>Create New Item</h3>,
-          body: (
-            <Form onSubmit={handleCreateItem}>
-              <Form.Group className="mb-3" controlId="itemLocationID">
-                <Form.Label>Location ID</Form.Label>
-                <BaseInput
-                  type="text"
-                  placeholder="Enter Location ID"
-                  value={newItem.LocationID}
-                  onChange={(e) =>
-                    setNewItem({ ...newItem, LocationID: e.target.value })
-                  }
-                  required
-                />
-              </Form.Group>
-              <Form.Group className="mb-3" controlId="itemProductID">
-                <Form.Label>Product ID</Form.Label>
-                <BaseInput
-                  type="text"
-                  placeholder="Enter Product ID"
-                  value={newItem.ProductID}
-                  onChange={(e) =>
-                    setNewItem({ ...newItem, ProductID: e.target.value })
-                  }
-                  required
-                />
-              </Form.Group>
-              <Form.Group className="mb-3" controlId="itemQuantity">
-                <Form.Label>Quantity</Form.Label>
-                <BaseInput
-                  type="number"
-                  placeholder="Enter Quantity"
-                  value={newItem.Quantity}
-                  onChange={(e) =>
-                    setNewItem({ ...newItem, Quantity: e.target.value })
-                  }
-                  required
-                />
-              </Form.Group>
-              <BaseBtn btnType="primary" label="Create Item" type="submit" />
-            </Form>
-          ),
-        }}
-      </BaseModal>
+        header={<h3>Create New Item</h3>}
+        body={
+          <Form onSubmit={handleCreateItemSubmit}>
+            <Form.Group className="mb-3" controlId="itemLocationID">
+              <Form.Label>Location ID</Form.Label>
+              <BaseInput
+                type="text"
+                placeholder="Enter Location ID"
+                value={newItem.LocationID}
+                onChange={(value) =>
+                  setNewItem({ ...newItem, LocationID: value })
+                }
+                required
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="itemProductID">
+              <Form.Label>Product ID</Form.Label>
+              <BaseInput
+                type="text"
+                placeholder="Enter Product ID"
+                value={newItem.ProductID}
+                onChange={(value) =>
+                  setNewItem({ ...newItem, ProductID: value })
+                }
+                required
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="itemQuantity">
+              <Form.Label>Quantity</Form.Label>
+              <BaseInput
+                type="number"
+                placeholder="Enter Quantity"
+                value={newItem.Quantity}
+                onChange={(value) =>
+                  setNewItem({ ...newItem, Quantity: value })
+                }
+                required
+              />
+            </Form.Group>
+            <BaseBtn btnType="primary" label="Create Item" htmlType="submit" />
+          </Form>
+        }
+      />
 
       {/* Modal for editing an item */}
       <BaseModal
         isOpen={showEditModal}
         onRequestClose={() => setShowEditModal(false)}
-      >
-        {{
-          header: <h3>Edit Item</h3>,
-          body: selectedItem && (
-            <Form onSubmit={handleEditItem}>
+        header={<h3>Edit Item</h3>}
+        body={
+          selectedItem && (
+            <Form onSubmit={handleEditItemSubmit}>
               <Form.Group className="mb-3" controlId="editItemLocationID">
                 <Form.Label>Location ID</Form.Label>
                 <BaseInput
                   type="text"
                   placeholder="Enter Location ID"
                   value={selectedItem.LocationID}
-                  onChange={(e) =>
+                  onChange={(value) =>
                     setSelectedItem({
                       ...selectedItem,
-                      LocationID: e.target.value,
+                      LocationID: value,
                     })
                   }
                   required
@@ -227,10 +225,10 @@ const FacilityManagerDashboard = () => {
                   type="text"
                   placeholder="Enter Product ID"
                   value={selectedItem.ProductID}
-                  onChange={(e) =>
+                  onChange={(value) =>
                     setSelectedItem({
                       ...selectedItem,
-                      ProductID: e.target.value,
+                      ProductID: value,
                     })
                   }
                   required
@@ -242,20 +240,24 @@ const FacilityManagerDashboard = () => {
                   type="number"
                   placeholder="Enter Quantity"
                   value={selectedItem.Quantity}
-                  onChange={(e) =>
+                  onChange={(value) =>
                     setSelectedItem({
                       ...selectedItem,
-                      Quantity: e.target.value,
+                      Quantity: value,
                     })
                   }
                   required
                 />
               </Form.Group>
-              <BaseBtn btnType="primary" label="Update Item" type="submit" />
+              <BaseBtn
+                btnType="primary"
+                label="Update Item"
+                htmlType="submit"
+              />
             </Form>
-          ),
-        }}
-      </BaseModal>
+          )
+        }
+      />
     </Container>
   );
 };
