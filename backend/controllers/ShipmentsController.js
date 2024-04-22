@@ -153,8 +153,8 @@ async function deleteShipment(req, res) {
 }
 
 async function logShipmentDetails(req, res) {
-  const ShipmentID  = req.params.id;
-  const { ProductID, Quantity } = req.body
+  const ShipmentID = req.params.id;
+  const { ProductID, Quantity } = req.body;
   try {
     const shipmentDetailsData = {
       ShipmentID,
@@ -198,6 +198,29 @@ async function getShipmentDetails(req, res) {
   }
 }
 
+async function deleteShipmentDetails(req, res) {
+  try {
+    const shipmentDetails = await ShipmentDetails.findByID(
+      req.params.id,
+      req.params.productID
+    );
+    if (shipmentDetails) {
+      await ShipmentDetails.delete(req.params.id, req.params.productID);
+      res.status(200).json({
+        message: `Shipment details for shipment id ${req.params.id} and product id ${req.params.productID} deleted successfully`,
+      });
+    } else {
+      res.status(404).json({
+        error: `Shipment details for shipment id ${req.params.id} and product id ${req.params.productID} not found`,
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      error: "Database error occurred.",
+    });
+  }
+}
+
 module.exports = {
   logShipment,
   getShipment,
@@ -207,4 +230,5 @@ module.exports = {
   deleteShipment,
   logShipmentDetails,
   getShipmentDetails,
+  deleteShipmentDetails,
 };

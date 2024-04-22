@@ -39,13 +39,14 @@ router.delete("/:id", shipmentController.deleteShipment);
  * Endpoints dealing with the ShipmentDetails
  */
 
-// Get every shipment detail for a specific shipment
-
 // Get all shipment details(items) for a specific shipment
 router.get("/:id/details", shipmentController.getShipmentDetails);
 
-// Log a new shipment detail(item) for a specific shipment
+// Log/update a new shipment detail(item) for a specific shipment
 // NOTE: If a shipmentDetail with the same ShipmentID and ProductID already exist, the qty will be updated instead
 router.post("/:id", shipmentController.logShipmentDetails);
+
+// Delete a shipment detail(item) for a specific shipment
+router.delete("/:id/:productID", shipmentController.deleteShipmentDetails);
 
 module.exports = router;

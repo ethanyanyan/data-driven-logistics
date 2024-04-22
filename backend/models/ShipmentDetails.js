@@ -74,6 +74,42 @@ class ShipmentDetails {
       throw new Error("Error finding shipmentDetails: " + error.message);
     }
   }
+
+  /**
+   * Finds shipmentDetails by their unique identifier.
+   * @param {number} ShipmentDetailID - The unique identifier of the shipmentDetail to find.
+   * @return {Promise<ShipmentDetails|null>} The found shipmentDetail as a ShipmentDetails instance, or null if not found.
+   */
+  static async findByID(ShipmentID, ProductID) {
+    const query = `SELECT * FROM ShipmentDetails WHERE ShipmentID = ? AND ProductID = ?`;
+
+    try {
+      const [rows] = await db.pool.query(query, [ShipmentID, ProductID]);
+      if (rows.length > 0) {
+        return new ShipmentDetails(rows[0]);
+      } else {
+        return null;
+      }
+    } catch (error) {
+      throw new Error("Error finding the shipmentDetail: " + error.message);
+    }
+  }
+
+  /**
+   * Deletes a shipmentDetail by its unique identifier.
+   *
+   * @param {number} ShipmentDetailID - The unique identifier of the shipmentDetail to delete.
+   * @return {Promise<object>} The result object from the database operation.
+   */
+  static async delete(ShipmentID, ProductID) {
+    const query = `DELETE FROM ShipmentDetails WHERE ShipmentID = ? AND ProductID = ?`;
+    try {
+      const [result] = await db.pool.query(query, [ShipmentID, ProductID]);
+      return result;
+    } catch (error) {
+      throw new Error("Error deleting the shipmentDetail: " + error.message);
+    }
+  }
 }
 
 module.exports = ShipmentDetails;
