@@ -65,19 +65,15 @@ export default function DataDrivenLogisticsNavbar() {
           isOpen={modalIsOpen}
           onRequestClose={() => setModalIsOpen(false)}
           width="400px"
-        >
-          {{
-            header: <h2>Confirm Logout</h2>,
-            buttons: (
-              <div>
-                <span style={{ marginRight: "10px" }}>
-                  <BaseBtn onClick={() => setModalIsOpen(false)}>Cancel</BaseBtn>
-                </span>
-                <BaseBtn onClick={() => logoutClick()}>Logout</BaseBtn>
-              </div>
-            ),
-          }}
-        </BaseModal>
+          header={<h2>Confirm Logout</h2>}
+          buttons={
+            <div>
+              <span style={{ marginRight: "10px" }}>
+              <BaseBtn onClick={() => setModalIsOpen(false)}>Cancel</BaseBtn>
+              </span>
+              <BaseBtn onClick={() => logoutClick()}>Logout</BaseBtn>
+            </div>}
+        />
       </div>
   );
 }
