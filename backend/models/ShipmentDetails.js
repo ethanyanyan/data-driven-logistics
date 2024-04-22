@@ -76,7 +76,7 @@ class ShipmentDetails {
   }
 
   /**
-   * Finds shipmentDetails by their unique identifier.
+   * Finds shipmentDetails by their unique identifier of ShipmentID and ProductID.
    * @param {number} ShipmentDetailID - The unique identifier of the shipmentDetail to find.
    * @return {Promise<ShipmentDetails|null>} The found shipmentDetail as a ShipmentDetails instance, or null if not found.
    */
