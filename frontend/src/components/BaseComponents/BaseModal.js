@@ -68,7 +68,9 @@ const BaseModal = ({
           </button>
         )}
       </div>
-      <div className="modal-body">{body}</div>
+      {body && (
+        <div className="modal-body">{body}</div>
+      )}
       {buttons && (
         <div className={`modal-footer align-${buttonAlign}`}>{buttons}</div>
       )}
