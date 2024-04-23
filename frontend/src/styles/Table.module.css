@@ -26,45 +26,14 @@
   transition: background-color 0.3s ease;
 }
 
+.colorInfo { color: lightskyblue; }
+.colorSuccess { color: seagreen; }
+.colorWarning { color: orange; }
+.colorDanger { color: red; }
+
 .tableCell:last-child,
 .tableHeader:last-child {
   border-right: none;
-}
-
-.tableCellInfo,
-.tableHeaderInfo {
-  padding: 10px;
-  color: lightskyblue;
-  border-right: 1px solid rgba(0, 0, 0, 0.1);
-  text-align: left;
-  transition: background-color 0.3s ease;
-}
-
-.tableCellSuccess,
-.tableHeaderSuccess {
-  padding: 10px;
-  color: seagreen;
-  border-right: 1px solid rgba(0, 0, 0, 0.1);
-  text-align: left;
-  transition: background-color 0.3s ease;
-}
-
-.tableCellWarning,
-.tableHeaderWarning {
-  padding: 10px;
-  color: orange;
-  border-right: 1px solid rgba(0, 0, 0, 0.1);
-  text-align: left;
-  transition: background-color 0.3s ease;
-}
-
-.tableCellDanger,
-.tableHeaderDanger {
-  padding: 10px;
-  color: red;
-  border-right: 1px solid rgba(0, 0, 0, 0.1);
-  text-align: left;
-  transition: background-color 0.3s ease;
 }
 
 .strongRowLine {

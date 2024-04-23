@@ -45,27 +45,36 @@ const ShipmentTracking = () => {
     return location ? location.LocationName : "Unknown Location";
   };
 
+  const getStatusNameById = (id) => {
+    return idToStatus[id];
+  };
+
   const formatDate = (dateString) => {
     return format(parseISO(dateString), "MMMM d, yyyy h:mm a");
   };
 
-  const getColorOfStatus = (status) => {
-    if(status === 'Completed') {
-      return styles.tableCellInfo;
-    }
-    if(status === 'Delivered') {
-      return styles.tableCellSuccess;
-    }
-    if(status === 'In Transit') {
-      return styles.tableCellWarning;
-    }
-    if(status === 'Delayed') {
-      return styles.tableCellDanger;
-    }
-    else {
-      return styles.tableCell;
-    }
+  const statusIdToColorClass = {
+    '1': 'Table_tableCell__+WZnA Table_colorInfo__SxUOR',
+    '2': 'Table_tableCell__+WZnA Table_colorSuccess__zp0Sb',
+    '3': 'Table_tableCell__+WZnA Table_colorWarning__fOMx7',
+    '4': 'Table_tableCell__+WZnA Table_colorDanger__EyuMN'
   };
+
+  const idToStatus = {
+    '1': 'Completed',
+    '2': 'Delivered',
+    '3': 'In Transit',
+    '4': 'Delayed'
+  }; 
+
+  const statusToId = {
+    'Completed': '1',
+    'Delivered': '2',
+    'In Transit': '3',
+    'Delayed': '4'
+  }; 
+
+  const getColorOfStatus = (statusId) => `${statusIdToColorClass[statusId] || ''}`;
 
   const sortShipments = (field) => {
     if (sortField !== field) {
@@ -96,6 +105,9 @@ const ShipmentTracking = () => {
           );
           valA = locationA ? locationA.LocationName.toLowerCase() : "";
           valB = locationB ? locationB.LocationName.toLowerCase() : "";
+        } else if (field === "Status") {
+          valA = a.StatusID;
+          valB = b.StatusID;
         } else {
           valA =
             typeof a[field] === "string" ? a[field].toLowerCase() : a[field];
@@ -214,7 +226,9 @@ const ShipmentTracking = () => {
                   <td className={styles.tableCell}>
                     {formatDate(shipment.ArrivalDate)}
                   </td>
-                  <td className={getColorOfStatus(shipment.Status)}>{shipment.Status}</td>
+                  <td className={getColorOfStatus(shipment.StatusID)}>
+                    {getStatusNameById(shipment.StatusID)}
+                  </td>
                 </tr>
               ))}
             </tbody>
