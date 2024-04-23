@@ -18,7 +18,7 @@ describe("Shipment Model", () => {
       DestinationID: 2,
       DepartureDate: new Date("2023-01-01"),
       ArrivalDate: new Date("2023-01-05"),
-      Status: "Pending",
+      StatusID: 1,
     };
     const shipment = new Shipment(shipmentData);
     await shipment.save();
@@ -38,7 +38,7 @@ describe("Shipment Model", () => {
       DestinationID: 2,
       DepartureDate: new Date("2023-01-01").toISOString(),
       ArrivalDate: new Date("2023-01-05").toISOString(),
-      Status: "Pending",
+      StatusID: 1,
     };
     db.pool.query.mockResolvedValue([[mockShipmentData], undefined]);
 
@@ -46,7 +46,7 @@ describe("Shipment Model", () => {
 
     expect(db.pool.query).toHaveBeenCalledWith(expect.any(String), [1]);
     expect(shipment).toBeInstanceOf(Shipment);
-    expect(shipment.Status).toEqual("Pending");
+    expect(shipment.StatusID).toEqual(1);
   });
 
   it("should retrieve all shipments from the database", async () => {
@@ -58,7 +58,7 @@ describe("Shipment Model", () => {
         DestinationID: 2,
         DepartureDate: new Date("2023-01-01").toISOString(),
         ArrivalDate: new Date("2023-01-05").toISOString(),
-        Status: "Pending",
+        StatusID: 1,
       },
     ];
     db.pool.query.mockResolvedValue([mockShipmentArray, undefined]);
@@ -80,9 +80,9 @@ describe("Shipment Model", () => {
       2,
       new Date("2023-01-01"),
       new Date("2023-01-05"),
-      "Pending",
+      1,
     );
-    const updateData = { Status: "Shipped" };
+    const updateData = { Status: 2 };
     const success = await Shipment.updateShipment(
       shipment.ShipmentID,
       updateData,

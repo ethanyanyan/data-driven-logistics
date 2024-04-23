@@ -33,7 +33,7 @@ describe("Shipment API routes", () => {
         DestinationID: 2,
         DepartureDate: "2023-01-10T00:00:00.000Z",
         ArrivalDate: "2023-01-12T00:00:00.000Z",
-        Status: "Delivered",
+        StatusID: 2,
       },
     ];
 
@@ -49,7 +49,7 @@ describe("Shipment API routes", () => {
       DestinationID: expect.any(Number),
       DepartureDate: expect.any(String),
       ArrivalDate: expect.any(String),
-      Status: expect.any(String),
+      StatusID: expect.any(Number),
     });
   });
 
@@ -61,7 +61,7 @@ describe("Shipment API routes", () => {
         DestinationID: 2,
         DepartureDate: "2023-01-10T00:00:00.000Z",
         ArrivalDate: "2023-01-12T00:00:00.000Z",
-        Status: "Delivered",
+        StatusID: 1,
       },
       {
         ShipmentID: 2,
@@ -69,7 +69,7 @@ describe("Shipment API routes", () => {
         DestinationID: 2,
         DepartureDate: "2023-01-10T00:00:00.000Z",
         ArrivalDate: "2023-01-12T00:00:00.000Z",
-        Status: "Delivered",
+        StatusID: 1,
       },
     ];
 
@@ -85,7 +85,7 @@ describe("Shipment API routes", () => {
         DestinationID: expect.any(Number),
         DepartureDate: expect.any(String),
         ArrivalDate: expect.any(String),
-        Status: expect.any(String),
+        StatusID: expect.any(Number),
       });
     }
   });
@@ -108,7 +108,7 @@ describe("Shipment API routes", () => {
       DestinationID: 2,
       DepartureDate: "2023-01-15",
       ArrivalDate: "2023-01-19",
-      Status: "Delivered",
+      StatusID: 2,
     };
 
     const postData = {
@@ -117,7 +117,7 @@ describe("Shipment API routes", () => {
       DestinationID: 2,
       DepartureDate: "2023-01-15",
       ArrivalDate: "2023-01-19",
-      Status: "Delivered",
+      StatusID: 2,
     };
 
     db.pool.query.mockResolvedValueOnce([mockApiResponse]);
@@ -131,7 +131,7 @@ describe("Shipment API routes", () => {
       DestinationID: expect.any(Number),
       DepartureDate: expect.any(String),
       ArrivalDate: expect.any(String),
-      Status: expect.any(String),
+      StatusID: expect.any(Number),
     });
   });
 });
