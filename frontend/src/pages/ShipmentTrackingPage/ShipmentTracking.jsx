@@ -145,6 +145,9 @@ const ShipmentTracking = () => {
     <div>
       <div className={styles.headerContainer}>
         <h1>Shipment Tracking</h1>
+        <BaseBtn type="primary" onClick={() => requestAddShipment(user)}>
+          Add Shipment +
+        </BaseBtn>
       </div>
       <div className={styles.tableContainer}>
         {shipments.length > 0 ? (
