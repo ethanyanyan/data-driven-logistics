@@ -13,7 +13,7 @@ class Shipment {
     this.DestinationID = row.DestinationID;
     this.DepartureDate = row.DepartureDate;
     this.ArrivalDate = row.ArrivalDate;
-    this.Status = row.Status;
+    this.StatusID = row.StatusID;
   }
 
   /**
@@ -24,7 +24,7 @@ class Shipment {
   async save() {
     const query = `
             INSERT INTO Shipments 
-            (ShipmentID, SourceID, DestinationID, DepartureDate, ArrivalDate, Status, UserID) 
+            (ShipmentID, SourceID, DestinationID, DepartureDate, ArrivalDate, StatusID, UserID) 
             VALUES (?, ?, ?, ?, ?, ?, ?)
         `;
     const values = [
@@ -33,7 +33,7 @@ class Shipment {
       this.DestinationID,
       this.DepartureDate,
       this.ArrivalDate,
-      this.Status,
+      this.StatusID,
       this.UserID,
     ];
 
