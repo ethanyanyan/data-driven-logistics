@@ -4,10 +4,7 @@ import * as shipmentService from "../../services/shipmentService";
 import * as locationService from "../../services/locationService";
 import styles from "../../styles/Table.module.css";
 import { format, parseISO } from "date-fns";
-import BaseBtn from "../../components/BaseComponents/BaseBtn";
-import BaseModal from "../../components/BaseComponents/BaseModal";
 import { SlArrowDown, SlArrowUp } from "react-icons/sl";
-import { toast } from "react-toastify";
 
 const ShipmentTracking = () => {
   const { user } = useAuth();
@@ -17,16 +14,6 @@ const ShipmentTracking = () => {
   const [sortField, setSortField] = useState(null);
   const [sortDirection, setSortDirection] = useState("ascending");
   const [isSorted, setIsSorted] = useState(false);
-  const [addShipmentModalIsOpen, setAddShipmentModalIsOpen] = useState(false);
-
-  //shipment addition modal data
-  const [source, setSource] = useState("");
-  const [destination, setDestination] = useState("");
-  const [departureDate, setDepartureDate] = useState("");
-  const [arrivalDate, setArrivalDate] = useState("");
-  const [status, setStatus] = useState("");
-
-  //source/components/forms/validation for validation.
 
   const loadShipmentsAndLocations = async () => {
     if (!user || !user.BusinessID) {
@@ -52,42 +39,10 @@ const ShipmentTracking = () => {
   useEffect(() => {
     loadShipmentsAndLocations();
   }, [user]);
-  // possibly move modal/ui to services to make files smaller
-
-
-  const requestAddShipment = () => {
-    setAddShipmentModalIsOpen(true);
-  };
-
-  const addShipment = async () => {
-
-    //source/components/forms/signup/submission-logic line 100 new user
-    //error check for proper input
-    try {
-      const result = await shipmentService.addShipment();
-      if (result.success) {
-        toast.success("Shipment added successfully.");
-      } else {
-        toast.error(result.message);
-      }
-    } catch (error) {
-      setError("Failed to add shipment.");
-      console.error(error);
-      toast.error("Failed to delete shipment.");
-    }
-    setAddShipmentModalIsOpen(false);
-    loadShipmentsAndLocations();
-  }
 
   const getLocationNameById = (id) => {
     const location = locations.find((loc) => loc.LocationID === id);
     return location ? location.LocationName : "Unknown Location";
-  };
-
-  const getIdByLocationName = (locName) => {
-    const location = locations.find((loc) =>  loc.LocationName === locName);
-    console.log(location);
-    return location ? location.LocationID : null;
   };
 
   const formatDate = (dateString) => {
@@ -250,56 +205,6 @@ const ShipmentTracking = () => {
           <h2>No shipments found.</h2>
         )}
       </div>
-      <BaseModal
-        isOpen={addShipmentModalIsOpen}
-        onRequestClose={() => setAddShipmentModalIsOpen(false)}
-        width="400px"
-      >
-        {{
-          header: <h2>Add Shipment</h2>,
-          body: (
-            <p>Please enter shipment information below:</p>,
-            <div className="ta">
-              <div className="form-field">
-                <label htmlFor="source">Source:</label>
-                <select onChange={setSource}>
-                {locations.map(location => <option value={getIdByLocationName(location.LocationName)}>{location.LocationName}</option>)}
-                </select>
-              </div>
-              <div className="form-field">
-                <label htmlFor="destination">Destination:</label>
-                <select onChange={setDestination}>
-                {locations.map(location => <option value={getIdByLocationName(location.LocationName)}>{location.LocationName}</option>)}
-                </select>
-              </div>
-              <div className="form-field">
-                <label htmlFor="departure date">Departure Date:</label>
-                <input type="date" class="form-control" onChange={setDepartureDate}/>
-              </div>
-              <div className="form-field">
-                <label htmlFor="departure date">Arrival Date:</label>
-                <input type="date" class="form-control" onChange={setArrivalDate}/>
-              </div>
-              <div className="form-field">
-                <label htmlFor="source">Status:</label>
-                <select onChange={setStatus}>
-                  <option value="In Transit" label="In Transit"/>
-                  <option value="Delayed" label="Delayed"/>
-                  <option value="Delivered" label="Delivered"/>
-                </select>
-              </div>
-            </div>
-            ),
-          buttons: (
-            <div>
-              <span style={{ marginRight: "10px" }}>
-                <BaseBtn onClick={() => setAddShipmentModalIsOpen(false)}>Cancel</BaseBtn>
-              </span>
-              <BaseBtn onClick={requestAddShipment}>Confirm</BaseBtn>
-            </div>
-          ),
-        }}
-      </BaseModal>
     </div>
   );
 };

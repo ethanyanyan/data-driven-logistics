@@ -25,25 +25,4 @@ export const fetchShipmentsByCompany = async (businessId) => {
   }
 };
 
-export const addShipment = async (businessId) => {
-  const token = localStorage.getItem("token");
-  try {
-    const response = await fetch(
-      `${SHIPMENTS_BASE_URL}/`,
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      },
-    );
-    if (!response.ok) {
-      throw new Error("Network response was not ok");
-    }
-    return await response.json();
-  } catch (error) {
-    throw error;
-  }
-};
 //implement new shipment logging here.
