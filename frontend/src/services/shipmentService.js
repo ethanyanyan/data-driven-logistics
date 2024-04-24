@@ -30,7 +30,7 @@ export const fetchShipmentsByCompany = async (businessId) => {
   }
 };
 
-export const addShipment = async (businessId) => {
+export const logShipment = async (SourceID, UserID, DestinationID, DepartureDate, ArrivalDate, StatusID) => {
   const token = localStorage.getItem("token");
   try {
     const response = await fetch(
@@ -41,6 +41,7 @@ export const addShipment = async (businessId) => {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
+        body: JSON.stringify({SourceID, UserID, DestinationID, DepartureDate, ArrivalDate, StatusID}),
       },
     );
     if (!response.ok) {

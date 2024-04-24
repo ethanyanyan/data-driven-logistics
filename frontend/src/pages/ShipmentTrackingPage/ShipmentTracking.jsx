@@ -3,7 +3,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import * as shipmentService from "../../services/shipmentService";
 import * as locationService from "../../services/locationService";
 import styles from "../../styles/Table.module.css";
-import { format, parseISO } from "date-fns";
+import { format, parseISO, secondsToHours } from "date-fns";
 import BaseBtn from "../../components/BaseComponents/BaseBtn";
 import BaseModal from "../../components/BaseComponents/BaseModal";
 import { SHIPMENT_STATUS } from "../../constants/constants";
@@ -58,40 +58,40 @@ const ShipmentTracking = () => {
   }, [user]);
   // possibly move modal/ui to services to make files smaller
 
-
   const requestAddShipment = () => {
     setAddShipmentModalIsOpen(true);
   };
 
   const addShipment = async () => {
-
-    //source/components/forms/signup/submission-logic line 100 new user
-    //error check for proper input
+    const newShipment = {
+      UserID: user.UserID,
+      SourceID: source,
+      DestinationID: destination,
+      ArrivalDate: arrivalDate,
+      DepartureDate: departureDate,
+      StatusID: status,
+    };
+    // possibly adjust status based on arrival date, maybe not show arrival date field if not yet completed?
+    if (!newShipment) return; //should verify info here
     try {
-      const result = await shipmentService.addShipment();
+      const result = await shipmentService.logShipment(source, user.UserID, destination, departureDate, arrivalDate, status);
       if (result.success) {
-        toast.success("Shipment added successfully.");
+        loadShipmentsAndLocations();
+        toast.success("New shipment successfully logged.");
       } else {
         toast.error(result.message);
       }
     } catch (error) {
-      setError("Failed to add shipment.");
+      setError("Failed to log new shipment.");
       console.error(error);
-      toast.error("Failed to delete shipment.");
+      toast.error("Failed to log new shipment.");
     }
     setAddShipmentModalIsOpen(false);
-    loadShipmentsAndLocations();
   }
 
   const getLocationNameById = (id) => {
     const location = locations.find((loc) => loc.LocationID === id);
     return location ? location.LocationName : "Unknown Location";
-  };
-
-  const getIdByLocationName = (locName) => {
-    const location = locations.find((loc) =>  loc.LocationName === locName);
-    console.log(location);
-    return location ? location.LocationID : null;
   };
 
   const formatDate = (dateString) => {
@@ -275,52 +275,51 @@ const ShipmentTracking = () => {
         isOpen={addShipmentModalIsOpen}
         onRequestClose={() => setAddShipmentModalIsOpen(false)}
         width="400px"
-      >
-        {{
-          header: <h2>Add Shipment</h2>,
-          body: (
-            <p>Please enter shipment information below:</p>,
-            <div className="ta">
-              <div className="form-field">
-                <label htmlFor="source">Source:</label>
-                <select onChange={setSource}>
-                {locations.map(location => <option value={getIdByLocationName(location.LocationName)}>{location.LocationName}</option>)}
-                </select>
-              </div>
-              <div className="form-field">
-                <label htmlFor="destination">Destination:</label>
-                <select onChange={setDestination}>
-                {locations.map(location => <option value={getIdByLocationName(location.LocationName)}>{location.LocationName}</option>)}
-                </select>
-              </div>
-              <div className="form-field">
-                <label htmlFor="departure date">Departure Date:</label>
-                <input type="date" class="form-control" onChange={setDepartureDate}/>
-              </div>
-              <div className="form-field">
-                <label htmlFor="departure date">Arrival Date:</label>
-                <input type="date" class="form-control" onChange={setArrivalDate}/>
-              </div>
-              <div className="form-field">
-                <label htmlFor="source">Status:</label>
-                <select onChange={setStatus}>
-                  <option value="In Transit" label="In Transit"/>
-                  <option value="Delayed" label="Delayed"/>
-                  <option value="Delivered" label="Delivered"/>
-                </select>
+        header={<h2>Add Shipment</h2>}
+        body={
+          <div>
+          <p>Please enter shipment information below:</p>
+          <div className="ta">
+                <div className="form-field">
+                  <label htmlFor="source">Source:</label>
+                  <select onChange={e => setSource(e.target.value)}>
+                  {locations.map(location => <option value={location.LocationID}>{location.LocationName}</option>)}
+                  </select>
+                </div>
+                <div className="form-field">
+                  <label htmlFor="destination">Destination:</label>
+                  <select onChange={e => setDestination(e.target.value)}>
+                  {locations.map(location => <option value={location.LocationID}>{location.LocationName}</option>)}
+                  </select>
+                </div>
+                <div className="form-field">
+                  <label htmlFor="departure date">Departure Date:</label>
+                  <input type="date" class="form-control" onChange={e => setDepartureDate(e.target.value)}/>
+                </div>
+                <div className="form-field">
+                  <label htmlFor="departure date">Arrival Date:</label>
+                  <input type="date" class="form-control" onChange={e => setArrivalDate(e.target.value)}/>
+                </div>
+                <div className="form-field">
+                  <label htmlFor="source">Status:</label>
+                  <select onChange={e => setStatus(e.target.value)}>
+                    {Object.entries(SHIPMENT_STATUS).map(([id, status]) => (
+                        <option key={id} value={id}>{status}</option>
+                    ))}
+                  </select>
+                </div>
               </div>
             </div>
-            ),
-          buttons: (
+            }
+          buttons={
             <div>
               <span style={{ marginRight: "10px" }}>
                 <BaseBtn onClick={() => setAddShipmentModalIsOpen(false)}>Cancel</BaseBtn>
               </span>
-              <BaseBtn onClick={requestAddShipment}>Confirm</BaseBtn>
+              <BaseBtn onClick={addShipment}>Confirm</BaseBtn>
             </div>
-          ),
-        }}
-      </BaseModal>
+          }
+      />
     </div>
   );
 };
