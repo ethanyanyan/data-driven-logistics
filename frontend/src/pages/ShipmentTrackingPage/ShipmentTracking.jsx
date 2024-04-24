@@ -6,6 +6,7 @@ import styles from "../../styles/Table.module.css";
 import { format, parseISO } from "date-fns";
 import BaseBtn from "../../components/BaseComponents/BaseBtn";
 import BaseModal from "../../components/BaseComponents/BaseModal";
+import { SHIPMENT_STATUS } from "../../constants/constants";
 import { SlArrowDown, SlArrowUp } from "react-icons/sl";
 import { toast } from "react-toastify";
 
@@ -37,15 +38,18 @@ const ShipmentTracking = () => {
       const shipmentsData =
         await shipmentService.fetchShipmentsByCompany(businessId);
       const locationsData = await locationService.getAllLocations();
-      if (locationsData.success) {
-        setLocations(locationsData.data);
-      } else {
-        throw new Error(locationsData.error);
+
+      if (!shipmentsData || !locationsData) {
+        throw new Error(
+          "Data retrieval was successful but data is not accessible",
+        );
       }
+
+      setLocations(locationsData.data);
       setShipments(shipmentsData.data);
     } catch (error) {
       setError("Failed to fetch data");
-      console.error(error);
+      console.error("Error in fetching data:", error);
     }
   };
 
@@ -94,17 +98,26 @@ const ShipmentTracking = () => {
     return format(parseISO(dateString), "MMMM d, yyyy h:mm a");
   };
 
+  const statusIdToClass = {
+    1: "statusInfo",
+    2: "statusSuccess",
+    3: "statusWarning",
+    4: "statusDanger",
+  };
+
+  const getClassForStatus = (statusId) => {
+    return styles[statusIdToClass[statusId]] || "";
+  };
+
   const sortShipments = (field) => {
     if (sortField !== field) {
       setSortField(field);
       setSortDirection("descending");
-      setIsSorted(true);
     } else if (sortDirection === "descending") {
       setSortDirection("ascending");
     } else if (sortDirection === "ascending") {
       setSortField(null);
       setSortDirection("ascending");
-      setIsSorted(false);
     }
 
     setShipments((prevShipments) => {
@@ -123,6 +136,9 @@ const ShipmentTracking = () => {
           );
           valA = locationA ? locationA.LocationName.toLowerCase() : "";
           valB = locationB ? locationB.LocationName.toLowerCase() : "";
+        } else if (field === "Status") {
+          valA = a.StatusID;
+          valB = b.StatusID;
         } else {
           valA =
             typeof a[field] === "string" ? a[field].toLowerCase() : a[field];
@@ -244,7 +260,9 @@ const ShipmentTracking = () => {
                   <td className={styles.tableCell}>
                     {formatDate(shipment.ArrivalDate)}
                   </td>
-                  <td className={styles.tableCell}>{shipment.Status}</td>
+                  <td className={getClassForStatus(shipment.StatusID)}>
+                    {SHIPMENT_STATUS[shipment.StatusID]}
+                  </td>
                 </tr>
               ))}
             </tbody>
