@@ -62,7 +62,6 @@ CREATE TABLE Products (
     Description TEXT,
     UnitPrice DECIMAL(10,2),
     ProductURL VARCHAR(255)
-
 );
 
 -- Create Shipments Table
