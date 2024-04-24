@@ -6,6 +6,7 @@
 
 const InventoryLevel = require("./../models/InventoryLevel");
 const db = require("../config/dbConfig");
+const Transaction = require("../models/Transaction");
 
 // Logs a new Item in the inventory
 async function createItem(req, res) {
@@ -171,6 +172,47 @@ async function getAllLocations(req, res) {
   }
 }
 
+async function getHistoricalInventoryLevels(req, res) {
+  const { locationID, productID } = req.params;
+  const { days } = req.query;
+
+  try {
+    const currentLevel = await InventoryLevel.findByLocationAndProduct(locationID, productID);
+    if (!currentLevel) {
+      return res.status(404).json({ error: 'Inventory level not found' });
+    }
+
+    const historicalLevels = [];
+    const currentDate = new Date();
+
+    for (const day of days.split(',')) {
+      const historicalPoint = new Date(currentDate);
+      historicalPoint.setDate(historicalPoint.getDate() - parseInt(day));
+
+      const quantityChange = await Transaction.calculateQuantityChange(
+        locationID,
+        productID,
+        historicalPoint,
+        currentDate,
+      );
+
+      const historicalLevel = {
+        date: historicalPoint.toISOString(),
+        level: currentLevel.Quantity - quantityChange,
+      };
+
+      historicalLevels.push(historicalLevel);
+    }
+
+    res.status(200).json({
+      message: 'Historical inventory levels retrieved successfully',
+      data: historicalLevels,
+    });
+  } catch (error) {
+    res.status(500).json({ error: 'Database error occurred.' + error });
+  }
+}
+
 module.exports = {
   createItem,
   getAllProducts,
@@ -180,4 +222,5 @@ module.exports = {
   deleteInventory,
   updateInventory,
   updateQuantity,
+  getHistoricalInventoryLevels
 };
