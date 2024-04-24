@@ -23,11 +23,12 @@ const ShipmentTracking = () => {
       const businessId = user.BusinessID;
       const shipmentsData =
         await shipmentService.fetchShipmentsByCompany(businessId);
-      const locationsData = await locationService.getAllLocations();
-      if (locationsData.success) {
+      try {
+        const locationsData = await locationService.getAllLocations();
         setLocations(locationsData.data);
-      } else {
-        throw new Error(locationsData.error);
+      } catch (error) {
+        setError("Failed to fetch locations");
+        console.error(error);
       }
       setShipments(shipmentsData.data);
     } catch (error) {
