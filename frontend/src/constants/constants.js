@@ -11,3 +11,10 @@ export const ROLES = {
   8: "Retail Manager",
   9: "Accountant",
 };
+
+export const STATUSES = {
+  1: 'Completed',
+  2: 'Delivered',
+  3: 'In Transit',
+  4: 'Delayed'
+};

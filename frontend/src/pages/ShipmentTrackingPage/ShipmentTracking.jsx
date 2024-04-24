@@ -4,6 +4,7 @@ import * as shipmentService from "../../services/shipmentService";
 import * as locationService from "../../services/locationService";
 import styles from "../../styles/Table.module.css";
 import { format, parseISO } from "date-fns";
+import { STATUSES } from "../../constants/constants";
 import { SlArrowDown, SlArrowUp } from "react-icons/sl";
 
 const ShipmentTracking = () => {
@@ -13,7 +14,6 @@ const ShipmentTracking = () => {
   const [error, setError] = useState("");
   const [sortField, setSortField] = useState(null);
   const [sortDirection, setSortDirection] = useState("ascending");
-  const [isSorted, setIsSorted] = useState(false);
 
   const loadShipmentsAndLocations = async () => {
     if (!user || !user.BusinessID) {
@@ -45,10 +45,6 @@ const ShipmentTracking = () => {
     return location ? location.LocationName : "Unknown Location";
   };
 
-  const getStatusNameById = (id) => {
-    return idToStatus[id];
-  };
-
   const formatDate = (dateString) => {
     return format(parseISO(dateString), "MMMM d, yyyy h:mm a");
   };
@@ -60,33 +56,17 @@ const ShipmentTracking = () => {
     '4': 'Table_tableCell__+WZnA Table_colorDanger__EyuMN'
   };
 
-  const idToStatus = {
-    '1': 'Completed',
-    '2': 'Delivered',
-    '3': 'In Transit',
-    '4': 'Delayed'
-  }; 
-
-  const statusToId = {
-    'Completed': '1',
-    'Delivered': '2',
-    'In Transit': '3',
-    'Delayed': '4'
-  }; 
-
   const getColorOfStatus = (statusId) => `${statusIdToColorClass[statusId] || ''}`;
 
   const sortShipments = (field) => {
     if (sortField !== field) {
       setSortField(field);
       setSortDirection("descending");
-      setIsSorted(true);
     } else if (sortDirection === "descending") {
       setSortDirection("ascending");
     } else if (sortDirection === "ascending") {
       setSortField(null);
       setSortDirection("ascending");
-      setIsSorted(false);
     }
 
     setShipments((prevShipments) => {
@@ -226,8 +206,8 @@ const ShipmentTracking = () => {
                   <td className={styles.tableCell}>
                     {formatDate(shipment.ArrivalDate)}
                   </td>
-                  <td className={getColorOfStatus(shipment.StatusID)}>
-                    {getStatusNameById(shipment.StatusID)}
+                  <td className={getColorOfStatus(STATUSES[shipment.StatusID])}>
+                    {STATUSES[shipment.StatusID]}
                   </td>
                 </tr>
               ))}
