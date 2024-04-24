@@ -12,9 +12,9 @@ export const ROLES = {
   9: "Accountant",
 };
 
-export const STATUSES = {
-  1: 'Completed',
-  2: 'Delivered',
-  3: 'In Transit',
-  4: 'Delayed'
+export const SHIPMENT_STATUS = {
+  1: "Completed",
+  2: "Delivered",
+  3: "In Transit",
+  4: "Delayed",
 };

@@ -4,7 +4,7 @@ import * as shipmentService from "../../services/shipmentService";
 import * as locationService from "../../services/locationService";
 import styles from "../../styles/Table.module.css";
 import { format, parseISO } from "date-fns";
-import { STATUSES } from "../../constants/constants";
+import { SHIPMENT_STATUS } from "../../constants/constants";
 import { SlArrowDown, SlArrowUp } from "react-icons/sl";
 
 const ShipmentTracking = () => {
@@ -24,15 +24,18 @@ const ShipmentTracking = () => {
       const shipmentsData =
         await shipmentService.fetchShipmentsByCompany(businessId);
       const locationsData = await locationService.getAllLocations();
-      if (locationsData.success) {
-        setLocations(locationsData.data);
-      } else {
-        throw new Error(locationsData.error);
+
+      if (!shipmentsData || !locationsData) {
+        throw new Error(
+          "Data retrieval was successful but data is not accessible",
+        );
       }
+
+      setLocations(locationsData.data);
       setShipments(shipmentsData.data);
     } catch (error) {
       setError("Failed to fetch data");
-      console.error(error);
+      console.error("Error in fetching data:", error);
     }
   };
 
@@ -49,14 +52,16 @@ const ShipmentTracking = () => {
     return format(parseISO(dateString), "MMMM d, yyyy h:mm a");
   };
 
-  const statusIdToColorClass = {
-    '1': 'Table_tableCell__+WZnA Table_colorInfo__SxUOR',
-    '2': 'Table_tableCell__+WZnA Table_colorSuccess__zp0Sb',
-    '3': 'Table_tableCell__+WZnA Table_colorWarning__fOMx7',
-    '4': 'Table_tableCell__+WZnA Table_colorDanger__EyuMN'
+  const statusIdToClass = {
+    1: "statusInfo",
+    2: "statusSuccess",
+    3: "statusWarning",
+    4: "statusDanger",
   };
 
-  const getColorOfStatus = (statusId) => `${statusIdToColorClass[statusId] || ''}`;
+  const getClassForStatus = (statusId) => {
+    return styles[statusIdToClass[statusId]] || "";
+  };
 
   const sortShipments = (field) => {
     if (sortField !== field) {
@@ -206,8 +211,8 @@ const ShipmentTracking = () => {
                   <td className={styles.tableCell}>
                     {formatDate(shipment.ArrivalDate)}
                   </td>
-                  <td className={getColorOfStatus(STATUSES[shipment.StatusID])}>
-                    {STATUSES[shipment.StatusID]}
+                  <td className={getClassForStatus(shipment.StatusID)}>
+                    {SHIPMENT_STATUS[shipment.StatusID]}
                   </td>
                 </tr>
               ))}
