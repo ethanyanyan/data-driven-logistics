@@ -11,6 +11,7 @@ import BaseInput from "../../components/BaseComponents/BaseInput";
 import styles from "../../styles/Table.module.css";
 import BaseModal from "../../components/BaseComponents/BaseModal";
 import "../../components/BaseComponents/BaseBtn.css";
+import { toast } from "react-toastify";
 
 const FacilityManagerDashboard = () => {
   const [inventory, setInventory] = useState([]);
@@ -32,7 +33,7 @@ const FacilityManagerDashboard = () => {
       const response = await getAllItems();
       setInventory(response.data);
     } catch (error) {
-      console.error("Failed to fetch inventory:", error);
+      toast.error("Failed to fetch inventory");
     }
   };
 
@@ -47,9 +48,9 @@ const FacilityManagerDashboard = () => {
       fetchInventory();
       setShowCreateModal(false);
       setNewItem({ LocationID: "", ProductID: "", Quantity: "" });
+      toast.success("Item created successfully");
     } catch (error) {
-      console.error("Failed to create item:", error);
-      alert("Failed to create item. Please try again.");
+      toast.error("Failed to create item. Please try again.");
     }
   };
 
@@ -64,9 +65,9 @@ const FacilityManagerDashboard = () => {
       fetchInventory();
       setShowEditModal(false);
       setSelectedItem(null);
+      toast.success("Item updated successfully");
     } catch (error) {
-      console.error("Failed to update item:", error);
-      alert("Failed to update item. Please try again.");
+      toast.error("Failed to update item. Please try again.");
     }
   };
 
@@ -74,8 +75,9 @@ const FacilityManagerDashboard = () => {
     try {
       await deleteInventoryItem(itemId);
       fetchInventory();
+      toast.success("Item deleted successfully");
     } catch (error) {
-      console.error("Failed to delete item:", error);
+      toast.error("Failed to delete item");
     }
   };
 
@@ -87,7 +89,6 @@ const FacilityManagerDashboard = () => {
         </Col>
         <Col xs="auto">
           <BaseBtn
-            btnType="primary"
             label="Create New Item"
             onClick={() => setShowCreateModal(true)}
           />
@@ -191,7 +192,7 @@ const FacilityManagerDashboard = () => {
                 required
               />
             </Form.Group>
-            <BaseBtn btnType="primary" label="Create Item" htmlType="submit" />
+            <BaseBtn label="Create Item" htmlType="submit" />
           </Form>
         }
       />
@@ -249,11 +250,7 @@ const FacilityManagerDashboard = () => {
                   required
                 />
               </Form.Group>
-              <BaseBtn
-                btnType="primary"
-                label="Update Item"
-                htmlType="submit"
-              />
+              <BaseBtn label="Update Item" htmlType="submit" />
             </Form>
           )
         }
