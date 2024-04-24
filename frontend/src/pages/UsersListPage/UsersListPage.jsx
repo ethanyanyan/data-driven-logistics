@@ -9,6 +9,7 @@ import { SlArrowDown, SlArrowUp } from "react-icons/sl";
 import { toast } from "react-toastify";
 
 const UsersListPage = () => {
+  
   const { user } = useAuth();
   const [users, setUsers] = useState([]);
   const [error, setError] = useState("");

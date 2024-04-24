@@ -9,7 +9,7 @@ async function logShipment(req, res) {
     DestinationID,
     DepartureDate,
     ArrivalDate,
-    Status,
+    StatusID,
   } = req.body;
 
   try {
@@ -19,7 +19,7 @@ async function logShipment(req, res) {
       DestinationID,
       DepartureDate,
       ArrivalDate,
-      Status,
+      StatusID,
     };
 
     const newShipment = new Shipment(shipmentData);
@@ -100,7 +100,7 @@ async function updateShipment(req, res) {
     "DestinationID",
     "DepartureDate",
     "ArrivalDate",
-    "Status",
+    "StatusID",
   ];
 
   // Collect fields to update
