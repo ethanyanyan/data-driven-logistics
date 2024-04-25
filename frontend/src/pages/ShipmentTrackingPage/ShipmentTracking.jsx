@@ -23,11 +23,12 @@ const ShipmentTracking = () => {
   //shipment addition modal data
   const [source, setSource] = useState("");
   const [destination, setDestination] = useState("");
-  const [departureDate, setDepartureDate] = useState("");
-  const [arrivalDate, setArrivalDate] = useState("");
-  const [status, setStatus] = useState("");
+  const [departureDate, setDepartureDate] = useState("2024-04-25");
+  const [arrivalDate, setArrivalDate] = useState("2024-04-28");
+  const [status, setStatus] = useState("3");
 
   //source/components/forms/validation for validation.
+
 
   const loadShipmentsAndLocations = async () => {
     if (!user || !user.BusinessID) {
@@ -47,6 +48,9 @@ const ShipmentTracking = () => {
 
       setLocations(locationsData.data);
       setShipments(shipmentsData.data);
+
+      setSource(locationsData.data[0].LocationID);
+      setDestination(locationsData.data[0].LocationID);
     } catch (error) {
       setError("Failed to fetch data");
       console.error("Error in fetching data:", error);
@@ -56,29 +60,19 @@ const ShipmentTracking = () => {
   useEffect(() => {
     loadShipmentsAndLocations();
   }, [user]);
-  // possibly move modal/ui to services to make files smaller
 
   const requestAddShipment = () => {
     setAddShipmentModalIsOpen(true);
   };
 
   const addShipment = async () => {
-    const newShipment = {
-      UserID: user.UserID,
-      SourceID: source,
-      DestinationID: destination,
-      ArrivalDate: arrivalDate,
-      DepartureDate: departureDate,
-      StatusID: status,
-    };
-    // possibly adjust status based on arrival date, maybe not show arrival date field if not yet completed?
-    if (!newShipment) return; //should verify info here
     try {
       const result = await shipmentService.logShipment(source, user.UserID, destination, departureDate, arrivalDate, status);
-      if (result.success) {
+      if (result.message === "Shipment logged successfully") {
         loadShipmentsAndLocations();
         toast.success("New shipment successfully logged.");
       } else {
+        console.log(result);
         toast.error(result.message);
       }
     } catch (error) {
