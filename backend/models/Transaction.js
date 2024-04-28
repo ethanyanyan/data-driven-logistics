@@ -107,6 +107,17 @@ class Transaction {
     }
   }
 
+  static async calculateQuantityChange(locationID, productID, startDate, endDate) {
+    const query = `
+      SELECT SUM(Quantity) AS quantityChange
+      FROM Transactions
+      WHERE LocationID = ? AND ItemID = ? AND Date BETWEEN ? AND ?
+    `;
+
+    const [result] = await db.pool.query(query, [locationID, productID, startDate, endDate]);
+    return result[0].quantityChange || 0;
+  }
+
   // Additional methods as needed for transaction management
 }
 

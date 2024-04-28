@@ -23,4 +23,6 @@ router.patch("/:id", inventoryController.updateInventory);
 // Endpoint to delete an item in the inventory
 router.delete("/:id", inventoryController.deleteInventory);
 
+router.get('/:locationID/:productID/historical', inventoryController.getHistoricalInventoryLevels);
+
 module.exports = router;
