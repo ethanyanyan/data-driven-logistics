@@ -60,7 +60,8 @@ CREATE TABLE Products (
     ProductID INT AUTO_INCREMENT PRIMARY KEY,
     Name VARCHAR(255) NOT NULL,
     Description TEXT,
-    UnitPrice DECIMAL(10,2)
+    UnitPrice DECIMAL(10,2),
+    ProductURL VARCHAR(255)
 );
 
 -- Create Shipments Table
